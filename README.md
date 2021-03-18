@@ -7,6 +7,15 @@
   Whirl, an open-source <a href="http://dev.worlds.net/private/GammaDocs/WorldServer.html">WorldServer</a> implementation in <a href="https://www.rust-lang.org/">Rust.</a>
 </h1>
 
+<p align="center">
+  <a href="https://discord.com/invite/8hn6padWF6" title="Discord">
+    <img src="https://img.shields.io/discord/821938182274154506">
+  </a>
+  <a href="./LICENSE" title="License">
+    <img src="https://img.shields.io/github/license/Whirlsplash/whirl">
+  </a>
+</p>
+
 ## Purpose
 Two *main* reasons;
 1. Worlds' official servers are old, slowly deteriorating, and *probably unmaintained*.
