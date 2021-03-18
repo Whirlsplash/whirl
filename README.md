@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Whirl, an open-source <a href="http://dev.worlds.net/private/GammaDocs/WorldServer.html">WorldServer</a> implementation in <a href="https://www.rust-lang.org/">Rust.</a>
+  Whirl, an open-source <a href="http://dev.worlds.net/private/GammaDocs/WorldServer.html">WorldServer</a> implementation in <a href="https://www.rust-lang.org/">Rust</a>.
 </h1>
 
 <p align="center">
