@@ -40,7 +40,7 @@ Use in production environments is not recommended as this project is a work-in-p
 4. Profit.
 
 ## Contributing
-Work-in-progress.
+Please reference the [contribution guidelines](./CONTRIBUTING.md) of this repository.
 
 ### License
 [GNU General Public License v3.0](./LICENSE)
