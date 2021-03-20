@@ -1,0 +1,21 @@
+[package]
+name = "whirl"
+version = "0.1.0"
+authors = ["Fuwn <fuwnzy@gmail.com>"]
+edition = "2018"
+description = "Whirl, an open-source WorldServer implementation in Rust."
+documentation = "https://www.whirlsplash.org"
+readme = "README.md"
+homepage = "https://whirlsplash.org"
+license = "GPLv3"
+# license-file = "LICENSE"
+keywords = ["rust", "worldserver", "whirl", "whirlsplash"]
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+mio = "0.6"
+log = "0.4.14"
+pretty_env_logger = "0.4.0"
+dotenv = "0.15.0"
