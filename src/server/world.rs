@@ -57,17 +57,11 @@ impl WorldServer {
 						}
 					},
 					token if event.readiness().is_readable() => {
-						// println!("readable");
 						loop {
 							let read = sockets.get_mut(&token).unwrap().read(&mut buffer);
 							match read {
-								Ok(0) => {
-									// println!("read 0 bytes: {:?}", buffer);
-									sockets.remove(&token);
-									break
-								},
+								Ok(0) => { sockets.remove(&token); break; }
 								Ok(n) => {
-									// println!("read {:?} bytes: {:?}", &n, buffer);
 									let req = requests.get_mut(&token).unwrap();
 									for b in &buffer[0..n] {
 										req.push(*b);
@@ -134,7 +128,7 @@ impl WorldServer {
 										// Anything else, do nothing.
 										_ => ()
 									}
-								},
+								}
 								Err(ref e) if e.kind() == std::io::ErrorKind::WouldBlock =>
 									break,
 								Err(e) => { error!("unexpected error: {}", e); break; }
