@@ -124,7 +124,8 @@ impl WorldServer {
 											info!("message: {}", message);
 
 											for mut socket in &sockets {
-												socket.1.write_all(&create_text_command(message)).unwrap();
+												// Using User as a placeholder. Ideally, this would print out the username of the one who sent it.
+												socket.1.write_all(&create_text_command("User", message)).unwrap();
 											}
 										}
 										// SESSEXIT
