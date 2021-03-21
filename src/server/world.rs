@@ -3,9 +3,23 @@ use std::io::{Read, Write};
 use mio::{Poll, Token, Ready, PollOpt, Events};
 use std::collections::HashMap;
 use std::str::from_utf8;
-use crate::sub::buddy_list::create_buddy_list_notify_command;
-use crate::sub::text::create_text_command;
-use crate::sub::property::{create_property_update_command, create_property_request_command};
+use crate::cmd::buddy_list::create_buddy_list_notify_command;
+use crate::cmd::text::create_text_command;
+use crate::cmd::property::{create_property_update_command, create_property_request_command};
+
+// pub struct ClientSocket {
+// 	tcp_stream: TcpStream,
+// 	username: String,
+// }
+
+fn broadcast_to_all_clients(
+	sockets: &HashMap<Token, TcpStream>,
+	message: &[u8]
+) -> () {
+	for mut socket in sockets {
+		socket.1.write_all(message).unwrap();
+	}
+}
 
 pub struct WorldServer;
 impl WorldServer {
@@ -76,19 +90,13 @@ impl WorldServer {
 										// PROPREQ
 										10 => {
 											info!("received property request command");
-											sockets.get_mut(&token)
-												.unwrap()
-												.write_all(&create_property_update_command())
-												.unwrap();
+											broadcast_to_all_clients(&sockets, &create_property_update_command());
 											info!("sent property update");
 										}
 										// SESSINIT
 										6 => {
 											info!("received session initialization command");
-											sockets.get_mut(&token)
-												.unwrap()
-												.write_all(&create_property_request_command())
-												.unwrap();
+											broadcast_to_all_clients(&sockets, &create_property_request_command());
 											info!("sent session initialization command")
 										}
 										// PROPSET
@@ -97,10 +105,10 @@ impl WorldServer {
 										29 => {
 											info!("received buddy list update command");
 
-											sockets.get_mut(&token)
-												.unwrap()
-												.write_all(&create_buddy_list_notify_command("Wirlaburla"))
-												.unwrap();
+											broadcast_to_all_clients(
+												&sockets,
+												&create_buddy_list_notify_command("Wirlaburla")
+											);
 											info!("sent buddy notify update command")
 										}
 										// ROOMIDRQ

@@ -1,8 +1,8 @@
-#![feature(type_ascription)] // src\sub\property.rs:37:2
+#![feature(type_ascription)] // src\cmd\property.rs:37:2
 
 #[macro_use]
 extern crate log;
 
-pub mod sub;
+pub mod cmd;
 pub mod server;
 pub mod utils;
