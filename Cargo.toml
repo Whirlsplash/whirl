@@ -29,4 +29,6 @@ dotenv = "0.15.0"
 rand = "0.8.3"
 
 # Database
-rusqlite = "0.24.2"
+[dependencies.sqlx]
+version = "0.5.1"
+features = ["runtime-async-std-rustls", "sqlite", "macros", "migrate", "chrono", "time", "tls"]
