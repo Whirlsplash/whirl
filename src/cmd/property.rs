@@ -55,7 +55,7 @@ pub fn create_property_update_command() -> [u8; 147] { // Vec<u8>
 	]: [u8; 147]
 }
 
-// src\sub\property.rs:20:1
+// src\cmd\property.rs:20:1
 pub fn create_property_request_command() -> [u8; 61] {
 	[
 		0x3D, 0x01, 0x06, 0x04, 0x01, 0x30, 0x01, 0x0C,
