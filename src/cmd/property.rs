@@ -17,8 +17,7 @@
 // 	}
 // }
 
-// To be honest, don't care enough to make this function.
-// It's not important enough as it stands currently.
+// TODO: Decode received data and send back a valid response.
 pub fn create_property_update_command() -> [u8; 147] { // Vec<u8>
 	// let mut property = Vec::with_capacity(2);
 	// property.push(0x01); // ?
@@ -55,7 +54,6 @@ pub fn create_property_update_command() -> [u8; 147] { // Vec<u8>
 	]: [u8; 147]
 }
 
-// src\cmd\property.rs:20:1
 pub fn create_property_request_command() -> [u8; 61] {
 	[
 		0x3D, 0x01, 0x06, 0x04, 0x01, 0x30, 0x01, 0x0C,
