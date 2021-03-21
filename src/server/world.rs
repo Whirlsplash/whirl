@@ -6,6 +6,7 @@ use std::str::from_utf8;
 use crate::cmd::buddy_list::create_buddy_list_notify_command;
 use crate::cmd::text::create_text_command;
 use crate::cmd::property::{create_property_update_command, create_property_request_command};
+use rand::Rng;
 
 // pub struct ClientSocket {
 // 	tcp_stream: TcpStream,
@@ -123,9 +124,18 @@ impl WorldServer {
 											).unwrap();
 											info!("message: {}", message);
 
-											for mut socket in &sockets {
-												socket.1.write_all(&create_text_command(message)).unwrap();
-											}
+											// Using User as a placeholder. Ideally, this would print out the username of
+											// the one who sent it.
+											broadcast_to_all_clients(
+												&sockets,
+												&create_text_command(
+													// Random integer is added to the end of "User", just a development
+													// proof-of-concept. Since at this stage usernames aren't exactly kept,
+													// we can identify message senders as their connection token; `token.0`.
+													&format!("User{}", rand::thread_rng().gen_range(1..150).to_string()),
+													message
+												)
+											);
 										}
 										// SESSEXIT
 										7 => {
