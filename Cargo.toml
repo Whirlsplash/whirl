@@ -15,9 +15,18 @@ publish = false
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# TCP
+
 mio = "0.6"
+# Logging
 log = "0.4.14"
 pretty_env_logger = "0.4.0"
+
+# Environment
 dotenv = "0.15.0"
+
+# Utility
 rand = "0.8.3"
+
+# Database
 rusqlite = "0.24.2"
