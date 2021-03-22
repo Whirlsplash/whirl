@@ -1,4 +1,4 @@
-CREATE TABLE "user_propertyies" (
+CREATE TABLE "user_properties" (
 	"user_name" TEXT NOT NULL,
 	"property_id" INTEGER NOT NULL,
 	"property_flags" INTEGER NOT NULL,
