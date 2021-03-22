@@ -1,5 +1,5 @@
 use mio::net::{TcpListener, TcpStream};
-use std::io::Read;
+use std::io::{Read, Write};
 use mio::{Poll, Token, Ready, PollOpt, Events};
 use std::collections::HashMap;
 use std::str::from_utf8;
@@ -83,13 +83,15 @@ impl WorldServer {
 										// PROPREQ
 										10 => {
 											info!("received property request command");
-											broadcast_to_all_clients(&sockets, &create_property_update_command());
+											sockets.get_mut(&token).unwrap()
+												.write_all(&create_property_update_command()).unwrap();
 											info!("sent property update");
 										}
 										// SESSINIT
 										6 => {
 											info!("received session initialization command");
-											broadcast_to_all_clients(&sockets, &create_property_request_command());
+											sockets.get_mut(&token).unwrap()
+												.write_all(&create_property_request_command()).unwrap();
 											info!("sent session initialization command")
 										}
 										// PROPSET
@@ -97,11 +99,9 @@ impl WorldServer {
 										// BUDDYLISTUPDATE
 										29 => {
 											info!("received buddy list update command");
-
-											broadcast_to_all_clients(
-												&sockets,
-												&create_buddy_list_notify_command("Wirlaburla")
-											);
+											sockets.get_mut(&token).unwrap()
+												.write_all(&create_buddy_list_notify_command("Wirlaburla"))
+												.unwrap();
 											info!("sent buddy notify update command")
 										}
 										// ROOMIDRQ
