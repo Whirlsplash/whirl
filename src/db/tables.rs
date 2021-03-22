@@ -28,15 +28,15 @@
 ///
 /// 1 = SERIAL_USED
 #[derive(Debug)]
-struct SerialNumbers {
+pub struct SerialNumbers {
 	/// The user's serial number
-	serial_number: String,
+	pub serial_number: String,
 
 	/// Username with case intact.
-	user_name: String,
+	pub user_name: String,
 
 	/// One of {SERIAL_FREE, SERIAL_USED}
-	serial_status: i64,
+	pub serial_status: i64,
 }
 
 /// The UserRegistration table contains a record for every registered user. The record holds the
@@ -86,35 +86,35 @@ struct SerialNumbers {
 /// connects to. To take effect, the value must be changed while the user is logged off,
 /// otherwise it will only become effective at the next login.
 #[derive(Debug)]
-struct UserRegistration {
+pub struct UserRegistration {
 	/// The user name in all lower case.
-	user_name_lower: String,
+	pub user_name_lower: String,
 
 	/// The user name with case intact.
-	user_name: String,
+	pub user_name: String,
 
 	/// The user's serial number.
-	serial_number: String,
+	pub serial_number: String,
 
 	/// The user's password.
-	password: String,
+	pub password: String,
 
 	/// The user's client software version.
-	client_version: String,
+	pub client_version: String,
 
 	/// One of {ACCOUNT_ACTIVE, ACCOUNT_INACTIVE}.
-	account_status: i64,
+	pub account_status: i64,
 
 	/// The date and time the user registered.
-	registration_date: String,
+	pub registration_date: String,
 
 	/// The number of times the user has logged on since registration.
-	times_on: i64,
+	pub times_on: i64,
 
 	/// The number of minutes the user has been logged on since registration.
-	total_minutes: i64,
+	pub total_minutes: i64,
 
-	user_privileges: i64,
+	pub user_privileges: i64,
 }
 
 /// The UserProperties table is used to store persistent user properties. These are accessed every
@@ -238,22 +238,22 @@ struct UserRegistration {
 /// interpreted by standard SQL. What you'll get in this case is often meaningless hexadecimal,
 /// which could be unicode text or just raw data.
 #[derive(Debug)]
-struct UserProperties {
+pub struct UserProperties {
 	/// The user name with case intact
-	user_name: String,
+	pub user_name: String,
 
 	/// The property identifier.
-	property_id: i64,
+	pub property_id: i64,
 
 	/// Each property has a PropertyFlags field that defines certain aspects of the property.
-	property_flags: i64,
+	pub property_flags: i64,
 
 	/// Defines access restrictions on the property.
-	property_access: i64,
+	pub property_access: i64,
 
 	/// The value of the property when it is a string.
-	property_string_value: String,
+	pub property_string_value: String,
 
 	/// The value of the property when it is binary data.
-	property_binary_value: String,
+	pub property_binary_value: String,
 }
