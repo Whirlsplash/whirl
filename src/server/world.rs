@@ -1,5 +1,5 @@
 use mio::net::{TcpListener, TcpStream};
-use std::io::{Read, Write};
+use std::io::Read;
 use mio::{Poll, Token, Ready, PollOpt, Events};
 use std::collections::HashMap;
 use std::str::from_utf8;
@@ -7,20 +7,12 @@ use crate::cmd::buddy_list::create_buddy_list_notify_command;
 use crate::cmd::text::create_text_command;
 use crate::cmd::property::{create_property_update_command, create_property_request_command};
 use rand::Rng;
+use crate::server::utils::broadcast_to_all_clients;
 
 // pub struct ClientSocket {
 // 	tcp_stream: TcpStream,
 // 	username: String,
 // }
-
-fn broadcast_to_all_clients(
-	sockets: &HashMap<Token, TcpStream>,
-	message: &[u8]
-) -> () {
-	for mut socket in sockets {
-		socket.1.write_all(message).unwrap();
-	}
-}
 
 pub struct WorldServer;
 impl WorldServer {
