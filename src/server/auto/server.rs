@@ -1,14 +1,19 @@
 use mio::net::{TcpListener, TcpStream};
 use std::io::{Read, Write};
 use mio::{Poll, Token, Ready, PollOpt, Events};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::str::from_utf8;
 use crate::cmd::buddy_list::create_buddy_list_notify_command;
 use crate::cmd::text::create_text_command;
-// use crate::cmd::property::{create_property_update_command, create_property_request_command};
-use crate::server::auto::cmd::property::{create_property_update_command, create_property_request_command};
+use crate::cmd::property::{create_property_update_command, create_property_request_command};
+use super::cmd::room::create_room_id_redirect_command;
 use rand::Rng;
 use crate::server::utils::broadcast_to_all_clients;
+
+// pub struct ClientSocket {
+// 	tcp_stream: TcpStream,
+// 	username: String,
+// }
 
 pub struct AutoServer;
 impl AutoServer {
@@ -25,6 +30,8 @@ impl AutoServer {
 		let mut sockets: HashMap<Token, TcpStream> = HashMap::new();
 		let mut requests: HashMap<Token, Vec<u8>> = HashMap::new();
 		let mut buffer = [0 as u8; 1024];
+		// let mut room_ids: HashMap<&str, i32> = HashMap::new();
+		let mut room_ids: HashSet<String> = HashSet::new();
 
 		let mut events = Events::with_capacity(1024);
 		loop {
@@ -102,10 +109,40 @@ impl AutoServer {
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_buddy_list_notify_command("Wirlaburla"))
 												.unwrap();
-											info!("sent buddy notify update command")
+											info!("sent buddy notify update command");
 										}
 										// ROOMIDRQ
-										20 => info!("received room id request command"),
+										20 => {
+											info!("received room id request command");
+
+											let room_name = from_utf8(
+												&buffer[4..*&buffer.get(0).unwrap().to_owned() as usize]
+											).unwrap();
+											let mut room_id = 0;
+											if !room_ids.contains(room_name) {
+												room_ids.insert(room_name.to_string());
+												let new = room_ids.iter()
+													.position(|i| i == room_name)
+													.unwrap();
+												debug!("inserted room '{}' as '{}'", room_name, new);
+											} else {
+												let pos = room_ids
+													.iter()
+													.position(|i| i == room_name)
+													.unwrap();
+												debug!("found room '{}' as '{}'", room_name, pos);
+												room_id = pos;
+											}
+											debug!("room name: {}, room id: {}", room_name, room_id);
+											debug!("{:?}", room_ids);
+
+											// Passing `0` as `room_id` parameter as currently there is
+											// no way to find out a room's ID based on it's name.
+											sockets.get_mut(&token).unwrap()
+												.write_all(&create_room_id_redirect_command(room_name, room_id))
+												.unwrap();
+											info!("sent redirect id command")
+										}
 										// TEXT
 										14 => {
 											info!("received text command");
