@@ -27,6 +27,9 @@ dotenv = "0.15.0"
 
 # Utility
 rand = "0.8.3"
+[dependencies.phf]
+version = "0.8.0"
+features = ["macros"]
 
 # Database
 [dependencies.sqlx]
