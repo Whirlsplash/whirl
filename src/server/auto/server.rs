@@ -116,12 +116,12 @@ impl AutoServer {
 											info!("received buddy list update command");
 
 											let received_buddy = from_utf8(
-												&buffer[4..*&buffer.get(3).unwrap().to_owned() as usize]
+												&buffer[4..*&buffer.get(0).unwrap().to_owned() as usize - 1]
 											).unwrap();
 											debug!("received buddy: {}", received_buddy);
 
 											sockets.get_mut(&token).unwrap()
-												.write_all(&create_buddy_list_notify_command("Wirlaburla"))
+												.write_all(&create_buddy_list_notify_command(received_buddy))
 												.unwrap();
 											info!("sent buddy notify update command");
 										}
