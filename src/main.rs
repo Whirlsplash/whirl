@@ -11,16 +11,16 @@ fn main() {
 
 	let mut threads = vec![];
 	threads.push(thread::spawn(move || {
-		debug!("spawned WorldServer thread");
-		server::world::server::WorldServer::new(
+		debug!("spawned AutoServer thread");
+		server::auto::server::AutoServer::new(
 			TcpListener::bind(
 				&"0.0.0.0:6650".parse().unwrap()
 			).unwrap()
 		);
 	}));
 	threads.push(thread::spawn(move || {
-		debug!("spawned AutoServer thread");
-		server::auto::server::AutoServer::new(
+		debug!("spawned RoomServer thread");
+		server::room::server::RoomServer::new(
 			TcpListener::bind(
 				&"0.0.0.0:5673".parse().unwrap()
 			).unwrap()

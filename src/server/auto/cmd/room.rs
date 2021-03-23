@@ -1,4 +1,4 @@
-pub fn create_room_id_redirect_command(room_name: &str, room_id: &i32) -> Vec<u8> {
+pub fn create_room_id_redirect_command(room_name: &str, room_id: usize) -> Vec<u8> {
 	let mut room_id_redirect = Vec::new();
 	// room_id_redirect.push(room_id_redirect.len() as u8 + 1); // Data length
 	room_id_redirect.push(0x01); // ?
@@ -9,7 +9,7 @@ pub fn create_room_id_redirect_command(room_name: &str, room_id: &i32) -> Vec<u8
 
 	// Room number
 	room_id_redirect.push(0x00);
-	room_id_redirect.push(*room_id as u8);
+	room_id_redirect.push(room_id as u8);
 
 	// IP
 	room_id_redirect.push(0x00);
