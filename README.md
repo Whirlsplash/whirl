@@ -30,14 +30,7 @@ Use in production environments is not recommended as this project is a work-in-p
 [https://www.whirlsplash.org](https://www.whirlsplash.org)
 
 ## Development
-1. Navigate to your `/etc/hosts` file, on Windows, this usually is located at `C:\Windows\System32\drivers\etc\hosts`.
-2. Add these rules;
-```
-0.0.0.0				www.3dcd.com
-0.0.0.0				test.3dcd.com
-```
-3. Build and run the Cargo project.
-4. Profit.
+[https://www.whirlsplash.org/introduction/development.html](https://www.whirlsplash.org/introduction/development.html)
 
 ## Contributing
 Please reference the [contribution guidelines](./CONTRIBUTING.md) of this repository.
