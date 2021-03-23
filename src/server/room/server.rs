@@ -46,7 +46,7 @@ impl RoomServer {
 									).unwrap();
 
 									info!(
-										"registered ip '{}' with token '{}'",
+										"registered client with ip '{}' as token '{}'",
 										address.ip(), token.0
 									);
 
@@ -82,39 +82,66 @@ impl RoomServer {
 									match &buffer.get(2).unwrap() { // Third byte is 2 because Rust is zero-indexed.
 										// PROPREQ
 										10 => {
-											info!("received property request command");
+											debug!(
+												"received property request command from client with token '{}'",
+												token.0
+											);
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_property_update_command()).unwrap();
-											info!("sent property update");
+											debug!(
+												"sent property update from client with token '{}'",
+												token.0
+											);
 										}
 										// SESSINIT
 										6 => {
-											info!("received session initialization command");
+											debug!(
+												"received session initialization command from client with token '{}'",
+												token.0
+											);
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_property_request_command()).unwrap();
-											info!("sent session initialization command")
+											debug!(
+												"sent session initialization command from client with token '{}'",
+												token.0
+											);
 										}
 										// PROPSET
-										15 => info!("received property set command"),
+										15 => debug!(
+											"received property set command from client with token '{}'",
+											token.0
+										),
 										// BUDDYLISTUPDATE
 										29 => {
-											info!("received buddy list update command");
+											debug!(
+												"received buddy list update command from client with token '{}'",
+												token.0
+											);
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_buddy_list_notify_command("Wirlaburla"))
 												.unwrap();
-											info!("sent buddy notify update command")
+											debug!(
+												"sent buddy notify update command from client with token '{}'",
+												token.0
+											);
 										}
 										// ROOMIDRQ
-										20 => info!("received room id request command"),
+										20 => debug!(
+											"received room id request command from client with token '{}'",
+											token.0
+										),
 										// TEXT
 										14 => {
-											info!("received text command");
+											debug!(
+												"received text command from client with token '{}'",
+												token.0
+											);
 
 											// TODO: Make this into a command!
 											let message = from_utf8(
 												&buffer[6..*&buffer.get(0).unwrap().to_owned() as usize]
 											).unwrap();
-											info!("message: {}", message);
+											trace!("message: {}", message);
 
 											// Using User as a placeholder. Ideally, this would print out the username of
 											// the one who sent it.
@@ -128,12 +155,26 @@ impl RoomServer {
 													message
 												)
 											);
+											debug!(
+												"broadcasted text command from client with token '{}'",
+												token.0
+											);
 										}
 										// SESSEXIT
 										7 => {
-											info!("received session termination command");
+											debug!(
+												"received session termination command from client with token '{}'",
+												token.0
+											);
 											poll.deregister(sockets.get(&token).unwrap()).unwrap();
-											info!("de-registered client: {}", token.0);
+											debug!("de-registered client with token '{}'", token.0);
+										}
+										// SUBSCRIB
+										16 => {
+											debug!(
+												"received room subscription command from client with token '{}'",
+												token.0
+											);
 										}
 										// Anything else, do nothing.
 										_ => ()
