@@ -53,7 +53,7 @@ impl AutoServer {
 									).unwrap();
 
 									info!(
-										"registered ip '{}' with token '{}'",
+										"registered client with ip '{}' as token '{}'",
 										address.ip(), token.0
 									);
 
@@ -89,31 +89,52 @@ impl AutoServer {
 									match &buffer.get(2).unwrap() { // Third byte is 2 because Rust is zero-indexed.
 										// PROPREQ
 										10 => {
-											info!("received property request command");
+											debug!(
+												"received property request command from client with token '{}'",
+												token.0
+											);
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_property_update_command()).unwrap();
-											info!("sent property update");
+											debug!(
+												"sent property update command to client with token '{}'",
+												token.0
+											);
 										}
 										// SESSINIT
 										6 => {
-											info!("received session initialization command");
+											debug!(
+												"received session initialization command from client with token '{}'",
+												token.0
+											);
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_property_request_command()).unwrap();
-											info!("sent session initialization command");
+											debug!(
+												"sent session initialization command to client with token '{}'",
+												token.0
+											);
 										}
 										// PROPSET
 										15 => {
-											info!("received property set command");
+											debug!(
+												"received property set command from client with token '{}'",
+												token.0
+											);
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_text_command_with_action(
 													"WORLDSMASTER",
 													"Welcome to Whirlsplash!"
 												)).unwrap();
-											info!("sent worldsmaster greeting");
+											debug!(
+												"sent worldsmaster greeting to client with token '{}'",
+												token.0
+											);
 										},
 										// BUDDYLISTUPDATE
 										29 => {
-											info!("received buddy list update command");
+											debug!(
+												"received buddy list update command from client with token '{}'",
+												token.0
+											);
 
 											let received_buddy = from_utf8(
 												&buffer[4..*&buffer.get(0).unwrap().to_owned() as usize - 1]
@@ -123,11 +144,17 @@ impl AutoServer {
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_buddy_list_notify_command(received_buddy))
 												.unwrap();
-											info!("sent buddy notify update command");
+											debug!(
+												"sent buddy notify update command to client with token '{}'",
+												token.0
+											);
 										}
 										// ROOMIDRQ
 										20 => {
-											info!("received room id request command");
+											debug!(
+												"received room id request command from client with token '{}'",
+												token.0
+											);
 
 											let room_name = from_utf8(
 												&buffer[4..*&buffer.get(0).unwrap().to_owned() as usize]
@@ -138,34 +165,34 @@ impl AutoServer {
 												room_id = room_ids.iter()
 													.position(|i| i == room_name)
 													.unwrap();
-												debug!("inserted room '{}' as '{}'", room_name, room_id);
+												trace!("inserted room '{}' as '{}'", room_name, room_id);
 											} else {
 												let pos = room_ids
 													.iter()
 													.position(|i| i == room_name)
 													.unwrap();
-												debug!("found room '{}' as '{}'", room_name, pos);
+												trace!("found room '{}' as '{}'", room_name, pos);
 												room_id = pos;
 											}
-											debug!("room name: {}, room id: {}", room_name, room_id);
-											debug!("{:?}", room_ids);
+											trace!("room name: {}, room id: {}", room_name, room_id);
+											trace!("{:?}", room_ids);
 
 											// Passing `0` as `room_id` parameter as currently there is
 											// no way to find out a room's ID based on it's name.
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_room_id_redirect_command(room_name, room_id))
 												.unwrap();
-											info!("sent redirect id command")
+											debug!("sent redirect id command to client with token '{}'", token.0)
 										}
 										// TEXT
 										14 => {
-											info!("received text command");
+											debug!("received text command from client with token '{}'", token.0);
 
 											// TODO: Make this into a command!
 											let message = from_utf8(
 												&buffer[6..*&buffer.get(0).unwrap().to_owned() as usize]
 											).unwrap();
-											info!("message: {}", message);
+											trace!("message: {}", message);
 
 											// Using User as a placeholder. Ideally, this would print out the username of
 											// the one who sent it.
@@ -179,12 +206,19 @@ impl AutoServer {
 													message
 												)
 											);
+											debug!(
+												"broadcasted text command from client with token '{}'",
+												token.0
+											);
 										}
 										// SESSEXIT
 										7 => {
-											info!("received session termination command");
+											debug!(
+												"received session termination command from client with token '{}'",
+												token.0
+											);
 											poll.deregister(sockets.get(&token).unwrap()).unwrap();
-											info!("de-registered client: {}", token.0);
+											debug!("de-registered client with token '{}'", token.0);
 										}
 										// Anything else, do nothing.
 										_ => ()
