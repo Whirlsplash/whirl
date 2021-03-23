@@ -27,6 +27,6 @@ fn main() {
 		);
 	}));
 	for thread in threads {
-		let _ = thread.join();
+		let _ = thread.join(); // Dissolving Result.
 	}
 }
