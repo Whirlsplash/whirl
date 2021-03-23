@@ -4,7 +4,7 @@ use mio::{Poll, Token, Ready, PollOpt, Events};
 use std::collections::{HashMap, HashSet};
 use std::str::from_utf8;
 use crate::cmd::buddy_list::create_buddy_list_notify_command;
-use crate::cmd::text::create_text_command;
+use crate::cmd::text::{create_text_command, create_text_command_with_action};
 use crate::cmd::property::{create_property_update_command, create_property_request_command};
 use super::cmd::room::create_room_id_redirect_command;
 use rand::Rng;
@@ -99,13 +99,27 @@ impl AutoServer {
 											info!("received session initialization command");
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_property_request_command()).unwrap();
-											info!("sent session initialization command")
+											info!("sent session initialization command");
 										}
 										// PROPSET
-										15 => info!("received property set command"),
+										15 => {
+											info!("received property set command");
+											sockets.get_mut(&token).unwrap()
+												.write_all(&create_text_command_with_action(
+													"WORLDSMASTER",
+													"Welcome to Whirlsplash!"
+												)).unwrap();
+											info!("sent worldsmaster greeting");
+										},
 										// BUDDYLISTUPDATE
 										29 => {
 											info!("received buddy list update command");
+
+											let received_buddy = from_utf8(
+												&buffer[4..*&buffer.get(3).unwrap().to_owned() as usize]
+											).unwrap();
+											debug!("received buddy: {}", received_buddy);
+
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_buddy_list_notify_command("Wirlaburla"))
 												.unwrap();
