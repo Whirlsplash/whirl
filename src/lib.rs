@@ -1,4 +1,5 @@
-#![feature(type_ascription)] // src\cmd\property.rs:37:2
+#![feature(type_ascription)]
+#![feature(hash_set_entry)]
 
 #[macro_use]
 extern crate log;
