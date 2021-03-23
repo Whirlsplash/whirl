@@ -121,10 +121,10 @@ impl AutoServer {
 											let mut room_id = 0;
 											if !room_ids.contains(room_name) {
 												room_ids.insert(room_name.to_string());
-												let new = room_ids.iter()
+												room_id = room_ids.iter()
 													.position(|i| i == room_name)
 													.unwrap();
-												debug!("inserted room '{}' as '{}'", room_name, new);
+												debug!("inserted room '{}' as '{}'", room_name, room_id);
 											} else {
 												let pos = room_ids
 													.iter()
