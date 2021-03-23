@@ -6,8 +6,10 @@ use std::str::from_utf8;
 use crate::cmd::buddy_list::create_buddy_list_notify_command;
 use crate::cmd::text::create_text_command;
 use crate::cmd::property::{create_property_update_command, create_property_request_command};
+use super::cmd::room::create_room_id_redirect_command;
 use rand::Rng;
 use crate::server::utils::broadcast_to_all_clients;
+// use super::constants::ROOM_IDS;
 
 // pub struct ClientSocket {
 // 	tcp_stream: TcpStream,
@@ -59,7 +61,11 @@ impl WorldServer {
 								}
 								Err(ref e) if e.kind() == std::io::ErrorKind::WouldBlock =>
 									break,
-								Err(e) => { error!("unexpected error: {}", e); break }
+								Err(e) => {
+									error!("unexpected error: {}", e);
+									poll.deregister(sockets.get(&Token(counter)).unwrap()).unwrap();
+									break;
+								}
 							}
 						}
 					},
@@ -102,10 +108,25 @@ impl WorldServer {
 											sockets.get_mut(&token).unwrap()
 												.write_all(&create_buddy_list_notify_command("Wirlaburla"))
 												.unwrap();
-											info!("sent buddy notify update command")
+											info!("sent buddy notify update command");
 										}
 										// ROOMIDRQ
-										20 => info!("received room id request command"),
+										20 => {
+											info!("received room id request command");
+
+											let room_name = from_utf8(
+												&buffer[4..*&buffer.get(0).unwrap().to_owned() as usize]
+											).unwrap();
+											// let room_id = ROOM_IDS.get(&room_name[11..]).cloned().unwrap();
+											// debug!("room name: {}, room id: {}", room_name, room_id);
+
+											// Passing `0` as `room_id` parameter as currently there is
+											// no way to find out a room's ID based on it's name.
+											sockets.get_mut(&token).unwrap()
+												.write_all(&create_room_id_redirect_command(room_name, &0))
+												.unwrap();
+											info!("sent redirect id command")
+										}
 										// TEXT
 										14 => {
 											info!("received text command");
