@@ -6,8 +6,8 @@ use std::thread;
 use whirl::server;
 
 fn main() {
-	dotenv::dotenv().ok(); // Adds ability to use environment variables.
-	pretty_env_logger::init(); // Adds pretty logging.
+	dotenv::dotenv().ok(); // Adds ability to use environment variables
+	pretty_env_logger::init(); // Adds pretty logging
 
 	let mut threads = vec![];
 	threads.push(thread::spawn(move || {
@@ -27,6 +27,6 @@ fn main() {
 		);
 	}));
 	for thread in threads {
-		let _ = thread.join(); // Dissolving Result.
+		let _ = thread.join(); // Handle Result by dissolving it.
 	}
 }
