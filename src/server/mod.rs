@@ -1,4 +1,11 @@
+use tokio::sync::mpsc;
+use bytes::BytesMut;
+
 pub mod auto;
-pub mod cmd;
+mod cmd;
 pub mod room;
-pub mod utils;
+mod shared;
+mod peer;
+
+type Tx = mpsc::UnboundedSender<BytesMut>;
+type Rx = mpsc::UnboundedReceiver<BytesMut>;

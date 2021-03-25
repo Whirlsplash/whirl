@@ -18,6 +18,13 @@ pub fn create_room_id_redirect_command(room_name: &str, room_id: usize) -> Vec<u
 	room_id_redirect.push(0x00);
 
 	// Port
+	// for byte in convert_u16_to_two_u8s_be(0x1629).iter() {
+	// 	room_id_redirect.push(*byte);
+	// }
+	// Port
+	// for byte in convert_u16_to_two_u8s_be(5673_i32 as u16).iter() {
+	// 	room_id_redirect.push(*byte);
+	// }
 	room_id_redirect.push(0x16);
 	room_id_redirect.push(0x29);
 
