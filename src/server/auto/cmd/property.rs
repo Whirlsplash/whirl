@@ -1,38 +1,4 @@
-// struct NetToProperty {
-// 	_prop_id: i32,
-// 	_flags: i32,
-// 	_access: i32,
-// 	_string_value: String,
-// 	_bin_value: Vec<i32>,
-// }
-// impl NetToProperty {
-// 	fn parse_net_data() -> Self {
-// 		NetToProperty {
-// 			_prop_id: 0,
-// 			_flags: 0,
-// 			_access: 0,
-// 			_string_value: "".to_string(),
-// 			_bin_value: vec![]
-// 		}
-// 	}
-// }
-
-// TODO: Decode received data and send back a valid response.
-pub fn create_property_update_command() -> [u8; 147] { // Vec<u8>
-	// let mut property = Vec::with_capacity(2);
-	// property.push(0x01); // ?
-	// property.push(0x10); // Command type
-	//
-	// // Meaningful Data
-	// property.push(); // Property ID
-	// property.push(); // Flags
-	// property.push(); // Access
-	//
-	// // Insert data length as first byte.
-	// property.insert(0, property.len() as u8 + 1); // ^
-	//
-	// property // Return created array
-
+pub fn create_property_update_command() -> [u8; 147] {
 	[
 		0x93, 0xFF, 0x10, 0x1B, 0x80, 0x01, 0x0C, 0x77, 0x6F,
 		0x72, 0x6C, 0x64, 0x73, 0x33, 0x64, 0x2E, 0x63, 0x6F,
