@@ -2,6 +2,16 @@ use crate::server::cmd::session::SessionInitializationCommand;
 use bytes::BytesMut;
 use std::str::from_utf8;
 
+struct SessionInitializationCommandServer {
+	pub error: usize,
+	pub app_name: String,
+	pub protocol: usize,
+	pub server_type: usize,
+	pub serial: String,
+	pub private: usize,
+	pub channel: String,
+}
+
 pub fn parse_session_initialization_command(
 	command: BytesMut
 ) -> SessionInitializationCommand {
@@ -16,3 +26,9 @@ pub fn parse_session_initialization_command(
 		// password: "".to_string()
 	}
 }
+
+// pub fn create_session_initialization_command() -> SessionInitializationCommandServer {
+// 	SessionInitializationCommandServer {
+//
+// 	}
+// }
