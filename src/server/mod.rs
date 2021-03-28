@@ -4,8 +4,9 @@ use bytes::BytesMut;
 pub mod auto;
 mod cmd;
 pub mod room;
-mod shared;
+mod parser;
 mod peer;
+mod shared;
 
 type Tx = mpsc::UnboundedSender<BytesMut>;
 type Rx = mpsc::UnboundedReceiver<BytesMut>;
