@@ -16,7 +16,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 	std::env::set_var("RUST_LOG", log_level);
 
 	// Set database URL
-	std::env::set_var("DATABASE_URL", "sqlite:worlds.db");
+	std::env::set_var("DATABASE_URL", "sqlite:whirl.db");
 
 	// Setup logging
 	dotenv::dotenv().ok();
