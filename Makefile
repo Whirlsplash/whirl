@@ -1,4 +1,4 @@
-flags = -d -v
+flags = -d -v # These are just generally useful for development.
 
 help:
 	cargo run -- $(flags) help
