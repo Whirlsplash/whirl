@@ -4,6 +4,7 @@ use whirl::server::room::server::RoomServer;
 use structopt::StructOpt;
 use whirl::config;
 use whirl::cli::Command;
+use whirl::config::get_config;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -24,22 +25,28 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 	// Handle CLI command
 	match opt.command {
-		Command::Run => run().await,
+		Command::Run => run().await.unwrap(),
 		Command::Config => println!("{:#?}", config::get_config()),
 	}
 
 	Ok(())
 }
 
-async fn run() {
+async fn run() -> Result<(), Box<dyn Error>> {
 	let mut threads = vec![];
 	threads.push(tokio::spawn(async move {
-		let _ = AutoServer::new("0.0.0.0:6650").await;
+		let _ = AutoServer::new(
+			&*format!("0.0.0.0:{}", get_config().unwrap().auto_server_port)
+		).await;
 	}));
 	threads.push(tokio::spawn(async move {
-		let _ = RoomServer::new("0.0.0.0:5673").await;
+		let _ = RoomServer::new(
+			&*format!("0.0.0.0:{}", get_config().unwrap().room_server_port)
+		).await;
 	}));
 	for thread in threads {
 		let _ = thread.await;
 	}
+
+	Ok(())
 }

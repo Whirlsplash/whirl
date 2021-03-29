@@ -1,13 +1,18 @@
 use serde_derive::{Serialize, Deserialize};
 
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Config {
 	pub worldsmaster_greeting: String,
+	pub auto_server_port: i32,
+	pub room_server_port: i32,
 }
 impl Default for Config {
 	fn default() -> Self {
 		Config {
 			worldsmaster_greeting: "Welcome to Whirlsplash!".to_string(),
+			auto_server_port: 6650,
+			room_server_port: 5673,
 		}
 	}
 }
