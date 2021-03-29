@@ -26,6 +26,10 @@ pretty_env_logger = "0.4.0"
 rand = "0.8.3"
 bytes = "1.0.1"
 
+# CLI
+structopt = "0.3.21"
+clap = "3.0.0-beta.2"
+
 # TCP
 [dependencies.tokio]
 version = "1.4.0"
