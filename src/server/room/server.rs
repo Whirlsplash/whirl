@@ -68,7 +68,7 @@ impl RoomServer {
 				result = peer.bytes.next() => match result {
 					Some(Ok(msg)) => {
 						// let msg: BytesMut = msg;
-						for msg in get_commands_from_buffer(msg).iter_mut() {
+						for msg in get_commands_from_buffer(msg) {
 							match msg.get(2).unwrap() {
 								10 => { // PROPREQ
 									debug!("received property request command from client");
