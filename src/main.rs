@@ -1,19 +1,23 @@
+#[macro_use]
+extern crate log;
+
 use whirl::server::auto::server::AutoServer;
 use std::error::Error;
 use whirl::server::room::server::RoomServer;
-use structopt::StructOpt;
 use whirl::config;
-use whirl::cli::Command;
 use whirl::config::get_config;
+use structopt::clap::{SubCommand, AppSettings, App, Arg, Shell};
+use whirl::cli::cli;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-	let opt = whirl::cli::Opt::from_args();
+	// Setup CLI
+	let matches = cli().get_matches();
 
 	// Set logging level
 	let mut log_level = "whirl=error,whirl=warn,whirl=info".to_string();
-	if opt.debug { log_level += ",whirl=debug"; }
-	if opt.verbose >= 1 { log_level += ",whirl=trace"; };
+	if matches.is_present("debug") { log_level += ",whirl=debug"; }
+	if matches.is_present("trace") { log_level += ",whirl=trace"; }
 	std::env::set_var("RUST_LOG", log_level);
 
 	// Set database URL
@@ -24,9 +28,25 @@ async fn main() -> Result<(), Box<dyn Error>> {
 	pretty_env_logger::init();
 
 	// Handle CLI command
-	match opt.command {
-		Command::Run => run().await.unwrap(),
-		Command::Config => println!("{:#?}", config::get_config()),
+	if matches.is_present("run") {
+		run().await.unwrap();
+	} else if let Some(cmd) = matches.subcommand_matches("config") {
+		if cmd.is_present("show") {
+			println!("{:#?}", config::get_config());
+		}
+	} else if let Some(shell) = matches.subcommand_matches("completions") {
+		if shell.is_present("powershell") {
+			cli().gen_completions(env!("CARGO_PKG_NAME"), Shell::PowerShell, ".");
+		} else if shell.is_present("bash") {
+			cli().gen_completions(env!("CARGO_PKG_NAME"), Shell::Bash, ".");
+		} else if shell.is_present("elvish") {
+			cli().gen_completions(env!("CARGO_PKG_NAME"), Shell::Elvish, ".");
+		} else if shell.is_present("zsh") {
+			cli().gen_completions(env!("CARGO_PKG_NAME"), Shell::Zsh, ".");
+		} else if shell.is_present("fish") {
+			cli().gen_completions(env!("CARGO_PKG_NAME"), Shell::Fish, ".");
+		}
+		debug!("generated shell completions");
 	}
 
 	Ok(())
