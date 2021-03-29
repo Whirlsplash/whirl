@@ -23,7 +23,7 @@ use crate::config::get_config;
 
 pub struct AutoServer;
 impl AutoServer {
-	pub async fn new(addr: &'static str) -> Result<(), Box<dyn Error>> {
+	pub async fn new(addr: &str) -> Result<(), Box<dyn Error>> {
 		let listener = TcpListener::bind(addr).await?;
 		debug!("AutoServer now listening on {}", listener.local_addr().unwrap());
 		let state = Arc::new(Mutex::new(Shared::new()));
