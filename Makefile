@@ -1,4 +1,4 @@
-FLAGS = -d -v # These are just generally useful for development.
+FLAGS = -d -t # These are just generally useful for development.
 
 help:
 	cargo run -- $(FLAGS) help $(ARGS)
