@@ -19,5 +19,5 @@ worlds.db
 whirl.toml
 
 # DB Browser
-worlds.db-shm
-worlds.db-wal
+whirl.db-shm
+whirl.db-wal
