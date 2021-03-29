@@ -222,7 +222,9 @@ pub struct UserRegistration {
 ///
 /// To extract an email address for a given user:
 /// ```sql
-/// select propertyStringValue from UserProperties where userName='John Doe' and propertyId=11;
+/// select propertyStringValue
+/// from UserProperties
+/// where userName='John Doe' and propertyId=11;
 /// ```
 ///
 /// To extract a list of all recorded email addresses:
