@@ -12,7 +12,7 @@ pub fn get_commands_from_buffer(mut buffer: BytesMut) -> Vec<BytesMut> {
 	// debug!("initial buffer: {:?}, length: {}", buffer, buffer.len());
 
 	let data_length = buffer.get(0).unwrap().to_owned() as usize;
-	if buffer.len() > data_length {
+	if buffer.is_empty() {
 		loop {
 			// debug!("loop: {:?}, length: {}", buffer, buffer.len());
 			let command_length = buffer.get(0).unwrap().to_owned() as usize;
