@@ -5,3 +5,6 @@ help:
 
 run:
 	cargo run -- $(flags) run
+
+config:
+	cargo run -- $(flags) config
