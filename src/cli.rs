@@ -1,5 +1,4 @@
-use structopt::StructOpt;
-use structopt::clap::{Shell, App, AppSettings, SubCommand, Arg};
+use structopt::clap::{App, AppSettings, SubCommand, Arg};
 
 pub fn cli<'b, 'a>() -> App<'a, 'b> {
 	App::new(env!("CARGO_PKG_NAME"))

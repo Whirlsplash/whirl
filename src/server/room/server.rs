@@ -23,7 +23,7 @@ use crate::server::cmd::property::parse_property_set_command;
 
 pub struct RoomServer;
 impl RoomServer {
-	pub async fn new(addr: &str) -> Result<(), Box<dyn Error>> {
+	pub async fn listen(addr: &str) -> Result<(), Box<dyn Error>> {
 		let listener = TcpListener::bind(addr).await?;
 		debug!("RoomServer now listening on {}", listener.local_addr().unwrap());
 		let state = Arc::new(Mutex::new(Shared::new()));

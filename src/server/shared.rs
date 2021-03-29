@@ -33,3 +33,8 @@ impl Shared {
 	// 	}
 	// }
 }
+impl Default for Shared {
+	fn default() -> Self {
+		Self::new()
+	}
+}

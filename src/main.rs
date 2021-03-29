@@ -6,7 +6,7 @@ use std::error::Error;
 use whirl::server::room::server::RoomServer;
 use whirl::config;
 use whirl::config::get_config;
-use structopt::clap::{SubCommand, AppSettings, App, Arg, Shell};
+use structopt::clap::Shell;
 use whirl::cli::cli;
 
 #[tokio::main]
@@ -53,17 +53,18 @@ async fn main() -> Result<(), Box<dyn Error>> {
 }
 
 async fn run() -> Result<(), Box<dyn Error>> {
-	let mut threads = vec![];
-	threads.push(tokio::spawn(async move {
-		let _ = AutoServer::new(
-			&*format!("0.0.0.0:{}", get_config().unwrap().auto_server_port)
-		).await;
-	}));
-	threads.push(tokio::spawn(async move {
-		let _ = RoomServer::new(
-			&*format!("0.0.0.0:{}", get_config().unwrap().room_server_port)
-		).await;
-	}));
+	let threads = vec![
+		tokio::spawn(async move {
+			let _ = AutoServer::listen(
+				&*format!("0.0.0.0:{}", get_config().unwrap().auto_server_port)
+			).await;
+		}),
+		tokio::spawn(async move {
+			let _ = RoomServer::listen(
+				&*format!("0.0.0.0:{}", get_config().unwrap().room_server_port)
+			).await;
+		}),
+	];
 	for thread in threads {
 		let _ = thread.await;
 	}

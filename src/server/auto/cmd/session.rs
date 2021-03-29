@@ -2,7 +2,7 @@ use crate::server::cmd::session::SessionInitializationCommand;
 use bytes::BytesMut;
 use std::str::from_utf8;
 
-struct SessionInitializationCommandServer {
+struct _SessionInitializationCommandServer {
 	pub error: usize,
 	pub app_name: String,
 	pub protocol: usize,
