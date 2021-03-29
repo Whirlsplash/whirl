@@ -19,6 +19,7 @@ use std::net::SocketAddr;
 use crate::server::auto::cmd::session::parse_session_initialization_command;
 use crate::server::parser::get_commands_from_buffer;
 use crate::server::cmd::property::parse_property_set_command;
+use crate::config::get_config;
 
 pub struct AutoServer;
 impl AutoServer {
@@ -90,7 +91,7 @@ impl AutoServer {
 									debug!("received property set command from client: {}", avatar);
 									peer.bytes.get_mut()
 										.write_all(&create_text_command_with_action(
-											"WORLDSMASTER", &std::env::var("WORLDSMASTER_GREETING")?
+											"WORLDSMASTER", &get_config()?.worldsmaster_greeting
 										)).await?;
 									debug!("sent worldsmaster greeting to client");
 								}
