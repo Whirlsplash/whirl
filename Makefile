@@ -1,10 +1,10 @@
-flags = -d -v # These are just generally useful for development.
+FLAGS = -d -v # These are just generally useful for development.
 
 help:
-	cargo run -- $(flags) help
+	cargo run -- $(FLAGS) help
 
 run:
-	cargo run -- $(flags) run
+	cargo run -- $(FLAGS) run
 
 config:
-	cargo run -- $(flags) config
+	cargo run -- $(FLAGS) config
