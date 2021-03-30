@@ -15,7 +15,7 @@ whirl.iml
 
 # Development
 /src/_*.*
-worlds.db
+whirl.db
 whirl.toml
 
 # DB Browser
