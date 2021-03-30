@@ -12,7 +12,7 @@ pub fn get_commands_from_buffer(mut buffer: BytesMut) -> Vec<BytesMut> {
 	// debug!("initial buffer: {:?}, length: {}", buffer, buffer.len());
 
 	let data_length = buffer.get(0).unwrap().to_owned() as usize;
-	if buffer.is_empty() {
+	if buffer.len() > data_length {
 		loop {
 			// debug!("loop: {:?}, length: {}", buffer, buffer.len());
 			let command_length = buffer.get(0).unwrap().to_owned() as usize;
@@ -24,7 +24,7 @@ pub fn get_commands_from_buffer(mut buffer: BytesMut) -> Vec<BytesMut> {
 			buffer = buffer.split_off(command_length);
 
 			// Check if any more commands are present
-			if buffer.len() == 0 { break; }
+			if buffer.is_empty() { break; }
 		}
 	} else {
 		// There will always be at least one command, push it.
