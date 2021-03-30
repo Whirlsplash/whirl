@@ -108,32 +108,32 @@ impl RoomServer {
 										.await?;
 									debug!("sent buddy list notify command to client: {}", received_buddy);
 								}
-								// 20 => { // ROOMIDRQ
-								// 	let room_name = from_utf8(
-								// 		msg.get(4..msg.get(0).unwrap().to_owned() as usize).unwrap()
-								// 	).unwrap();
-								// 	debug!("received room id request command from client: {}", room_name);
-								// 	let room_id;
-								// 	if !room_ids.contains(&room_name.to_string()) {
-								// 		room_ids.push(room_name.to_string());
-								// 		room_id = room_ids.iter()
-								// 			.position(|i| i == &room_name.to_string())
-								// 			.unwrap();
-								// 		trace!("inserted room '{}' as '{}'", room_name, room_id);
-								// 	} else {
-								// 		let position = room_ids.iter()
-								// 			.position(|i| i == &room_name.to_string())
-								// 			.unwrap();
-								// 		trace!("found room '{}' as '{}'", room_name, position);
-								// 		room_id = position;
-								// 	}
-								// 	trace!("room name: {}, room id: {}", room_name, room_id);
-								// 	trace!("{:?}", room_ids);
-								// 	peer.bytes.get_mut()
-								// 		.write_all(&create_room_id_redirect_command(room_name, room_id))
-								// 		.await?;
-								// 	debug!("sent redirect id command to client: {} == {}", room_name, room_id);
-								// }
+								20 => { // ROOMIDRQ
+									let room_name = from_utf8(
+										msg.get(4..msg.get(0).unwrap().to_owned() as usize).unwrap()
+									).unwrap();
+									debug!("received room id request command from client: {}", room_name);
+									let room_id;
+									if !room_ids.contains(&room_name.to_string()) {
+										room_ids.push(room_name.to_string());
+										room_id = room_ids.iter()
+											.position(|i| i == &room_name.to_string())
+											.unwrap();
+										trace!("inserted room '{}' as '{}'", room_name, room_id);
+									} else {
+										let position = room_ids.iter()
+											.position(|i| i == &room_name.to_string())
+											.unwrap();
+										trace!("found room '{}' as '{}'", room_name, position);
+										room_id = position;
+									}
+									trace!("room name: {}, room id: {}", room_name, room_id);
+									trace!("{:?}", room_ids);
+									peer.bytes.get_mut()
+										.write_all(&create_room_id_redirect_command(room_name, room_id))
+										.await?;
+									debug!("sent redirect id command to client: {} == {}", room_name, room_id);
+								}
 								14 => {
 									let text = from_utf8(
 										msg.get(6..msg.get(0).unwrap().to_owned() as usize).unwrap()
