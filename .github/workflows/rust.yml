@@ -1,4 +1,4 @@
-name: Rust ✅
+name: Rust ✅/ 🚫
 
 on:
   push:
@@ -13,5 +13,19 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: cargo check
+      - name: Checkout 🛒
+        uses: actions/checkout@v2
+    
+      - name: Toolchain 🧰
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2021-02-20
+          components: rustfmt, clippy
+          override: true
+      
+      - name: Check ✅/ 🚫
+        uses: actions-rs/cargo@v1
+        continue-on-error: false
+        with:
+          command: check
