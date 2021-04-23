@@ -8,3 +8,6 @@ run:
 
 config:
 	cargo run -- $(FLAGS) config $(ARGS)
+
+fmt:
+	cargo fmt
