@@ -30,8 +30,6 @@ coverage:
           - unit
         paths:
           - "src"
-        #branches:
-          #- main
         if_ci_failed: error
         informational: false
         only_pulls: false
@@ -39,3 +37,10 @@ coverage:
 
 github_checks:
   annotations: false
+  
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_changes: false
+  require_base: no
+  require_head: yes
