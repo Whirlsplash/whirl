@@ -36,3 +36,6 @@ coverage:
         informational: false
         only_pulls: false
     patch: false
+
+github_checks:
+  annotations: false
