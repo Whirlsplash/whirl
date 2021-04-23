@@ -11,6 +11,9 @@
   <a href="https://discord.com/invite/8hn6padWF6" title="Discord">
     <img src="https://img.shields.io/discord/821938182274154506">
   </a>
+  <a href="https://codecov.io/gh/Whirlsplash/whirl">
+    <img src="https://codecov.io/gh/Whirlsplash/whirl/branch/develop/graph/badge.svg?token=8G1QR17SB0"/>
+  </a>
   <a href="./LICENSE" title="License">
     <img src="https://img.shields.io/github/license/Whirlsplash/whirl">
   </a>
