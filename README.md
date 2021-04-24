@@ -9,13 +9,13 @@
 
 <p align="center">
   <a href="https://discord.com/invite/8hn6padWF6" title="Discord">
-    <img src="https://img.shields.io/discord/821938182274154506">
+    <img src="https://img.shields.io/discord/821938182274154506" alt="Discord">
   </a>
   <a href="https://www.codefactor.io/repository/github/whirlsplash/whirl">
     <img src="https://www.codefactor.io/repository/github/whirlsplash/whirl/badge" alt="CodeFactor" />
   </a>
   <a href="./LICENSE" title="License">
-    <img src="https://img.shields.io/github/license/Whirlsplash/whirl">
+    <img src="https://img.shields.io/github/license/Whirlsplash/whirl" alt="License">
   </a>
 </p>
 
