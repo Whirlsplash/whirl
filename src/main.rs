@@ -73,7 +73,7 @@ async fn run() -> Result<(), Box<dyn Error>> {
         AutoServer,
       )
       .await;
-    }),
+    })
     tokio::spawn(async move {
       let _ = Hub::listen(
         &*format!("0.0.0.0:{}", get_config().unwrap().hub_port),
