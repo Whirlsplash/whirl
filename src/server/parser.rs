@@ -8,30 +8,28 @@ use bytes::BytesMut;
 /// 3. Remove command from `buffer`.
 /// 4. Iterate and do this for all commands within `buffer`.
 pub fn get_commands_from_buffer(mut buffer: BytesMut) -> Vec<BytesMut> {
-	let mut commands: Vec<BytesMut> = Vec::new();
-	// debug!("initial buffer: {:?}, length: {}", buffer, buffer.len());
+  let mut commands: Vec<BytesMut> = Vec::new();
+  trace!("initial buffer: {:?}, length: {}", buffer, buffer.len());
 
-	let data_length = buffer.get(0).unwrap().to_owned() as usize;
-	if buffer.len() > data_length {
-		loop {
-			// debug!("loop: {:?}, length: {}", buffer, buffer.len());
-			let command_length = buffer.get(0).unwrap().to_owned() as usize;
-			commands.push(
-				BytesMut::from(buffer.get(0..command_length).unwrap())
-			);
+  let data_length = buffer.get(0).unwrap().to_owned() as usize;
+  if buffer.len() > data_length {
+    loop {
+      trace!("loop: {:?}, length: {}", buffer, buffer.len());
+      let command_length = buffer.get(0).unwrap().to_owned() as usize;
+      commands.push(BytesMut::from(buffer.get(0..command_length).unwrap()));
 
-			// Remove command from buffer
-			buffer = buffer.split_off(command_length);
+      // Remove command from buffer
+      buffer = buffer.split_off(command_length);
 
-			// Check if any more commands are present
-			if buffer.is_empty() { break; }
-		}
-	} else {
-		// There will always be at least one command, push it.
-		commands.push(
-			BytesMut::from(buffer.get(0..data_length).unwrap())
-		);
-	}
+      // Check if any more commands are present
+      if buffer.is_empty() {
+        break;
+      }
+    }
+  } else {
+    // There will always be at least one command, push it.
+    commands.push(BytesMut::from(buffer.get(0..data_length).unwrap()));
+  }
 
-	commands // Return command (s)
+  commands // Return command (s)
 }
