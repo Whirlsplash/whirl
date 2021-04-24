@@ -8,5 +8,5 @@ pub mod cli;
 pub mod config;
 
 pub mod db;
-pub mod re_server;
+pub mod re_server
 pub mod utils;
