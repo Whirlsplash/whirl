@@ -21,3 +21,6 @@ whirl.db
 # DB Browser
 whirl.db-shm
 whirl.db-wal
+
+# Wireshark
+*.pcapng
