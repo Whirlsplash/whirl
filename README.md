@@ -12,7 +12,8 @@
     <img src="https://img.shields.io/discord/821938182274154506">
   </a>
   <a href="https://www.codefactor.io/repository/github/whirlsplash/whirl">
-    <img src="https://www.codefactor.io/repository/github/whirlsplash/whirl/badge" alt="CodeFactor" /></a>
+    <img src="https://www.codefactor.io/repository/github/whirlsplash/whirl/badge" alt="CodeFactor" />
+  </a>
   <a href="./LICENSE" title="License">
     <img src="https://img.shields.io/github/license/Whirlsplash/whirl">
   </a>
