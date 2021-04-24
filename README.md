@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Whirl, an open-source <a href="http://dev.worlds.net/private/GammaDocs/WorldServer.html">WorldServer</a> implementation in <a href="https://www.rust-lang.org/">Rust</a>.
+  The Open-Source WorldServer.
 </h1>
 
 <p align="center">
@@ -15,6 +15,8 @@
     <img src="https://img.shields.io/github/license/Whirlsplash/whirl">
   </a>
 </p>
+
+Whirl, an open-source <a href="http://dev.worlds.net/private/GammaDocs/WorldServer.html">WorldServer</a> implementation in <a href="https://www.rust-lang.org/">Rust</a>.
 
 ## Purpose
 Two *main* reasons;
@@ -27,10 +29,7 @@ TLDR: To keep Worlds' legacy going for future generations.
 Use in production environments is not recommended as this project is a work-in-progress. As we begin to become more stable and add new features, we will release periodic updates regarding production use.
 
 ## Documentation
-[https://www.whirlsplash.org](https://www.whirlsplash.org)
-
-## Development
-[https://www.whirlsplash.org/introduction/development.html](https://www.whirlsplash.org/introduction/development.html)
+[https://whirlsplash.org/docs/](https://whirlsplash.org/docs/)
 
 ## Contributing
 Please reference the [contribution guidelines](./CONTRIBUTING.md) of this repository.
