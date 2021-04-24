@@ -1,3 +1,11 @@
+# # NOTICE
+# 
+# ## Before Committing
+# 1. Verify the validity of the configuration via the following shell command;
+#   ```shell
+#   cat codecov.yml | curl --data-binary @- https://codecov.io/validate
+#   ```
+
 codecov:
   token: "secret:MV/bbQs7G9pJMr9d23PBUd+s6PP3MMj3RGqwOIWIlUH4639jfrTi+CxbHTBhicskHyYRuaDoTLB+HbktHuxYftPEC+MLacZJAn3krVe2jj8="
   bot: "codecov-io"
@@ -14,5 +22,17 @@ coverage:
   round: nearest
   precision: 2
   status:
-    project: true
+    project:
+      default:
+        target: auto
+        threshold: 0%
+        flags:
+          - unit
+        paths:
+          - "src"
+        #branches:
+          #- main
+        if_ci_failed: error
+        informational: false
+        only_pulls: false
     patch: false
