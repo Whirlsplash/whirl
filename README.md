@@ -14,6 +14,8 @@
   <a href="https://codecov.io/gh/Whirlsplash/whirl">
     <img src="https://codecov.io/gh/Whirlsplash/whirl/branch/develop/graph/badge.svg?token=8G1QR17SB0"/>
   </a>
+  <a href="https://www.codefactor.io/repository/github/whirlsplash/whirl">
+    <img src="https://www.codefactor.io/repository/github/whirlsplash/whirl/badge" alt="CodeFactor" /></a>
   <a href="./LICENSE" title="License">
     <img src="https://img.shields.io/github/license/Whirlsplash/whirl">
   </a>
