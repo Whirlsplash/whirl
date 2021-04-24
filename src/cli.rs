@@ -17,7 +17,7 @@ pub fn cli<'b, 'a>() -> App<'a, 'b> {
         .subcommands(vec![
           SubCommand::with_name("powershell"),
           SubCommand::with_name("bash"),
-          SubCommand::with_name("elvish"),
+          SubCommand::with_name("elvish")
           SubCommand::with_name("zsh"),
           SubCommand::with_name("fish"),
         ]),
