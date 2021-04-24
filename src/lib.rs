@@ -4,8 +4,9 @@
 #[macro_use]
 extern crate log;
 
-pub mod db;
-pub mod server;
-pub mod utils;
 pub mod cli;
 pub mod config;
+
+pub mod db;
+pub mod re_server;
+pub mod utils;

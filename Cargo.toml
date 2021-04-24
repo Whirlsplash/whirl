@@ -7,6 +7,7 @@ description = "Whirl, an open-source WorldServer implementation in Rust."
 documentation = "https://www.whirlsplash.org"
 readme = "README.md"
 homepage = "https://whirlsplash.org"
+repository = "https://github.com/Whirlsplash/whirl"
 license = "GPLv3"
 # license-file = "LICENSE"
 keywords = ["rust", "worldserver", "whirl", "whirlsplash"]
@@ -24,9 +25,13 @@ pretty_env_logger = "0.4.0"
 
 # Utility
 rand = "0.8.3"
+async-trait = "0.1.50"
+
+# Byte Manipulation
 bytes = "1.0.1"
 serde = "1.0.125"
 serde_derive = "1.0.125"
+byteorder = "1.4.3"
 
 # CLI
 structopt = "0.3.21"
@@ -35,21 +40,12 @@ structopt = "0.3.21"
 confy = "0.4.0"
 
 # TCP
-[dependencies.tokio]
-version = "1.4.0"
-features = ["full"]
-[dependencies.tokio-util]
-version = "0.6.5"
-features = ["codec"]
-[dependencies.tokio-stream]
-version = "0.1.5"
-
-# Utility
-[dependencies.phf]
-version = "0.8.0"
-features = ["macros"]
+tokio = { version = "1.4.0", features = ["full"] }
+tokio-util = { version = "0.6.5", features = ["codec"] }
+tokio-stream = "0.1.5"
 
 # Database
-[dependencies.sqlx]
-version = "0.5.1"
-features = ["runtime-async-std-rustls", "sqlite", "macros", "migrate", "chrono", "time", "tls"]
+sqlx = { version = "0.5.1", features = ["runtime-async-std-rustls", "sqlite", "macros", "migrate", "chrono", "time", "tls"] }
+
+# Web-server
+#actix-web = "3"

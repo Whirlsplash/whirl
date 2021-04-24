@@ -1,0 +1,15 @@
+pub struct NetworkProperty {
+  pub prop_id: i32,
+  pub value:   String,
+}
+impl NetworkProperty {
+  pub fn new() -> Self { NetworkProperty::default() }
+}
+impl Default for NetworkProperty {
+  fn default() -> Self {
+    NetworkProperty {
+      prop_id: 0,
+      value:   "".to_string(),
+    }
+  }
+}

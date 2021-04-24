@@ -16,7 +16,7 @@ whirl.iml
 # Development
 /src/_*.*
 whirl.db
-whirl.toml
+.whirlrc.toml
 
 # DB Browser
 whirl.db-shm

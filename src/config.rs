@@ -1,28 +1,29 @@
-use serde_derive::{Serialize, Deserialize};
-
+use serde_derive::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Config {
-	pub worldsmaster_greeting: String,
-	pub auto_server_port: i32,
-	pub room_server_port: i32,
+  pub worldsmaster_greeting: String,
+  pub worldsmaster_username: String,
+  pub distributor_port:      i32,
+  pub hub_port:              i32,
 }
 impl Default for Config {
-	fn default() -> Self {
-		Config {
-			worldsmaster_greeting: "Welcome to Whirlsplash!".to_string(),
-			auto_server_port: 6650,
-			room_server_port: 5673,
-		}
-	}
+  fn default() -> Self {
+    Config {
+      worldsmaster_greeting: "Welcome to Whirlsplash!".to_string(),
+      worldsmaster_username: "WORLDSMASTER".to_string(),
+      distributor_port:      6650,
+      hub_port:              5673,
+    }
+  }
 }
 
 pub fn get_config() -> Result<Config, confy::ConfyError> {
-	let config: Config = confy::load_path("./whirl.toml").unwrap();
+  let config: Config = confy::load_path("./.whirlrc.toml").unwrap();
 
-	Ok(config)
+  Ok(config)
 }
 
 pub fn store_config(config: Config) -> Result<(), confy::ConfyError> {
-	confy::store_path("./whirl.toml", config)
+  confy::store_path("./.whirlrc.toml", config)
 }
