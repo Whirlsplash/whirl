@@ -24,3 +24,6 @@ whirl.db-wal
 
 # Wireshark
 *.pcapng
+
+# Nix
+result*
