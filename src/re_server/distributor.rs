@@ -1,3 +1,6 @@
+// Copyleft 2021-2021 Whirlsplash
+// SPDX-License-Identifier: GPL-3.0-only
+
 //! The distributor functions as bare-minimal
 //! [AutoServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#AutoServer).
 //!
