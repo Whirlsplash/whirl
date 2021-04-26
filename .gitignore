@@ -27,3 +27,6 @@ whirl.db-wal
 
 # Nix
 result*
+
+# Legacy
+/src/server_dev/
