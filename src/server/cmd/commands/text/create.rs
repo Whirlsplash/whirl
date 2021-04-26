@@ -3,7 +3,7 @@
 
 use bytes::{BufMut, BytesMut};
 
-use crate::re_server::cmd::{commands::text::structure::Text, constants::TEXT};
+use crate::server::cmd::{commands::text::structure::Text, constants::TEXT};
 
 pub fn create_text(text: Text) -> Vec<u8> {
   let mut command = BytesMut::new();
