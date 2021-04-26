@@ -3,7 +3,7 @@
 
 use std::str::from_utf8;
 
-use crate::re_server::cmd::commands::text::structure::Text;
+use crate::server::cmd::commands::text::structure::Text;
 
 pub fn parse_text(data: Vec<u8>, username: &str) -> Text {
   Text {

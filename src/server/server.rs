@@ -8,7 +8,7 @@ use tokio::{
   sync::Mutex,
 };
 
-use crate::re_server::interaction::shared::Shared;
+use crate::server::interaction::shared::Shared;
 
 #[derive(Debug)]
 pub enum ServerType {

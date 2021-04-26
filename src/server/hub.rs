@@ -1,15 +1,11 @@
 // Copyleft 2021-2021 Whirlsplash
 // SPDX-License-Identifier: GPL-3.0-only
 
-//! The distributor functions as bare-minimal
-//! [AutoServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#AutoServer).
+//! The hub functions as a
+//! [RoomServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#AutoServer).
 //!
-//! It intercepts a client and distributes it to a
-//! [RoomServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#RoomServer).
-//!
-//! This is not meant to be a high performant section of code as the distributor
-//! is only meant to handle the initial and brief session initialization of the
-//! client.
+//! The RoomServer is responsible for handling just about every request from the
+//! client after they have been redirected to a room (hub).
 
 use std::{error::Error, net::SocketAddr, sync::Arc};
 
@@ -19,17 +15,17 @@ use tokio_util::codec::{BytesCodec, Decoder};
 
 use crate::{
   config::get_config,
-  re_server::{
+  server::{
     cmd::{
       commands::{
         action::create_action,
         buddy_list::{create::create_buddy_list_notify, parse::parse_buddy_list_update},
         property::{
-          create::{create_property_request_as_distributor, create_property_update_as_distributor},
+          create::{create_property_request_as_hub, create_property_update_as_hub},
           parse::find_property_in_property_list,
         },
         room::{create::create_room_id_request, parse::parse_room_id_request},
-        text::{create::create_text, structure::Text},
+        text::{create::create_text, parse::parse_text, structure::Text},
       },
       constants::*,
     },
@@ -40,9 +36,9 @@ use crate::{
   },
 };
 
-pub struct Distributor;
+pub struct Hub;
 #[async_trait::async_trait]
-impl Server for Distributor {
+impl Server for Hub {
   async fn handle(
     state: Arc<Mutex<Shared>>,
     stream: TcpStream,
@@ -51,23 +47,25 @@ impl Server for Distributor {
   ) -> Result<(), Box<dyn Error>> {
     let bytes = BytesCodec::new().framed(stream);
     let mut peer = Peer::new(state.clone(), bytes, count.to_string()).await?;
-    let mut room_ids = vec![];
+    // let mut room_ids = vec![];
     let mut username = String::from("unknown");
 
     loop {
       tokio::select! {
         Some(msg) = peer.rx.recv() => {
+          dbg!("got peer activity: {:?}", &msg);
           peer.bytes.get_mut().write_all(&msg).await?;
         }
         result = peer.bytes.next() => match result {
           Some(Ok(msg)) => {
+            dbg!("got some bytes: {:?}", &msg);
             for msg in parse_commands_from_packet(msg) {
               match msg.get(2).unwrap().to_owned() as i32 {
                 PROPREQ => {
                   trace!("received property request from client");
 
                   peer.bytes.get_mut()
-                    .write_all(&create_property_update_as_distributor()).await?;
+                    .write_all(&create_property_update_as_hub()).await?;
                   trace!("sent property update to client");
                 }
                 SESSINIT => {
@@ -79,7 +77,7 @@ impl Server for Distributor {
                   trace!("received session initialization from {}", username);
 
                   peer.bytes.get_mut()
-                    .write_all(&create_property_request_as_distributor()).await?;
+                    .write_all(&create_property_request_as_hub()).await?;
                   trace!("sent property request to {}", username);
                 }
                 PROPSET => {
@@ -103,25 +101,23 @@ impl Server for Distributor {
                 }
                 ROOMIDRQ => {
                   let room = parse_room_id_request(msg.to_vec());
-                  trace!("received room id request from {}: {}", username, &room);
-
-                  let room_id;
-                  if !room_ids.contains(&room) {
-                    room_ids.push(room.clone());
-                    room_id = room_ids.iter().position(|r| r == &room).unwrap();
-                    debug!("inserted room: {}", room);
-                  } else {
-                    let position = room_ids.iter().position(|r| r == &room).unwrap();
-                    debug!("found room: {}", room);
-                    room_id = position;
-                  }
-
-                  peer.bytes.get_mut()
-                    .write_all(&create_room_id_request(&room, room_id as u8)).await?;
-                  trace!("sent room id redirect to {}: {}", username, room);
+                  trace!("received room id request from {}: {}", username, room);
+                  debug!("{:?}", create_room_id_request(&room, 0x04));
                 }
                 SESSEXIT => {
                   trace!("received session exit from {}", username); break;
+                }
+                TEXT => {
+                  let text = parse_text(msg.to_vec(), &username);
+                  trace!("received text from {}:{}", username, text.content);
+
+                  {
+                    state.lock().await.broadcast(&create_text(Text {
+                      sender: username.clone(),
+                      content: text.content,
+                    })).await;
+                  }
+                  trace!("broadcasted text to hub");
                 }
                 _ => (),
               }
@@ -130,7 +126,9 @@ impl Server for Distributor {
           Some(Err(e)) => {
             error!("error while processing message (s): {}", e); break;
           }
-          None => break,
+          None => {
+            debug!("nothing"); break;
+          },
         }
       }
     }

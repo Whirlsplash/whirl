@@ -3,7 +3,7 @@
 
 use bytes::{BufMut, BytesMut};
 
-use crate::re_server::cmd::{commands::buddy_list::structure::Buddy, constants::BUDDYLISTNOTIFY};
+use crate::server::cmd::{commands::buddy_list::structure::Buddy, constants::BUDDYLISTNOTIFY};
 
 pub fn create_buddy_list_notify(buddy: &Buddy) -> Vec<u8> {
   let mut command = BytesMut::new();

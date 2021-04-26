@@ -11,7 +11,7 @@ use whirl::{
   cli::cli,
   config,
   config::get_config,
-  re_server::{
+  server::{
     distributor::Distributor,
     hub::Hub,
     server::{

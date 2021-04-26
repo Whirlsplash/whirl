@@ -3,7 +3,7 @@
 
 use std::str::from_utf8;
 
-use crate::re_server::net::structure::NetworkProperty;
+use crate::server::net::structure::NetworkProperty;
 
 /// Iterate over a network property in the form of bytes and return a list of
 /// human-readable properties.

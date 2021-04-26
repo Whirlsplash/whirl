@@ -3,7 +3,7 @@
 
 use crate::{
   config::get_config,
-  re_server::{
+  server::{
     cmd::constants::{PROPUPD, SESSINIT},
     net::{
       constants::{
