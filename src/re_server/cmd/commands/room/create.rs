@@ -1,3 +1,6 @@
+// Copyleft 2021-2021 Whirlsplash
+// SPDX-License-Identifier: GPL-3.0-only
+
 use bytes::{BufMut, BytesMut};
 
 use crate::{config::get_config, re_server::cmd::constants::REDIRID};

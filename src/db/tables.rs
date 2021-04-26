@@ -1,3 +1,6 @@
+// Copyleft 2021-2021 Whirlsplash
+// SPDX-License-Identifier: GPL-3.0-only
+
 //! Much of the documentation that you will see within this module is quoted
 //! from http://dev.worlds.net/private/GammaDocs/WorldServer.html#RoomServer.
 

@@ -1,3 +1,6 @@
+// Copyleft 2021-2021 Whirlsplash
+// SPDX-License-Identifier: GPL-3.0-only
+
 use std::str::from_utf8;
 
 use crate::re_server::cmd::commands::buddy_list::structure::Buddy;
