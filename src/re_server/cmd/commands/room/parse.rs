@@ -1,3 +1,6 @@
+// Copyleft 2021-2021 Whirlsplash
+// SPDX-License-Identifier: GPL-3.0-only
+
 use std::str::from_utf8;
 
 pub fn parse_room_id_request(data: Vec<u8>) -> String {

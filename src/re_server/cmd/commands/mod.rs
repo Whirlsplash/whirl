@@ -1,3 +1,6 @@
+// Copyleft 2021-2021 Whirlsplash
+// SPDX-License-Identifier: GPL-3.0-only
+
 pub mod action;
 pub mod buddy_list;
 pub mod property;
