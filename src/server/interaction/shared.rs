@@ -5,7 +5,7 @@ use std::collections::HashMap;
 
 use bytes::BytesMut;
 
-use crate::re_server::types::Tx;
+use crate::server::types::Tx;
 
 pub struct Shared {
   pub peers: HashMap<String, Tx>,

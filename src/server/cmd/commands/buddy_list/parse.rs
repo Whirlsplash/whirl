@@ -3,7 +3,7 @@
 
 use std::str::from_utf8;
 
-use crate::re_server::cmd::commands::buddy_list::structure::Buddy;
+use crate::server::cmd::commands::buddy_list::structure::Buddy;
 
 pub fn parse_buddy_list_update(data: Vec<u8>) -> Buddy {
   Buddy {

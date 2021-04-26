@@ -1,7 +1,7 @@
 // Copyleft 2021-2021 Whirlsplash
 // SPDX-License-Identifier: GPL-3.0-only
 
-use crate::re_server::cmd::structure::Command;
+use crate::server::cmd::structure::Command;
 
 /// Iterate over a command set in the from of bytes and return a list of
 /// human-readable commands.

@@ -3,7 +3,7 @@
 
 use bytes::{BufMut, BytesMut};
 
-use crate::{config::get_config, re_server::cmd::constants::REDIRID};
+use crate::{config::get_config, server::cmd::constants::REDIRID};
 
 pub fn create_room_id_request(room: &str, room_id: u8) -> Vec<u8> {
   let mut command = BytesMut::new();

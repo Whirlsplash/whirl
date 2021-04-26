@@ -4,7 +4,7 @@
 use byteorder::{BigEndian, ReadBytesExt};
 use bytes::{Buf, BytesMut};
 
-use crate::re_server::cmd::commands::subscribe::structure::SubscribeRoom;
+use crate::server::cmd::commands::subscribe::structure::SubscribeRoom;
 
 /// TODO: The functionality of this function has not been tested... TEST IT!
 pub fn parse_subscribe_room(data: Vec<u8>) -> SubscribeRoom {

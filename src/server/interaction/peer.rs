@@ -9,7 +9,7 @@ use tokio::{
 };
 use tokio_util::codec::{BytesCodec, Framed};
 
-use crate::re_server::{interaction::shared::Shared, types::Rx};
+use crate::server::{interaction::shared::Shared, types::Rx};
 
 pub struct Peer {
   pub bytes: Framed<TcpStream, BytesCodec>,
