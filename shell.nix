@@ -1,8 +1,8 @@
 let
-    sources = import ./nix/sources.nix;
-    rust = import ./nix/rust.nix { inherit sources; };
-    pkgs = import sources.nixpkgs { };
+  sources = import ./nix/sources.nix;
+  rust = import ./nix/rust.nix { inherit sources; };
+  pkgs = import sources.nixpkgs { };
 in
 pkgs.mkShell {
-    buildInputs = with pkgs; [ rust ];
+  buildInputs = with pkgs; [ rust ];
 }
