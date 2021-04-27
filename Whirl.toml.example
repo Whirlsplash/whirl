@@ -1,0 +1,10 @@
+[whirlsplash]
+worldsmaster_username = "WORLDSMASTER" # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
+log_level = 1 # Generally, you should only change this if you are expiriencing issues
+
+[distributor]
+worldsmaster_greeting = "Welcome to Whirlsplash!"
+port = 6650 # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
+
+[hub]
+port = 5673 # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING

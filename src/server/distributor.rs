@@ -18,7 +18,7 @@ use tokio_stream::StreamExt;
 use tokio_util::codec::{BytesCodec, Decoder};
 
 use crate::{
-  config::get_config,
+  config::Config,
   server::{
     cmd::{
       commands::{
@@ -87,8 +87,8 @@ impl Server for Distributor {
 
                   peer.bytes.get_mut()
                     .write_all(&create_text(Text {
-                    sender: get_config()?.worldsmaster_username,
-                    content: get_config()?.worldsmaster_greeting,
+                    sender: Config::get()?.whirlsplash.worldsmaster_username,
+                    content: Config::get()?.distributor.worldsmaster_greeting,
                   })).await?;
                   peer.bytes.get_mut()
                     .write_all(&create_action()).await?;

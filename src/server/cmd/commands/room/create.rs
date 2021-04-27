@@ -3,7 +3,7 @@
 
 use bytes::{BufMut, BytesMut};
 
-use crate::{config::get_config, server::cmd::constants::REDIRID};
+use crate::{config::Config, server::cmd::constants::REDIRID};
 
 pub fn create_room_id_request(room: &str, room_id: u8) -> Vec<u8> {
   let mut command = BytesMut::new();
@@ -23,7 +23,7 @@ pub fn create_room_id_request(room: &str, room_id: u8) -> Vec<u8> {
   for byte in "0.0.0.0".split('.') {
     command.put_u8(byte.parse::<u8>().unwrap());
   }
-  command.put_u16(get_config().unwrap().hub_port as u16); // Port
+  command.put_u16(Config::get().unwrap().hub.port as u16); // Port
 
   // Length
   let mut command_as_vec = command.to_vec();
