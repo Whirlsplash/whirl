@@ -49,6 +49,3 @@ sqlx = { version = "0.5.1", features = ["runtime-async-std-rustls", "sqlite", "m
 
 # Web-server
 #actix-web = "3"
-
-[dev-dependencies]
-cargo-husky = { version = "1", default-features = false, features = ["precommit-hook"] }
