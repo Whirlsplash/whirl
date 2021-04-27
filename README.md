@@ -14,6 +14,9 @@ The Open-Source WorldServer.
 <a href="https://www.codefactor.io/repository/github/whirlsplash/whirl">
 <img src="https://www.codefactor.io/repository/github/whirlsplash/whirl/badge" alt="CodeFactor" />
 </a>
+<a href="https://saythanks.io/to/fuwnzy@gmail.com">
+<img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks" />
+</a>
 <a href="./LICENSE">
 <img src="https://img.shields.io/github/license/Whirlsplash/whirl" alt="License" />
 </a>
