@@ -9,8 +9,7 @@ use std::error::Error;
 use structopt::clap::Shell;
 use whirl::{
   cli::cli,
-  config,
-  config::get_config,
+  config::Config,
   server::{
     distributor::Distributor,
     hub::Hub,
@@ -20,6 +19,7 @@ use whirl::{
     },
   },
 };
+use log::LevelFilter;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -27,11 +27,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
   let matches = cli().get_matches();
 
   // Set logging level
-  let mut log_level = "whirl=error,whirl=warn,whirl=info".to_string();
-  if matches.is_present("debug") {
+  let mut log_level = "whirl=error,whirl=warn,whirl=trace".to_string();
+  if matches.is_present("debug") || Config::get()?.whirlsplash.log_level >= 2 {
     log_level += ",whirl=debug";
   }
-  if matches.is_present("trace") {
+  if matches.is_present("trace") || Config::get()?.whirlsplash.log_level >= 3 {
     log_level += ",whirl=trace";
   }
   std::env::set_var("RUST_LOG", log_level);
@@ -48,7 +48,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     run().await.unwrap();
   } else if let Some(cmd) = matches.subcommand_matches("config") {
     if cmd.is_present("show") {
-      println!("{:#?}", config::get_config());
+      println!("{:#?}", Config::get()?);
     }
   } else if let Some(shell) = matches.subcommand_matches("completions") {
     if shell.is_present("powershell") {
@@ -72,14 +72,14 @@ async fn run() -> Result<(), Box<dyn Error>> {
   let threads = vec![
     tokio::spawn(async move {
       let _ = Distributor::listen(
-        &*format!("0.0.0.0:{}", get_config().unwrap().distributor_port,),
+        &*format!("0.0.0.0:{}", Config::get().unwrap().distributor.port),
         AutoServer,
       )
       .await;
     }),
     tokio::spawn(async move {
       let _ = Hub::listen(
-        &*format!("0.0.0.0:{}", get_config().unwrap().hub_port),
+        &*format!("0.0.0.0:{}", Config::get().unwrap().hub.port),
         RoomServer,
       )
       .await;

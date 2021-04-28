@@ -1,4 +1,0 @@
-worldsmaster_greeting = 'Welcome to Whirlsplash!'
-worldsmaster_username = "WORLDSMASTER" # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
-distributor_port = 6650 # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
-hub_port = 5673 # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
