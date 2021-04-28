@@ -30,3 +30,6 @@ result*
 
 # Legacy
 /src/server_dev/
+
+# NPM
+/node_modules/
