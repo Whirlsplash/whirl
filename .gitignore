@@ -11,16 +11,16 @@ Cargo.lock
 
 # IDE
 /.idea/
-whirl.iml
+/whirl.iml
 
 # Development
 /src/_*.*
-whirl.db
-.whirlrc.toml
+/whirl.db
+/Whirl.toml
 
 # DB Browser
-whirl.db-shm
-whirl.db-wal
+/whirl.db-shm
+/whirl.db-wal
 
 # Wireshark
 *.pcapng
