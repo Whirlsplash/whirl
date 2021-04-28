@@ -1,0 +1,1 @@
+{"devDependencies":{"husky":"^6.0.0"},"scripts":{"prepare":"husky install"}}
