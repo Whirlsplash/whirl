@@ -1,1 +1,24 @@
-{"devDependencies":{"husky":"^6.0.0"},"scripts":{"prepare":"husky install"}}
+{
+  "name": "whirl",
+  "version": "0.1.0",
+  "description": "The Open-Source WorldServer",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "commit": "cz",
+    "commit:signed": "cz -S"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "12.1.1",
+    "@commitlint/config-conventional": "12.1.1",
+    "commitizen": "4.2.3",
+    "cz-conventional-changelog": "3.3.0",
+    "husky": "6.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog",
+      "defaultScope": "global"
+    }
+  }
+}
