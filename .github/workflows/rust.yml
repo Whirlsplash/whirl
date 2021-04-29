@@ -3,10 +3,14 @@ name: Rust ✅/ 🚫
 on:
   push:
     # branches: [develop]
-    paths: "src"
+    paths:
+      - "src"
+      - "Cargo.toml"
   pull_request:
     # branches: [develop]
-    paths: "src"
+    paths:
+      - "src"
+      - "Cargo.toml"
 
 env:
   CARGO_TERM_COLOR: always
