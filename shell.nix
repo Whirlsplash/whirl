@@ -5,4 +5,6 @@ let
 in
 pkgs.mkShell {
   buildInputs = with pkgs; [ rust ];
+
+  DATABASE_URL = "sqlite:whirl.db";
 }
