@@ -40,12 +40,12 @@ structopt = "0.3.21"
 config = "0.11.0"
 
 # TCP
-tokio = { version = "1.4.0", features = ["full"] }
+tokio = { version = "1.5.0", features = ["full"] }
 tokio-util = { version = "0.6.6", features = ["codec"] }
 tokio-stream = "0.1.5"
 
 # Database
-sqlx = { version = "0.5.1", features = ["runtime-async-std-rustls", "sqlite", "macros", "migrate", "chrono", "time", "tls"] }
+sqlx = { version = "0.5.2", features = ["runtime-async-std-rustls", "sqlite", "macros", "migrate", "chrono", "time", "tls"] }
 
 # Web-server
 #actix-web = "3"
