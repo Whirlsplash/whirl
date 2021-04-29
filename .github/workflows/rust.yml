@@ -2,10 +2,10 @@ name: Rust ✅/ 🚫
 
 on:
   push:
-    branches: [develop]
+    # branches: [develop]
     paths: "src"
   pull_request:
-    branches: [develop]
+    # branches: [develop]
     paths: "src"
 
 env:
