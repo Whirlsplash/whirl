@@ -28,7 +28,7 @@ use crate::{
         subscribe_distance::parse::parse_subscribe_distance,
         subscribe_room::parse::parse_subscribe_room,
         teleport::parse::parse_teleport,
-        text::{create::create_text, parse::parse_text, structure::Text},
+        text::Text,
       },
       constants::*,
     },
@@ -87,10 +87,10 @@ impl Server for Hub {
                   trace!("received property set from {}", username);
 
                   peer.bytes.get_mut()
-                    .write_all(&create_text(Text {
+                    .write_all(&Text {
                     sender: Config::get()?.whirlsplash.worldsmaster_username,
                     content: Config::get()?.distributor.worldsmaster_greeting,
-                  })).await?;
+                  }.create()).await?;
                   peer.bytes.get_mut()
                     .write_all(&create_action()).await?;
                   trace!("sent text to {}", username);
@@ -111,14 +111,14 @@ impl Server for Hub {
                   trace!("received session exit from {}", username); break;
                 }
                 TEXT => {
-                  let text = parse_text(msg.to_vec(), &username);
+                  let text = Text::parse(msg.to_vec(), &username);
                   trace!("received text from {}:{}", username, text.content);
 
                   {
-                    state.lock().await.broadcast(&create_text(Text {
+                    state.lock().await.broadcast(&Text {
                       sender: username.clone(),
                       content: text.content,
-                    })).await;
+                    }.create()).await;
                   }
                   trace!("broadcasted text to hub");
                 }

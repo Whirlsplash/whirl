@@ -29,7 +29,7 @@ use crate::{
           parse::find_property_in_property_list,
         },
         room::{create::create_room_id_request, parse::parse_room_id_request},
-        text::{create::create_text, structure::Text},
+        text::Text,
       },
       constants::*,
     },
@@ -86,10 +86,10 @@ impl Server for Distributor {
                   trace!("received property set from {}", username);
 
                   peer.bytes.get_mut()
-                    .write_all(&create_text(Text {
+                    .write_all(&Text {
                     sender: Config::get()?.whirlsplash.worldsmaster_username,
                     content: Config::get()?.distributor.worldsmaster_greeting,
-                  })).await?;
+                  }.create()).await?;
                   peer.bytes.get_mut()
                     .write_all(&create_action()).await?;
                   trace!("sent text to {}", username);
