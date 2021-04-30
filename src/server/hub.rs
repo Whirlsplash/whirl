@@ -25,6 +25,9 @@ use crate::{
           parse::find_property_in_property_list,
         },
         room::{create::create_room_id_request, parse::parse_room_id_request},
+        subscribe_distance::parse::parse_subscribe_distance,
+        subscribe_room::parse::parse_subscribe_room,
+        teleport::parse::parse_teleport,
         text::{create::create_text, parse::parse_text, structure::Text},
       },
       constants::*,
@@ -118,6 +121,21 @@ impl Server for Hub {
                     })).await;
                   }
                   trace!("broadcasted text to hub");
+                }
+                SUBSCRIB => {
+                  let subscribe_room = parse_subscribe_room(msg[3..].to_vec());
+                  trace!("received subscribe room from {}: {:?}",
+                    username, subscribe_room);
+                }
+                SUB_DIST => {
+                  let subscribe_distance = parse_subscribe_distance(msg[3..].to_vec());
+                  trace!("received subscribe distance from {}: {:?}",
+                    username, subscribe_distance);
+                }
+                TELEPORT => {
+                  let teleport = parse_teleport(msg[3..].to_vec());
+                  trace!("received teleport from {}: {:?}",
+                    username, teleport);
                 }
                 _ => (),
               }
