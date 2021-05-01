@@ -4,7 +4,7 @@ let
   pkgs = import sources.nixpkgs { };
 in
 pkgs.mkShell {
-  buildInputs = with pkgs; [ rust ];
+  buildInputs = with pkgs; [ niv rust ];
 
   DATABASE_URL = "sqlite:whirl.db";
 }
