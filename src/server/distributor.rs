@@ -28,7 +28,8 @@ use crate::{
           create::{create_property_request_as_distributor, create_property_update_as_distributor},
           parse::find_property_in_property_list,
         },
-        room::{create::create_room_id_request, parse::parse_room_id_request},
+        redirect_id::RedirectId,
+        room_id_request::RoomIdRequest,
         text::Text,
       },
       constants::*,
@@ -103,23 +104,25 @@ impl Server for Distributor {
                   trace!("sent buddy list notify to {}: {}", username, buddy.buddy);
                 }
                 ROOMIDRQ => {
-                  let room = parse_room_id_request(msg.to_vec());
-                  trace!("received room id request from {}: {}", username, &room);
+                  let room = RoomIdRequest::parse(msg.to_vec());
+                  trace!("received room id request from {}: {}", username, &room.room_name);
 
                   let room_id;
-                  if !room_ids.contains(&room) {
-                    room_ids.push(room.clone());
-                    room_id = room_ids.iter().position(|r| r == &room).unwrap();
-                    debug!("inserted room: {}", room);
+                  if !room_ids.contains(&room.room_name) {
+                    room_ids.push(room.room_name.clone());
+                    room_id = room_ids.iter().position(|r| r == &room.room_name).unwrap();
+                    debug!("inserted room: {}", room.room_name);
                   } else {
-                    let position = room_ids.iter().position(|r| r == &room).unwrap();
-                    debug!("found room: {}", room);
+                    let position = room_ids.iter().position(|r| r == &room.room_name).unwrap();
+                    debug!("found room: {}", room.room_name);
                     room_id = position;
                   }
 
-                  peer.bytes.get_mut()
-                    .write_all(&create_room_id_request(&room, room_id as u8)).await?;
-                  trace!("sent room id redirect to {}: {}", username, room);
+                  peer.bytes.get_mut().write_all(&RedirectId {
+                    room_name: room.room_name.clone(),
+                    room_number: room_id as i8,
+                  }.create()).await?;
+                  trace!("sent redirect id to {}: {}", username, room.room_name);
                 }
                 SESSEXIT => {
                   trace!("received session exit from {}", username); break;
