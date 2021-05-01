@@ -10,4 +10,3 @@ pub mod subscribe_distance;
 pub mod subscribe_room;
 pub mod teleport;
 pub mod text;
-pub mod whisper;
