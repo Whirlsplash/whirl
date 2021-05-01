@@ -27,7 +27,7 @@ use crate::{
         room::{create::create_room_id_request, parse::parse_room_id_request},
         subscribe_distance::parse::parse_subscribe_distance,
         subscribe_room::parse::parse_subscribe_room,
-        teleport::parse::parse_teleport,
+        teleport::Teleport,
         text::Text,
       },
       constants::*,
@@ -134,7 +134,7 @@ impl Server for Hub {
                     username, subscribe_distance);
                 }
                 TELEPORT => {
-                  let teleport = parse_teleport(msg[3..].to_vec());
+                  let teleport = Teleport::parse(msg[3..].to_vec());
                   trace!("received teleport from {}: {:?}",
                     username, teleport);
                 }
