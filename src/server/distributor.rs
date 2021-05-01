@@ -33,6 +33,7 @@ use crate::{
         text::Text,
       },
       constants::*,
+      extendable::{Creatable, Parsable},
     },
     interaction::{peer::Peer, shared::Shared},
     net::{constants::VAR_USERNAME, property_parser::parse_network_property},

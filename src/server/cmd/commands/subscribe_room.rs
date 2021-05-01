@@ -4,6 +4,8 @@
 use byteorder::{BigEndian, ReadBytesExt};
 use bytes::{Buf, BytesMut};
 
+use crate::server::cmd::extendable::Parsable;
+
 #[derive(Debug)]
 pub struct SubscribeRoom {
   pub room_number: i8,
@@ -12,8 +14,8 @@ pub struct SubscribeRoom {
   pub z:           f32,
   pub distance:    f32,
 }
-impl SubscribeRoom {
-  pub fn parse(data: Vec<u8>) -> Self {
+impl Parsable for SubscribeRoom {
+  fn parse(data: Vec<u8>) -> Self {
     // https://stackoverflow.com/questions/41034635/how-do-i-convert-between-string-str-vecu8-and-u8
     let mut data = BytesMut::from(data.as_slice()).reader();
 

@@ -5,15 +5,18 @@ use std::str::from_utf8;
 
 use bytes::{BufMut, BytesMut};
 
-use crate::server::cmd::constants::BUDDYLISTNOTIFY;
+use crate::server::cmd::{
+  constants::BUDDYLISTNOTIFY,
+  extendable::{Creatable, Parsable},
+};
 
 #[derive(Clone)]
 pub struct BuddyList {
   pub buddy: String,
   pub add:   i8,
 }
-impl BuddyList {
-  pub fn parse(data: Vec<u8>) -> Self {
+impl Parsable for BuddyList {
+  fn parse(data: Vec<u8>) -> Self {
     Self {
       buddy: from_utf8(&data[4..data[0] as usize - 1])
         .unwrap()
@@ -23,8 +26,9 @@ impl BuddyList {
       add: data[data[0] as usize - 1] as i8,
     }
   }
-
-  pub fn create(self) -> Vec<u8> {
+}
+impl Creatable for BuddyList {
+  fn create(self) -> Vec<u8> {
     let mut command = BytesMut::new();
 
     // Header

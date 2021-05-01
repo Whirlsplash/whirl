@@ -3,15 +3,18 @@
 
 use bytes::{BufMut, BytesMut};
 
-use crate::{config::Config, server::cmd::constants::REDIRID};
+use crate::{
+  config::Config,
+  server::cmd::{constants::REDIRID, extendable::Creatable},
+};
 
 #[derive(Debug)]
 pub struct RedirectId {
   pub room_name:   String,
   pub room_number: i8,
 }
-impl RedirectId {
-  pub fn create(self) -> Vec<u8> {
+impl Creatable for RedirectId {
+  fn create(self) -> Vec<u8> {
     let mut command = BytesMut::new();
 
     // Header

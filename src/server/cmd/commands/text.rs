@@ -5,21 +5,17 @@ use std::str::from_utf8;
 
 use bytes::{BufMut, BytesMut};
 
-use crate::server::cmd::constants::TEXT;
+use crate::server::cmd::{
+  constants::TEXT,
+  extendable::{Creatable, ParsableWithArguments},
+};
 
 pub struct Text {
   pub sender:  String,
   pub content: String,
 }
-impl Text {
-  pub fn parse(data: Vec<u8>, username: &str) -> Self {
-    Self {
-      sender:  username.to_string(),
-      content: from_utf8(&data[6..]).unwrap().to_string(),
-    }
-  }
-
-  pub fn create(self) -> Vec<u8> {
+impl Creatable for Text {
+  fn create(self) -> Vec<u8> {
     let mut command = BytesMut::new();
 
     // Header
@@ -42,5 +38,28 @@ impl Text {
 
     // Return bytes
     command_as_vec
+  }
+}
+impl ParsableWithArguments for Text {
+  /// The first and only element of `args` *should* be the username of the sender.
+  ///
+  /// There isn't anything currently stopping someone from passing some other value so that might be
+  /// annoying at times.
+  ///
+  /// Realistically, this method is mostly static so the username will *always* be passed properly
+  /// unless someone intentionally commits breaking changes on purpose regarding what is passed to
+  /// to this method where called.
+  ///
+  /// It would be neat to have some sort of ability to statically check if the `args` argument
+  /// contains x number of elements at compile time or something of the sort but the Rust RFC is
+  /// probably not focused on that.
+  ///
+  /// So, right now, trust is in the developers' hands to make sure to pass the right -- number
+  /// -- of elements to `args`.
+  fn parse(data: Vec<u8>, args: &[&str]) -> Self {
+    Self {
+      sender:  args[0].to_string(),
+      content: from_utf8(&data[6..]).unwrap().to_string(),
+    }
   }
 }
