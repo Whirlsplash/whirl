@@ -37,6 +37,9 @@ Use in production environments is not recommended as this project is a work-in-p
 ## Documentation
 [https://whirlsplash.org/docs/](https://whirlsplash.org/docs/)
 
+## Known issues
+- https://github.com/Whirlsplash/whirl/issues/2
+
 ## Contributing
 Please reference the [contribution guidelines](./CONTRIBUTING.md) of this repository.
 
