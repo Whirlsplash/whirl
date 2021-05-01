@@ -24,7 +24,6 @@ use crate::{
           create::{create_property_request_as_hub, create_property_update_as_hub},
           parse::find_property_in_property_list,
         },
-        room::{create::create_room_id_request, parse::parse_room_id_request},
         subscribe_distance::SubscribeDistance,
         subscribe_room::SubscribeRoom,
         teleport::Teleport,
@@ -103,11 +102,12 @@ impl Server for Hub {
                   }.create()).await?;
                   trace!("sent buddy list notify to {}: {}", username, buddy.buddy);
                 }
-                ROOMIDRQ => {
-                  let room = parse_room_id_request(msg.to_vec());
-                  trace!("received room id request from {}: {}", username, room);
-                  debug!("{:?}", create_room_id_request(&room, 0x04));
-                }
+                // ROOMIDRQ => {
+                //   // TODO: Figure out if this is actually even needed.
+                //   let room = RoomIdRequest::parse(msg.to_vec());
+                //   trace!("received room id request from {}: {}", username, room.room_name);
+                //   debug!("{:?}", create_room_id_request(&room.room_name, 0x00));
+                // }
                 SESSEXIT => {
                   trace!("received session exit from {}", username); break;
                 }

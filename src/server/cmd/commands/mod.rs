@@ -4,7 +4,8 @@
 pub mod action;
 pub mod buddy_list;
 pub mod property;
-pub mod room;
+pub mod redirect_id;
+pub mod room_id_request;
 pub mod subscribe_distance;
 pub mod subscribe_room;
 pub mod teleport;
