@@ -17,16 +17,18 @@ WORLDS_RUN = gsudo $(WORLDS_PATH)
 fmt:
 	cargo fmt
 
-check: fmt
+check:
 	cargo check
 
 # -------------
 # | Executors |
 # -------------
-help:
+checkf: fmt check
+
+help: checkf
 	cargo run -- $(FLAGS) help $(ARGS)
 
-run: check
+run: checkf
 	cargo run -- $(FLAGS) run $(ARGS)
 
 # Subject to change depending on different PCs, this is just mine. ~Fuwn
