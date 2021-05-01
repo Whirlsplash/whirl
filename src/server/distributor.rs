@@ -23,7 +23,7 @@ use crate::{
     cmd::{
       commands::{
         action::create_action,
-        buddy_list::{create::create_buddy_list_notify, parse::parse_buddy_list_update},
+        buddy_list::BuddyList,
         property::{
           create::{create_property_request_as_distributor, create_property_update_as_distributor},
           parse::find_property_in_property_list,
@@ -95,10 +95,11 @@ impl Server for Distributor {
                   trace!("sent text to {}", username);
                 }
                 BUDDYLISTUPDATE => {
-                  let buddy = parse_buddy_list_update(msg.to_vec());
+                  let buddy = BuddyList::parse(msg.to_vec());
                   trace!("received buddy list update from {}: {}", username, buddy.buddy);
-                  peer.bytes.get_mut()
-                    .write_all(&create_buddy_list_notify(&buddy)).await?;
+                  peer.bytes.get_mut().write_all(&BuddyList {
+                    ..buddy.clone()
+                  }.create()).await?;
                   trace!("sent buddy list notify to {}: {}", username, buddy.buddy);
                 }
                 ROOMIDRQ => {
