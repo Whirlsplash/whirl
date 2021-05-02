@@ -30,6 +30,7 @@ use crate::{
         text::Text,
       },
       constants::*,
+      extendable::{Creatable, Parsable, ParsableWithArguments},
     },
     interaction::{peer::Peer, shared::Shared},
     net::{constants::VAR_USERNAME, property_parser::parse_network_property},
@@ -112,7 +113,7 @@ impl Server for Hub {
                   trace!("received session exit from {}", username); break;
                 }
                 TEXT => {
-                  let text = Text::parse(msg.to_vec(), &username);
+                  let text = Text::parse(msg.to_vec(), &[&username]);
                   trace!("received text from {}:{}", username, text.content);
 
                   {
