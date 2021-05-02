@@ -24,7 +24,8 @@ impl Creatable for Text {
 
     // Content
     // TODO: Find a way to parse ObjIds.
-    //  The below byte is suspected to be the sender's short ObjId.
+    //
+    // The below byte is suspected to be the sender's short ObjId.
     command.put_i8(0x00);
 
     command.put_u8(self.sender.len() as u8);
