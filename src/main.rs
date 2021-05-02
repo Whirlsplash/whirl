@@ -8,6 +8,7 @@ use std::error::Error;
 
 use structopt::clap::Shell;
 use whirl::{
+  api::API,
   cli::cli,
   config::Config,
   server::{
@@ -82,6 +83,9 @@ async fn run() -> Result<(), Box<dyn Error>> {
         RoomServer,
       )
       .await;
+    }),
+    tokio::spawn(async move {
+      let _ = API::listen();
     }),
   ];
   for thread in threads {
