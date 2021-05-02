@@ -48,4 +48,5 @@ tokio-stream = "0.1.5"
 sqlx = { version = "0.5.2", features = ["runtime-async-std-rustls", "sqlite", "macros", "migrate", "chrono", "time", "tls"] }
 
 # Web-server
-#actix-web = "3"
+rocket = "0.4.7"
+rocket_contrib = "0.4.7"
