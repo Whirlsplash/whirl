@@ -41,21 +41,22 @@ impl Creatable for Text {
   }
 }
 impl ParsableWithArguments for Text {
-  /// The first and only element of `args` *should* be the username of the sender.
+  /// The first and only element of `args` *should* be the username of the
+  /// sender.
   ///
-  /// There isn't anything currently stopping someone from passing some other value so that might be
-  /// annoying at times.
+  /// There isn't anything currently stopping someone from passing some other
+  /// value so that might be annoying at times.
   ///
-  /// Realistically, this method is mostly static so the username will *always* be passed properly
-  /// unless someone intentionally commits breaking changes on purpose regarding what is passed to
-  /// to this method where called.
+  /// Realistically, this method is mostly static so the username will *always*
+  /// be passed properly unless someone intentionally commits breaking changes
+  /// on purpose regarding what is passed to to this method where called.
   ///
-  /// It would be neat to have some sort of ability to statically check if the `args` argument
-  /// contains x number of elements at compile time or something of the sort but the Rust RFC is
-  /// probably not focused on that.
+  /// It would be neat to have some sort of ability to statically check if the
+  /// `args` argument contains x number of elements at compile time or
+  /// something of the sort but the Rust RFC is probably not focused on that.
   ///
-  /// So, right now, trust is in the developers' hands to make sure to pass the right -- number
-  /// -- of elements to `args`.
+  /// So, right now, trust is in the developers' hands to make sure to pass the
+  /// right -- number -- of elements to `args`.
   fn parse(data: Vec<u8>, args: &[&str]) -> Self {
     Self {
       sender:  args[0].to_string(),
