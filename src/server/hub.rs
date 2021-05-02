@@ -103,8 +103,8 @@ impl Server for Hub {
                   }.create()).await?;
                   trace!("sent buddy list notify to {}: {}", username, buddy.buddy);
                 }
+                // TODO: Figure out if this is actually even needed.
                 // ROOMIDRQ => {
-                //   // TODO: Figure out if this is actually even needed.
                 //   let room = RoomIdRequest::parse(msg.to_vec());
                 //   trace!("received room id request from {}: {}", username, room.room_name);
                 //   debug!("{:?}", create_room_id_request(&room.room_name, 0x00));
