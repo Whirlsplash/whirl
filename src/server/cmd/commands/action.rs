@@ -1,6 +1,11 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+// TODO: of2m-ify
+//  Of2m-ifying isn't much of a priority right now as the whole action ordeal hasn't been fully
+//  dissected yet.
+//  Once more is known about the inner working of actions, it will be of2m-ified.
+
 use bytes::{BufMut, BytesMut};
 
 pub fn create_action() -> Vec<u8> {
