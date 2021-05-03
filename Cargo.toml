@@ -54,5 +54,5 @@ rocket = "0.4.7"
 rocket_contrib = "0.4.7"
 
 [dev-dependencies]
-#diesel_cli = { version = "1.4.1", default-features = false, features = ["sqlite-bundled"] }
-#cargo-watch = "7.8.0" # Optional
+diesel_cli = { version = "1.4.1", default-features = false, features = ["sqlite-bundled"] }
+cargo-watch = "7.8.0" # Optional
