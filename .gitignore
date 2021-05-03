@@ -15,12 +15,12 @@ Cargo.lock
 
 # Development
 /src/_*.*
-/whirl.db
+/whirl.sqlite3
 /Whirl.toml
 
 # DB Browser
-/whirl.db-shm
-/whirl.db-wal
+/whirl.sqlite3-shm
+/whirl.sqlite3-wal
 
 # Wireshark
 *.pcapng

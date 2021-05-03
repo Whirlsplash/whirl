@@ -11,7 +11,7 @@ impl CLI {
     let matches = Self::cli().get_matches();
 
     Self::calc_log_level(&matches);
-    std::env::set_var("DATABASE_URL", "sqlite:whirl.db");
+    std::env::set_var("DATABASE_URL", "whirl.sqlite3");
 
     matches
   }

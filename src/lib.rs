@@ -9,11 +9,16 @@
   proc_macro_hygiene
 )]
 #![warn(rust_2018_idioms)]
+#![recursion_limit = "128"]
 
 #[macro_use]
 extern crate log;
 #[macro_use]
 extern crate rocket;
+#[macro_use]
+extern crate diesel;
+#[macro_use]
+extern crate serde_derive;
 
 pub mod cli;
 pub mod config;
