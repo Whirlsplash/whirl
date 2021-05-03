@@ -51,3 +51,7 @@ sqlx = { version = "0.5.2", features = ["runtime-async-std-rustls", "sqlite", "m
 # Web-server
 rocket = "0.4.7"
 rocket_contrib = "0.4.7"
+
+[dev-dependencies]
+sqlx-cli = "0.5.2"
+#cargo-watch = "7.8.0" # Optional
