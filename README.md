@@ -43,5 +43,12 @@ Use in production environments is not recommended as this project is a work-in-p
 ## Contributing
 Please reference the [contribution guidelines](./CONTRIBUTING.md) of this repository.
 
+## Prerequisites
+### Required
+- [sqlx-cli](https://crates.io/crates/sqlx-cli)
+
+### Optional
+- [cargo-watch](https://crates.io/crates/cargo-watch)
+
 ### License
 [GNU General Public License v3.0](./LICENSE)
