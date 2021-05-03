@@ -26,6 +26,7 @@ pretty_env_logger = "0.4.0"
 # Utility
 rand = "0.8.3"
 async-trait = "0.1.50"
+sysinfo = "0.17.2"
 
 # Byte Manipulation
 bytes = "1.0.1"
