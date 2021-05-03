@@ -17,6 +17,7 @@ extern crate rocket;
 
 pub mod cli;
 pub mod config;
+pub mod subs;
 
 pub mod api;
 pub mod db;
