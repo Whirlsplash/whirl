@@ -6,5 +6,5 @@ in
 pkgs.mkShell {
   buildInputs = with pkgs; [ niv rust ];
 
-  DATABASE_URL = "sqlite:whirl.db";
+  DATABASE_URL = "whirl.sqlite3";
 }

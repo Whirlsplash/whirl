@@ -46,12 +46,13 @@ tokio-util = { version = "0.6.6", features = ["codec"] }
 tokio-stream = "0.1.5"
 
 # Database
-sqlx = { version = "0.5.2", features = ["runtime-async-std-rustls", "sqlite", "macros", "migrate", "chrono", "time", "tls"] }
+libsqlite3-sys = { version = "0.9.1", features = ["bundled"] }
+diesel = { version = "1.4.6", features = ["sqlite"] }
 
 # Web-server
 rocket = "0.4.7"
 rocket_contrib = "0.4.7"
 
 [dev-dependencies]
-#sqlx-cli = "0.5.2"
+#diesel_cli = { version = "1.4.1", default-features = false, features = ["sqlite-bundled"] }
 #cargo-watch = "7.8.0" # Optional

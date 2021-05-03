@@ -45,7 +45,7 @@ Please reference the [contribution guidelines](./CONTRIBUTING.md) of this reposi
 
 ## Prerequisites
 ### Required
-- [sqlx-cli](https://crates.io/crates/sqlx-cli)
+- [diesel_cli](https://crates.io/crates/diesel_cli)
 
 ### Optional
 - [cargo-watch](https://crates.io/crates/cargo-watch)
