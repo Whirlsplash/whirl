@@ -7,12 +7,14 @@ use whirl::cli::CLI;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+  // Environment
   let matches = CLI::setup();
 
-  // Setup logging
+  // Logging
   dotenv::dotenv().ok();
   pretty_env_logger::init();
 
+  // Execution
   CLI::execute(matches).await;
 
   Ok(())
