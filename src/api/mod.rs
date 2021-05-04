@@ -3,8 +3,8 @@
 
 mod routes;
 
-pub struct API;
-impl API {
+pub struct Api;
+impl Api {
   pub fn listen() {
     let _ = rocket::ignite()
       .mount("/", routes![routes::index])
