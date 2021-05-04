@@ -7,6 +7,7 @@ use config::{ConfigError, File};
 pub struct WhirlsplashConfig {
   pub worldsmaster_username: String,
   pub log_level:             i64,
+  pub ip:                    String,
 }
 #[derive(Serialize, Deserialize, Debug)]
 pub struct DistributorConfig {
