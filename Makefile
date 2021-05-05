@@ -20,10 +20,15 @@ fmt:
 check:
 	cargo check
 
+clippy:
+	cargo clippy
+
 # -------------
 # | Executors |
 # -------------
 checkf: fmt check
+
+checkfc: fmt check clippy
 
 help: checkf
 	cargo run -- $(FLAGS) help $(ARGS)
