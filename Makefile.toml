@@ -1,0 +1,55 @@
+# -------------
+# | Variables |
+# -------------
+[env]
+# This variable will vary depending on where you installed Worlds, ideally, you
+# should know the correct value for your own system.
+#
+# If you DON'T know the correct value, DO NOT file an issue on GitHub, ask
+# someone within the Whirlsplash Discord server;
+# https://discord.com/invite/8hn6padWF6.
+#
+# See line 49!
+WORLDS_PATH = "C:\\Program Files (x86)\\Worlds Inc\\WorldsPlayer - Win7\\WorldsPlayer.exe"
+
+# ------------
+# | Wrappers |
+# ------------
+[tasks.fmt]
+command = "cargo"
+args = ["fmt"]
+
+[tasks.check]
+command = "cargo"
+args = ["check"]
+
+[tasks.clippy]
+command = "cargo"
+args = ["clippy"]
+
+# -------------
+# | Executors |
+# -------------
+[tasks.checkf]
+dependencies = ["fmt", "check"]
+
+[tasks.checkfc]
+dependencies = ["fmt", "check", "clippy"]
+
+[tasks.help]
+dependencies = ["checkf"]
+command = "cargo"
+args = ["run", "--", "help"]
+
+[tasks.run]
+dependencies = ["checkf"]
+command = "cargo"
+args = ["run", "--", "run"]
+
+# This task also depends on your system configuration, same goes as read above.
+[tasks.start_client]
+command = "gsudo"
+args = ["${WORLDS_PATH}"]
+
+[tasks.runc]
+dependencies = ["start_client", "run"]
