@@ -25,3 +25,10 @@ pub fn builtin_echo(args: &[String]) -> i32 {
   println!("{}", args.join(" "));
   0
 }
+
+pub fn builtin_history(history: Vec<String>) -> i32 {
+  for cmd in history {
+    println!("{}", cmd.trim());
+  }
+  0
+}
