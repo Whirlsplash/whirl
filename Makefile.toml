@@ -53,3 +53,10 @@ args = ["${WORLDS_PATH}"]
 
 [tasks.runc]
 dependencies = ["start_client", "run"]
+
+[tasks.runw]
+env = { "DISABLE_PROMPT" = true }
+dependencies = ["checkf"]
+command = "cargo"
+args = ["run", "--", "run"]
+watch = true
