@@ -5,8 +5,8 @@ use structopt::clap::{App, AppSettings, Arg, ArgMatches, Shell, SubCommand};
 
 use crate::{config::Config, subs::run};
 
-pub struct CLI;
-impl CLI {
+pub struct Cli;
+impl Cli {
   pub fn setup() -> ArgMatches<'static> {
     let matches = Self::cli().get_matches();
 

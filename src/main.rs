@@ -3,19 +3,19 @@
 
 use std::error::Error;
 
-use whirl::cli::CLI;
+use whirl::cli::Cli;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
   // Environment
-  let matches = CLI::setup();
+  let matches = Cli::setup();
 
   // Logging
   dotenv::dotenv().ok();
   pretty_env_logger::init();
 
   // Execution
-  CLI::execute(matches).await;
+  Cli::execute(matches).await;
 
   Ok(())
 }
