@@ -9,7 +9,7 @@ use std::{io, io::Write, str::FromStr};
 use crate::{
   config::Config,
   prompt::{
-    builtins::{builtin_echo, builtin_history, BuiltIn},
+    builtins::{builtin_echo, builtin_help, builtin_history, BuiltIn},
     structure::Command,
   },
 };
@@ -43,7 +43,11 @@ impl Prompt {
       .read_line(&mut input)
       .expect("failed to read command from stdin");
 
-    self.history.push(input.clone());
+    if input.len() > 2 {
+      self.history.push(input.clone());
+    } else {
+      input = "null".to_string();
+    }
 
     input
   }
@@ -64,8 +68,10 @@ impl Prompt {
       Ok(BuiltIn::Echo) => builtin_echo(&c.args),
       Ok(BuiltIn::Exit) => std::process::exit(0),
       Ok(BuiltIn::History) => builtin_history(history),
+      Ok(BuiltIn::Null) => 0,
+      Ok(BuiltIn::Help) => builtin_help(),
       _ => {
-        println!("{}: command not found", &c.keyword);
+        println!("wsh: command not found: {}", &c.keyword);
         1
       }
     }
