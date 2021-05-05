@@ -18,7 +18,7 @@ impl Cli {
 
   pub async fn execute(matches: ArgMatches<'_>) {
     if matches.is_present("run") {
-      run().await.unwrap();
+      run().await;
     } else if let Some(cmd) = matches.subcommand_matches("config") {
       if cmd.is_present("show") {
         println!("{:#?}", Config::get().unwrap());
