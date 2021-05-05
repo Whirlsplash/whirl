@@ -6,9 +6,12 @@ mod structure;
 
 use std::{io, io::Write, str::FromStr};
 
-use crate::prompt::{
-  builtins::{builtin_echo, builtin_history, BuiltIn},
-  structure::Command,
+use crate::{
+  config::Config,
+  prompt::{
+    builtins::{builtin_echo, builtin_history, BuiltIn},
+    structure::Command,
+  },
 };
 
 pub struct Prompt {
@@ -30,7 +33,7 @@ impl Prompt {
   }
 
   fn write_prompt() {
-    print!("> ");
+    print!("{} ", Config::get().unwrap().whirlsplash.prompt_ps1);
     io::stdout().flush().unwrap();
   }
 
