@@ -1,11 +1,10 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use std::error::Error;
-
 use crate::{
   api::Api,
   config::Config,
+  prompt::Prompt,
   server::{
     distributor::Distributor,
     hub::Hub,
@@ -16,8 +15,8 @@ use crate::{
   },
 };
 
-pub async fn run() -> Result<(), Box<dyn Error>> {
-  let threads = vec![
+pub async fn run() -> ! {
+  let _threads = vec![
     tokio::spawn(async move {
       let _ = Distributor::listen(
         &*format!("0.0.0.0:{}", Config::get().unwrap().distributor.port),
@@ -36,9 +35,10 @@ pub async fn run() -> Result<(), Box<dyn Error>> {
       let _ = Api::listen();
     }),
   ];
-  for thread in threads {
-    let _ = thread.await;
-  }
 
-  Ok(())
+  std::thread::sleep(std::time::Duration::from_secs(2));
+  loop {
+    // TODO: Find a way to keep this persistent on the bottom row.
+    Prompt::handle();
+  }
 }
