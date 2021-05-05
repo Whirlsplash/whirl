@@ -8,6 +8,7 @@ pub struct WhirlsplashConfig {
   pub worldsmaster_username: String,
   pub log_level:             i64,
   pub ip:                    String,
+  pub prompt_ps1:            String,
 }
 #[derive(Serialize, Deserialize, Debug)]
 pub struct DistributorConfig {
