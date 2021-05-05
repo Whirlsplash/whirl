@@ -1,6 +1,7 @@
 [whirlsplash]
 worldsmaster_username = "WORLDSMASTER" # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
 log_level = 1 # Generally, you should only change this if you are expiriencing issues
+ip = "0.0.0.0" # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
 
 [distributor]
 worldsmaster_greeting = "Welcome to Whirlsplash!"
