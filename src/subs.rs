@@ -4,7 +4,7 @@
 use std::error::Error;
 
 use crate::{
-  api::API,
+  api::Api,
   config::Config,
   server::{
     distributor::Distributor,
@@ -33,7 +33,7 @@ pub async fn run() -> Result<(), Box<dyn Error>> {
       .await;
     }),
     tokio::spawn(async move {
-      let _ = API::listen();
+      let _ = Api::listen();
     }),
   ];
   for thread in threads {
