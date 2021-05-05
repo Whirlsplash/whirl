@@ -7,15 +7,26 @@ mod structure;
 use std::{io, io::Write, str::FromStr};
 
 use crate::prompt::{
-  builtins::{builtin_echo, BuiltIn},
+  builtins::{builtin_echo, builtin_history, BuiltIn},
   structure::Command,
 };
 
-pub struct Prompt;
+pub struct Prompt {
+  history: Vec<String>,
+}
 impl Prompt {
-  pub fn handle() {
-    Prompt::write_prompt();
-    Prompt::process_command(Prompt::tokenize_command(Prompt::read_command()));
+  pub fn handle() -> ! {
+    let mut prompt = Prompt {
+      history: vec![]
+    };
+
+    loop {
+      Prompt::write_prompt();
+      Prompt::process_command(
+        Prompt::tokenize_command(prompt.read_command()),
+        prompt.history.clone(),
+      );
+    }
   }
 
   fn write_prompt() {
@@ -23,11 +34,13 @@ impl Prompt {
     io::stdout().flush().unwrap();
   }
 
-  fn read_command() -> String {
+  fn read_command(&mut self) -> String {
     let mut input = String::new();
     io::stdin()
       .read_line(&mut input)
       .expect("failed to read command from stdin");
+
+    self.history.push(input.clone());
 
     input
   }
@@ -41,10 +54,13 @@ impl Prompt {
     }
   }
 
-  fn process_command(c: Command) -> i32 {
+  // TODO: Find a way to make this access itself `history` doesn't have to be
+  // passed everytime.
+  fn process_command(c: Command, history: Vec<String>) -> i32 {
     match BuiltIn::from_str(&c.keyword) {
       Ok(BuiltIn::Echo) => builtin_echo(&c.args),
       Ok(BuiltIn::Exit) => std::process::exit(0),
+      Ok(BuiltIn::History) => builtin_history(history),
       _ => {
         println!("{}: command not found", &c.keyword);
         1

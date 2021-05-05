@@ -37,8 +37,5 @@ pub async fn run() -> ! {
   ];
 
   std::thread::sleep(std::time::Duration::from_secs(2));
-  loop {
-    // TODO: Find a way to keep this persistent on the bottom row.
-    Prompt::handle();
-  }
+  Prompt::handle();
 }
