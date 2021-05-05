@@ -7,6 +7,8 @@ pub enum BuiltIn {
   Echo,
   History,
   Exit,
+  Null,
+  Help,
 }
 impl FromStr for BuiltIn {
   type Err = ();
@@ -16,6 +18,8 @@ impl FromStr for BuiltIn {
       "echo" => Ok(BuiltIn::Echo),
       "history" => Ok(BuiltIn::History),
       "exit" => Ok(BuiltIn::Exit),
+      "null" => Ok(BuiltIn::Null),
+      "help" => Ok(BuiltIn::Help),
       _ => Err(()),
     }
   }
@@ -27,8 +31,18 @@ pub fn builtin_echo(args: &[String]) -> i32 {
 }
 
 pub fn builtin_history(history: Vec<String>) -> i32 {
-  for cmd in history {
-    println!("{}", cmd.trim());
+  let mut index = 0;
+  for cmd in &history {
+    index += 1;
+    println!("{}  {}", index, cmd.trim());
   }
+  0
+}
+
+pub fn builtin_help() -> i32 {
+  println!(
+    "echo    - display a line of text\nhistory - manipulate the history list\nexit    - end the \
+     application"
+  );
   0
 }
