@@ -9,7 +9,7 @@ use diesel::prelude::*;
 // use crate::db::models::*;
 
 pub fn establish_connection() -> SqliteConnection {
-  let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+  let database_url = std::env::var("DATABASE_URL").unwrap_or_else(|_| "whirl.sqlite3".to_string());
   SqliteConnection::establish(&database_url)
     .unwrap_or_else(|_| panic!("error connecting to {}", database_url))
 }

@@ -60,3 +60,26 @@ dependencies = ["checkf"]
 command = "cargo"
 args = ["run", "--", "run"]
 watch = true
+
+[tasks.docker_build]
+command = "nix-build"
+args = ["docker.nix"]
+
+[tasks.docker_load]
+command = "docker"
+args = ["load", "<", "result"]
+
+[tasks.docker_run]
+command = "docker"
+args = [
+  "run",
+  "--name", "Whirlsplash",
+  #     Distributor        Hub                API
+  "-p", "6650:6650", "-p", "5673:5673", "-p", "8000:8000",
+  "whirlsplash/whirl"
+]
+
+# Build 'n' load
+[tasks.bnl]
+dependencies = ["docker_build", "docker_load"]
+

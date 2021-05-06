@@ -34,5 +34,34 @@ impl Config {
     s.try_into()
   }
 
-  pub fn get() -> Result<Self, ConfigError> { Self::load() }
+  pub fn get() -> Config {
+    return if let Err(why) = Self::load() {
+      error!(
+        "unable to load configuration file, reverting to default: {}",
+        why
+      );
+      Self::default()
+    } else {
+      Self::load().unwrap()
+    };
+  }
+}
+impl Default for Config {
+  fn default() -> Self {
+    Config {
+      whirlsplash: WhirlsplashConfig {
+        worldsmaster_username: "WORLDSMASTER".to_string(),
+        log_level:             1,
+        ip:                    "0.0.0.0".to_string(),
+        prompt_ps1:            "[WORLDSMASTER@Whirlsplash ~]$".to_string(),
+      },
+      distributor: DistributorConfig {
+        worldsmaster_greeting: "Welcome to Whirlsplash!".to_string(),
+        port:                  6650,
+      },
+      hub:         HubConfig {
+        port: 5673
+      },
+    }
+  }
 }

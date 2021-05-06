@@ -17,17 +17,13 @@ pub async fn run() -> ! {
   let _threads = vec![
     tokio::spawn(async move {
       let _ = Distributor::listen(
-        &*format!("0.0.0.0:{}", Config::get().unwrap().distributor.port),
+        &*format!("0.0.0.0:{}", Config::get().distributor.port),
         AutoServer,
       )
       .await;
     }),
     tokio::spawn(async move {
-      let _ = Hub::listen(
-        &*format!("0.0.0.0:{}", Config::get().unwrap().hub.port),
-        RoomServer,
-      )
-      .await;
+      let _ = Hub::listen(&*format!("0.0.0.0:{}", Config::get().hub.port), RoomServer).await;
     }),
     tokio::spawn(async move {
       let _ = Api::listen();

@@ -88,8 +88,8 @@ impl Server for Hub {
 
                   peer.bytes.get_mut()
                     .write_all(&Text {
-                    sender: Config::get()?.whirlsplash.worldsmaster_username,
-                    content: Config::get()?.distributor.worldsmaster_greeting,
+                    sender: Config::get().whirlsplash.worldsmaster_username,
+                    content: Config::get().distributor.worldsmaster_greeting,
                   }.create()).await?;
                   peer.bytes.get_mut()
                     .write_all(&create_action()).await?;
