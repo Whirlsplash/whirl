@@ -7,15 +7,18 @@ let
   whirl = callPackage ./default.nix { };
 
   dockerImage = pkg:
-    pkgs.dockerTools.buildLayeredImage {
+    pkgs.dockerTools.buildImage {
       name = "Whirlsplash/whirl";
       tag = "latest";
 
-#      fromImage = pkgs.dockerTools.buildImage {
-#        name = "bash";
-#        tag = "latest";
-#        contents = pkgs.bashInteractive;
-#      };
+      fromImage = pkgs.dockerTools.pullImage {
+        imageName = "alpine";
+        imageDigest = "sha256:def822f9851ca422481ec6fee59a9966f12b351c62ccb9aca841526ffaa9f748";
+        # https://nixos.wiki/wiki/Docker
+        sha256 = "1z6fh6ry14m5cpcjfg88vn2m36garmgdagr4vfc3pm1z3kph639n";
+        finalImageTag = "alpine";
+        finalImageName = "3.13.5";
+      };
 
       contents = [ pkg ];
 

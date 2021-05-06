@@ -74,8 +74,8 @@ command = "docker"
 args = [
   "run",
   "--name", "Whirlsplash",
-  #     Distributor        Hub                API
-  "-p", "6650:6650", "-p", "5673:5673", "-p", "8000:8000",
+  #     API                Distributor        Hub
+  "-p", "8000:8000", "-p", "6650:6650", "-p", "5673:5673",
   "whirlsplash/whirl"
 ]
 
