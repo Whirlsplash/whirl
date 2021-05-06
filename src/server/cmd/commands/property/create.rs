@@ -59,7 +59,7 @@ pub fn create_property_update_as_distributor() -> Vec<u8> {
       },
       NetworkProperty {
         prop_id: VAR_APPNAME,
-        value:   Config::get().unwrap().whirlsplash.worldsmaster_username,
+        value:   Config::get().whirlsplash.worldsmaster_username,
       },
     ],
   )
@@ -100,7 +100,7 @@ pub fn create_property_update_as_hub() -> Vec<u8> {
       },
       NetworkProperty {
         prop_id: VAR_APPNAME,
-        value:   Config::get().unwrap().whirlsplash.worldsmaster_username,
+        value:   Config::get().whirlsplash.worldsmaster_username,
       },
     ],
   )
@@ -117,7 +117,7 @@ pub fn create_property_request_as_distributor() -> Vec<u8> {
       },
       NetworkProperty {
         prop_id: VAR_APPNAME,
-        value:   Config::get().unwrap().whirlsplash.worldsmaster_username,
+        value:   Config::get().whirlsplash.worldsmaster_username,
       },
       NetworkProperty {
         prop_id: VAR_PROTOCOL,

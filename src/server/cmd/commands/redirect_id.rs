@@ -29,10 +29,10 @@ impl Creatable for RedirectId {
     command.put_u16(self.room_number as u16); // Room ID
 
     // IP
-    for byte in Config::get().unwrap().whirlsplash.ip.split('.') {
+    for byte in Config::get().whirlsplash.ip.split('.') {
       command.put_u8(byte.parse::<u8>().unwrap());
     }
-    command.put_u16(Config::get().unwrap().hub.port as u16); // Port
+    command.put_u16(Config::get().hub.port as u16); // Port
 
     // Length
     let mut command_as_vec = command.to_vec();
