@@ -14,7 +14,10 @@ pub fn establish_connection() -> SqliteConnection {
     .unwrap_or_else(|_| panic!("error connecting to {}", database_url))
 }
 
+/// Only works if you have a valid database already setup!
+#[cfg(test)]
 #[test]
+#[ignore]
 pub fn show_serials() {
   use crate::db::{models::SerialNumber, schema::serial_numbers::dsl::*};
 
