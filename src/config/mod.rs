@@ -37,7 +37,7 @@ impl Config {
   pub fn get() -> Config {
     return if let Err(why) = Self::load() {
       error!(
-        "unable to load configuration file, reverting to default: {}",
+        "unable to load configuration file, reverting to default value: {}",
         why
       );
       Self::default()
