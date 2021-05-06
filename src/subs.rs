@@ -36,7 +36,7 @@ pub async fn run() -> ! {
     }),
   ];
 
-  if std::env::var("DISABLE_PROMPT").unwrap_or("false".to_string()) == "true" {
+  if std::env::var("DISABLE_PROMPT").unwrap_or_else(|_| "false".to_string()) == "true" {
     info!("starting with prompt disabled");
     loop {
       std::thread::sleep(std::time::Duration::default());
