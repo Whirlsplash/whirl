@@ -66,8 +66,10 @@ command = "nix-build"
 args = ["docker.nix"]
 
 [tasks.docker-load]
-command = "docker"
-args = ["load", "<", "result"]
+script_runner = "@shell"
+script = '''
+docker load < result
+'''
 
 [tasks.docker-run]
 command = "docker"
