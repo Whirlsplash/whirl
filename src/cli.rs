@@ -21,7 +21,7 @@ impl Cli {
       run().await;
     } else if let Some(cmd) = matches.subcommand_matches("config") {
       if cmd.is_present("show") {
-        println!("{:#?}", Config::get().unwrap());
+        println!("{:#?}", Config::get());
       }
     } else if let Some(shell) = matches.subcommand_matches("completions") {
       if shell.is_present("powershell") {
@@ -41,10 +41,10 @@ impl Cli {
 
   fn calc_log_level(matches: &ArgMatches<'_>) {
     let mut log_level = "whirl=error,whirl=warn,whirl=trace".to_string();
-    if matches.is_present("debug") || Config::get().unwrap().whirlsplash.log_level >= 2 {
+    if matches.is_present("debug") || Config::get().whirlsplash.log_level >= 2 {
       log_level += ",whirl=debug";
     }
-    if matches.is_present("trace") || Config::get().unwrap().whirlsplash.log_level >= 3 {
+    if matches.is_present("trace") || Config::get().whirlsplash.log_level >= 3 {
       log_level += ",whirl=trace";
     }
     std::env::set_var("RUST_LOG", log_level);

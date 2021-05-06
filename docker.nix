@@ -11,12 +11,18 @@ let
       name = "Whirlsplash/whirl";
       tag = "latest";
 
+#      fromImage = pkgs.dockerTools.buildImage {
+#        name = "bash";
+#        tag = "latest";
+#        contents = pkgs.bashInteractive;
+#      };
+
       contents = [ pkg ];
 
       config = {
-        Cmd = [ "/bin/whirl" ];
+        Cmd = [ "/bin/whirl" "run" ];
         WorkingDir = "/";
-        Env = [ ];
+        Env = [ "DATABASE_URl=whirl.sqlite3" "DISABLE_PROMPT=true" ];
       };
     };
 
