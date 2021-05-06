@@ -29,7 +29,7 @@ let
       contents = [ pkg ];
 
       config = {
-        Cmd = [ "/bin/whirl" "run" ];
+        Cmd = [ "run" ];
         WorkingDir = "/";
         Env = [ "DATABASE_URl=whirl.sqlite3" "DISABLE_PROMPT=true" ];
         ExposedPorts = {
@@ -37,6 +37,7 @@ let
           "6659/tcp" = { }; # Distributor
           "5673/tcp" = { }; # Hub
         };
+        EntryPoint = [ "/bin/whirl" ];
       };
     };
 
