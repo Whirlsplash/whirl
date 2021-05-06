@@ -10,6 +10,7 @@ let
     pkgs.dockerTools.buildImage {
       name = "Whirlsplash/whirl";
       tag = "latest";
+      created = "now";
 
       fromImage = pkgs.dockerTools.pullImage {
         imageName = "alpine";
