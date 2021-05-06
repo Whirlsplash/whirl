@@ -34,7 +34,7 @@ let
         Env = [ "DATABASE_URl=whirl.sqlite3" "DISABLE_PROMPT=true" ];
         ExposedPorts = {
           "8000/tcp" = { }; # API
-          "6659/tcp" = { }; # Distributor
+          "6650/tcp" = { }; # Distributor
           "5673/tcp" = { }; # Hub
         };
         EntryPoint = [ "/bin/whirl" ];
