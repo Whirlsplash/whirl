@@ -32,6 +32,11 @@ let
         Cmd = [ "/bin/whirl" "run" ];
         WorkingDir = "/";
         Env = [ "DATABASE_URl=whirl.sqlite3" "DISABLE_PROMPT=true" ];
+        ExposedPorts = {
+          "8000/tcp" = { }; # API
+          "6659/tcp" = { }; # Distributor
+          "5673/tcp" = { }; # Hub
+        };
       };
     };
 
