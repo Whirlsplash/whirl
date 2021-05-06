@@ -47,12 +47,12 @@ command = "cargo"
 args = ["run", "--", "run"]
 
 # This task also depends on your system configuration, same goes as read above.
-[tasks.start_client]
+[tasks.start-client]
 command = "gsudo"
 args = ["${WORLDS_PATH}"]
 
 [tasks.runc]
-dependencies = ["start_client", "run"]
+dependencies = ["start-client", "run"]
 
 [tasks.runw]
 env = { "DISABLE_PROMPT" = true }
@@ -61,15 +61,15 @@ command = "cargo"
 args = ["run", "--", "run"]
 watch = true
 
-[tasks.docker_build]
+[tasks.docker-build]
 command = "nix-build"
 args = ["docker.nix"]
 
-[tasks.docker_load]
+[tasks.docker-load]
 command = "docker"
 args = ["load", "<", "result"]
 
-[tasks.docker_run]
+[tasks.docker-run]
 command = "docker"
 args = [
   "run",
@@ -81,5 +81,5 @@ args = [
 
 # Build 'n' load
 [tasks.bnl]
-dependencies = ["docker_build", "docker_load"]
+dependencies = ["docker-build", "docker-load"]
 
