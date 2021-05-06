@@ -1,20 +1,47 @@
-{ system ? builtins.currentSystem }:
+{ sources ? import ./nix/sources.nix, pkgs ? import sources.nixpkgs { } }:
+with pkgs;
 
 let
-  sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs { };
-  whirl = import ./whirl.nix { inherit sources pkgs; };
+  rust = pkgs.callPackage ./nix/rust.nix { };
 
-  name = "Whirlsplash/whirl";
-  tag = "latest";
+  srcNoTarget = dir:
+    builtins.filterSource
+      (path: type: type != "directory" || builtins.baseNameOf path != "target")
+      dir;
 
-in pkgs.dockerTools.buildLayeredImage {
-  inherit name tag;
-  contents = [ whirl ];
-
-  config = {
-    Cmd = [ "/bin/whirl" ];
-    Env = [ ];
-    WorkingDir = "/";
+  naersk = pkgs.callPackage sources.naersk {
+    rustc = rust;
+    cargo = rust;
   };
+  dhallpkgs = import sources.easy-dhall-nix { inherit pkgs; };
+  src = srcNoTarget ./.;
+
+  whirl = naersk.buildPackage {
+    inherit src;
+    doCheck = true;
+    buildInputs = [ ];
+    remapPathPrefix = true;
+  };
+
+  config = stdenv.mkDerivation {
+    pname = "whirl-config";
+    version = "HEAD";
+    buildInputs = [ dhallpkgs.dhall-simple ];
+
+#    phases = "installPhase";
+#
+#    installPhase = ''
+#    '';
+  };
+
+in pkgs.stdenv.mkDerivation {
+  inherit (whirl) name;
+  inherit src;
+  phases = "installPhase";
+
+  installPhase = ''
+    mkdir -p $out $out/bin
+
+    cp -rf ${whirl}/bin/whirl $out/bin/whirl
+  '';
 }
