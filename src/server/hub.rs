@@ -35,7 +35,7 @@ use crate::{
     interaction::{peer::Peer, shared::Shared},
     net::{constants::VAR_USERNAME, property_parser::parse_network_property},
     packet_parser::parse_commands_from_packet,
-    server::Server,
+    Server,
   },
 };
 
