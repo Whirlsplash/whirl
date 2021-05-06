@@ -8,10 +8,8 @@ use crate::{
   server::{
     distributor::Distributor,
     hub::Hub,
-    server::{
-      Server,
-      ServerType::{AutoServer, RoomServer},
-    },
+    Server,
+    ServerType::{AutoServer, RoomServer},
   },
 };
 
