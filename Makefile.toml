@@ -18,14 +18,17 @@ WORLDS_PATH = "C:\\Program Files (x86)\\Worlds Inc\\WorldsPlayer - Win7\\WorldsP
 [tasks.fmt]
 command = "cargo"
 args = ["fmt"]
+private = true
 
 [tasks.check]
 command = "cargo"
 args = ["check"]
+private = true
 
 [tasks.clippy]
 command = "cargo"
 args = ["clippy"]
+private = true
 
 # -------------
 # | Executors |
