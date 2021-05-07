@@ -33,8 +33,8 @@ pub fn builtin_echo(args: &[String]) -> i32 {
 pub fn builtin_history(history: Vec<String>) -> i32 {
   let mut index = 0;
   for cmd in &history {
-    index += 1;
     println!("{}  {}", index, cmd.trim());
+    index += 1;
   }
   0
 }
