@@ -84,6 +84,18 @@ args = [
   "whirlsplash/whirl"
 ]
 
+[tasks.docker-run-i]
+command = "docker"
+args = [
+  "run",
+  "-it",
+  "--name", "Whirlsplash",
+  #     API                Distributor        Hub
+  "-p", "8000:8000", "-p", "6650:6650", "-p", "5673:5673",
+  "--env", "DISABLE_PROMPT=false",
+  "whirlsplash/whirl"
+]
+
 # Build 'n' load
 [tasks.bnl]
 dependencies = ["docker-build", "docker-load"]
