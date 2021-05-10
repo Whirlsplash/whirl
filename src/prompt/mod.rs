@@ -33,7 +33,7 @@ impl Prompt {
   }
 
   fn write_prompt() {
-    print!("{} ", Config::get().whirlsplash.prompt_ps1);
+    print!("{} ", Config::get().whirlsplash.prompt.ps1);
     io::stdout().flush().unwrap();
   }
 

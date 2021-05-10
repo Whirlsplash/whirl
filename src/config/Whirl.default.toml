@@ -2,11 +2,11 @@
 worldsmaster_username = "WORLDSMASTER" # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
 log_level = 1 # Generally, you should only change this if you are experiencing issues
 ip = "0.0.0.0" # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
-prompt_ps1 = "[WORLDSMASTER@Whirlsplash ~]$"
 api.port = 8080
 
 [whirlsplash.prompt]
 enable = false
+ps1 = "[WORLDSMASTER@Whirlsplash ~]$"
 
 [distributor]
 worldsmaster_greeting = "Welcome to Whirlsplash!"
