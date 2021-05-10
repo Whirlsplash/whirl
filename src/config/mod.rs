@@ -8,7 +8,6 @@ pub struct WhirlsplashConfig {
   pub worldsmaster_username: String,
   pub log_level:             i64,
   pub ip:                    String,
-  pub prompt_ps1:            String,
   pub api:                   WhirlsplashApiConfig,
   pub prompt:                WhirlsplashPromptConfig,
 }
@@ -19,6 +18,7 @@ pub struct WhirlsplashApiConfig {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct WhirlsplashPromptConfig {
   pub enable: bool,
+  pub ps1:    String,
 }
 #[derive(Serialize, Deserialize, Debug)]
 pub struct DistributorConfig {
@@ -63,12 +63,12 @@ impl Default for Config {
         worldsmaster_username: "WORLDSMASTER".to_string(),
         log_level:             1,
         ip:                    "0.0.0.0".to_string(),
-        prompt_ps1:            "[WORLDSMASTER@Whirlsplash ~]$".to_string(),
         api:                   WhirlsplashApiConfig {
           port: 80
         },
         prompt:                WhirlsplashPromptConfig {
-          enable: false
+          enable: false,
+          ps1:    "[WORLDSMASTER@Whirlsplash ~]$".to_string(),
         },
       },
       distributor: DistributorConfig {
