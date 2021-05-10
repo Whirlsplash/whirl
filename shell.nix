@@ -9,6 +9,9 @@ in pkgs.mkShell {
   buildInputs = with pkgs; [
     # Rust
     rust
+    cargo-make
+    diesel-cli
+    cargo-watch
 
     # Dhall
     dhall
