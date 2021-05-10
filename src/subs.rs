@@ -14,6 +14,8 @@ use crate::{
 };
 
 pub async fn run() -> ! {
+  let (tx, _rx) = std::sync::mpsc::channel();
+
   let _threads = vec![
     tokio::spawn(async move {
       let _ = Distributor::listen(
@@ -26,7 +28,11 @@ pub async fn run() -> ! {
       let _ = Hub::listen(&*format!("0.0.0.0:{}", Config::get().hub.port), RoomServer).await;
     }),
     tokio::spawn(async move {
-      let _ = Api::listen();
+      let _ = Api::listen(
+        tx,
+        &*format!("0.0.0.0:{}", Config::get().whirlsplash.api.port),
+      )
+      .await;
     }),
   ];
 
@@ -39,4 +45,6 @@ pub async fn run() -> ! {
     std::thread::sleep(std::time::Duration::from_secs(2));
     Prompt::handle();
   }
+
+  // actix_web::rt::System::new("").block_on(rx.recv().unwrap().stop(true));
 }

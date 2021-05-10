@@ -9,6 +9,11 @@ pub struct WhirlsplashConfig {
   pub log_level:             i64,
   pub ip:                    String,
   pub prompt_ps1:            String,
+  pub api:                   WhirlsplashApiConfig,
+}
+#[derive(Serialize, Deserialize, Debug)]
+pub struct WhirlsplashApiConfig {
+  pub port: i64,
 }
 #[derive(Serialize, Deserialize, Debug)]
 pub struct DistributorConfig {
@@ -54,6 +59,9 @@ impl Default for Config {
         log_level:             1,
         ip:                    "0.0.0.0".to_string(),
         prompt_ps1:            "[WORLDSMASTER@Whirlsplash ~]$".to_string(),
+        api:                   WhirlsplashApiConfig {
+          port: 80
+        },
       },
       distributor: DistributorConfig {
         worldsmaster_greeting: "Welcome to Whirlsplash!".to_string(),
