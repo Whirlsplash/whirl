@@ -5,6 +5,9 @@ ip = "0.0.0.0" # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
 prompt_ps1 = "[WORLDSMASTER@Whirlsplash ~]$"
 api.port = 8080
 
+[whirlsplash.prompt]
+enable = false
+
 [distributor]
 worldsmaster_greeting = "Welcome to Whirlsplash!"
 port = 6650 # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
