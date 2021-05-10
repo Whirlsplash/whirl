@@ -100,3 +100,18 @@ args = [
 [tasks.bnl]
 dependencies = ["docker-build", "docker-load"]
 
+[tasks.ask-discord-token]
+script = '''
+#!@duckscript
+
+echo github token:
+github_token = read
+
+echo set ${github_token} as the current github token
+set_env GITHUB_TOKEN ${github_token}
+'''
+
+[tasks.act]
+dependencies = ["ask-discord-token"]
+command = "act"
+args = ["-s", "GITHUB_TOKEN=${GITHUB_TOKEN}"]

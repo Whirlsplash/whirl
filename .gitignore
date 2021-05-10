@@ -17,6 +17,7 @@ Cargo.lock
 /src/_*.*
 /whirl.sqlite3
 /Whirl.toml
+/.secrets
 
 # DB Browser
 /whirl.sqlite3-shm
