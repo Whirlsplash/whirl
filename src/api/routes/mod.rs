@@ -2,6 +2,3 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 pub mod stats;
-
-#[get("/")]
-pub fn index() -> &'static str { "Whirlsplash" }

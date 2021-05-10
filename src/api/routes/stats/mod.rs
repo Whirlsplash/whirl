@@ -3,7 +3,7 @@
 
 pub mod structures;
 
-use rocket_contrib::json::Json;
+use actix_web::HttpResponse;
 use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
 
 use crate::{
@@ -13,24 +13,23 @@ use crate::{
 
 // This is mostly for developmental testing, it consumes more CPU than it's
 // worth.
-#[get("/statistics")]
-pub fn statistics() -> Json<Statistics> {
+pub fn statistics() -> HttpResponse {
   let mut sys = System::new_all();
   sys.refresh_all();
 
   let process = sys.get_process(get_current_pid().unwrap()).unwrap();
 
-  Json(Statistics {
+  HttpResponse::Ok().json(Statistics {
     system:  StatisticsSystem {
       os_type: sys.get_name().unwrap(),
       release: sys.get_kernel_version().unwrap(),
       uptime:  seconds_to_hrtime(sysinfo::System::new().get_uptime() as usize),
     },
     process: StatisticsProcess {
-      memory_usage: (process.memory() / 1000).to_string(),
       // (process.cpu_usage() * 100.0).round() / 100.0
+      memory_usage: (process.memory() / 1000).to_string(),
       cpu_usage:    (process.cpu_usage() / sys.get_processors().len() as f32).to_string(),
-      // uptime:       seconds_to_hrtime((sys.get_uptime() - process.start_time()) as usize),
+      // uptime: seconds_to_hrtime((sys.get_uptime() - process.start_time()) as usize),
     },
   })
 }
