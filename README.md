@@ -51,5 +51,8 @@ Please reference the [contribution guidelines](./CONTRIBUTING.md) of this reposi
 ### Optional
 - [cargo-watch](https://crates.io/crates/cargo-watch)
 
+*These development dependencies will automatically be satisfied if you are using the Nix
+shell configuration as provided.*
+
 ### License
 [GNU General Public License v3.0](./LICENSE)
