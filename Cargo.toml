@@ -52,7 +52,3 @@ diesel = { version = "1.4.6", features = ["sqlite"] }
 # Web-server
 actix-web = { version = "3.3.2", features = ["rustls"] }
 actix-cors = "0.5.4"
-
-#[dev-dependencies]
-#diesel_cli = { version = "1.4.1", default-features = false, features = ["sqlite-bundled"] }
-#cargo-watch = "7.8.0" # Optional
