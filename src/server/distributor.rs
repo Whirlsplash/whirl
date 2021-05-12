@@ -43,7 +43,7 @@ use crate::{
 };
 
 pub struct Distributor;
-#[async_trait::async_trait]
+#[async_trait]
 impl Server for Distributor {
   async fn handle(
     state: Arc<Mutex<Shared>>,

@@ -32,7 +32,7 @@ impl fmt::Display for ServerType {
   fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result { write!(f, "{:?}", self) }
 }
 
-#[async_trait::async_trait]
+#[async_trait]
 pub trait Server {
   async fn listen(address: &str, server_type: ServerType) -> Result<(), Box<dyn Error>> {
     let listener = TcpListener::bind(address).await?;

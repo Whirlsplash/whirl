@@ -40,7 +40,7 @@ use crate::{
 };
 
 pub struct Hub;
-#[async_trait::async_trait]
+#[async_trait]
 impl Server for Hub {
   async fn handle(
     state: Arc<Mutex<Shared>>,
