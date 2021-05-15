@@ -6,10 +6,10 @@ use config::{ConfigError, File};
 #[derive(Serialize, Deserialize, Debug)]
 pub struct WhirlsplashConfig {
   pub worldsmaster_username: String,
-  pub log_level:             i64,
   pub ip:                    String,
   pub api:                   WhirlsplashApiConfig,
   pub prompt:                WhirlsplashPromptConfig,
+  pub log:                   WhirlsplashLogConfig,
 }
 #[derive(Serialize, Deserialize, Debug)]
 pub struct WhirlsplashApiConfig {
@@ -19,6 +19,13 @@ pub struct WhirlsplashApiConfig {
 pub struct WhirlsplashPromptConfig {
   pub enable: bool,
   pub ps1:    String,
+}
+#[derive(Serialize, Deserialize, Debug)]
+pub struct WhirlsplashLogConfig {
+  pub enable:     bool,
+  pub level:      i64,
+  pub everything: bool,
+  pub test:       bool,
 }
 #[derive(Serialize, Deserialize, Debug)]
 pub struct DistributorConfig {
@@ -61,7 +68,6 @@ impl Default for Config {
     Config {
       whirlsplash: WhirlsplashConfig {
         worldsmaster_username: "WORLDSMASTER".to_string(),
-        log_level:             1,
         ip:                    "0.0.0.0".to_string(),
         api:                   WhirlsplashApiConfig {
           port: 80
@@ -69,6 +75,12 @@ impl Default for Config {
         prompt:                WhirlsplashPromptConfig {
           enable: false,
           ps1:    "[WORLDSMASTER@Whirlsplash ~]$".to_string(),
+        },
+        log:                   WhirlsplashLogConfig {
+          enable:     true,
+          level:      1,
+          everything: false,
+          test:       false,
         },
       },
       distributor: DistributorConfig {
