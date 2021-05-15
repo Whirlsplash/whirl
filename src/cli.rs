@@ -10,13 +10,20 @@ impl Cli {
   pub fn setup() -> ArgMatches<'static> {
     let matches = Self::cli().get_matches();
 
-    Self::calc_log_level(&matches);
     std::env::set_var("DATABASE_URL", "whirl.sqlite3");
 
     matches
   }
 
   pub async fn execute(matches: ArgMatches<'_>) {
+    if Config::get().whirlsplash.log.test {
+      error!("error");
+      warn!("warn");
+      info!("info");
+      debug!("debug");
+      trace!("trace");
+    }
+
     if matches.is_present("run") {
       run().await;
     } else if let Some(cmd) = matches.subcommand_matches("config") {
@@ -37,17 +44,6 @@ impl Cli {
       }
       debug!("generated shell completions");
     }
-  }
-
-  fn calc_log_level(matches: &ArgMatches<'_>) {
-    let mut log_level = "whirl=error,whirl=warn,whirl=trace".to_string();
-    if matches.is_present("debug") || Config::get().whirlsplash.log_level >= 2 {
-      log_level += ",whirl=debug";
-    }
-    if matches.is_present("trace") || Config::get().whirlsplash.log_level >= 3 {
-      log_level += ",whirl=trace";
-    }
-    std::env::set_var("RUST_LOG", log_level);
   }
 
   fn cli<'a, 'b>() -> App<'a, 'b> {

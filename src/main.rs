@@ -3,7 +3,7 @@
 
 use std::error::Error;
 
-use whirl::cli::Cli;
+use whirl::{cli::Cli, utils::log::calculate_log_level};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -12,7 +12,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   // Logging
   dotenv::dotenv().ok();
-  flexi_logger::Logger::with_str("trace")
+  flexi_logger::Logger::with_str(calculate_log_level())
     .log_to_file()
     .directory("log")
     .print_message()

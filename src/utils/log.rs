@@ -1,0 +1,19 @@
+// Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
+// SPDX-License-Identifier: GPL-3.0-only
+
+use crate::config::Config;
+
+pub fn calculate_log_level() -> String {
+  let mut level;
+
+  level = match Config::get().whirlsplash.log.level {
+    2 => "debug".to_string(),
+    3 => "trace".to_string(),
+    _ => "info".to_string(),
+  };
+  if !Config::get().whirlsplash.log.everything {
+    level = format!("whirl={}", level);
+  }
+
+  level
+}
