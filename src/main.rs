@@ -12,7 +12,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   // Logging
   dotenv::dotenv().ok();
-  pretty_env_logger::init();
+  flexi_logger::Logger::with_str("trace")
+    .log_to_file()
+    .directory("log")
+    .print_message()
+    .start()?;
 
   // Execution
   Cli::execute(matches).await;
