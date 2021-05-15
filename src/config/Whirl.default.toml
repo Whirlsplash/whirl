@@ -1,6 +1,8 @@
+# See more keys and their definitions at https://whirlsplash.org/docs/whirl/configuration
+
 [whirlsplash]
-worldsmaster_username = "WORLDSMASTER" # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
-ip = "0.0.0.0" # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
+worldsmaster_username = "WORLDSMASTER"
+ip = "0.0.0.0"
 api.port = 8080
 
 [whirlsplash.prompt]
@@ -15,7 +17,7 @@ test = false
 
 [distributor]
 worldsmaster_greeting = "Welcome to Whirlsplash!"
-port = 6650 # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
+port = 6650
 
 [hub]
-port = 5673 # DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING
+port = 5673
