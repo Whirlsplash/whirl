@@ -1,18 +1,12 @@
 .. raw:: html
 
   <p align="center">
-  <a href="https://github.com/Whirlsplash/whirl">
-    <img src="https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png"
-      alt="Whirl" width="220">
-  </a>
+    <a href="https://github.com/Whirlsplash/whirl">
+      <img src="https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png"
+        alt="Whirl" width="220">
+    </a>
   </p>
-  <h1 align="center">
-
-The Open-Source WorldServer.
-
-.. raw:: html
-
-  </h1>
+  <h1 align="center">The Open-Source WorldServer.</h1>
 
   <p align="center">
 
