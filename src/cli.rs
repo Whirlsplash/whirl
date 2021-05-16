@@ -15,7 +15,7 @@ impl Cli {
     matches
   }
 
-  pub async fn execute(matches: ArgMatches<'_>) {
+  pub async fn execute(matches: ArgMatches<'_>) -> Result<(), Box<dyn std::error::Error>> {
     if Config::get().whirlsplash.log.test {
       error!("error");
       warn!("warn");
@@ -43,7 +43,17 @@ impl Cli {
         Self::cli().gen_completions(env!("CARGO_PKG_NAME"), Shell::Fish, ".");
       }
       debug!("generated shell completions");
+    } else if matches.is_present("clean") {
+      let cleanable_directories = vec!["./log"];
+      for dir in cleanable_directories {
+        println!("cleaning directory '{}'", dir);
+        if let Err(e) = std::fs::remove_dir_all(dir) {
+          bail!("error delete directory '{}': {}", dir, e);
+        }
+      }
     }
+
+    Ok(())
   }
 
   fn cli<'a, 'b>() -> App<'a, 'b> {
@@ -67,6 +77,8 @@ impl Cli {
             SubCommand::with_name("zsh"),
             SubCommand::with_name("fish"),
           ]),
+        SubCommand::with_name("clean")
+          .about("Delete Whirl generated files/ directories which are NOT critical. E.g., logs/"),
       ])
       .args(&[
         Arg::with_name("debug").short("d").long("debug"),
