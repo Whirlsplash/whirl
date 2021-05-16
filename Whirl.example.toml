@@ -14,6 +14,7 @@ enable = true
 level = 1
 everything = false
 test = false
+file = true
 
 [distributor]
 worldsmaster_greeting = "Welcome to Whirlsplash!"

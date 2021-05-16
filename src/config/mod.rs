@@ -26,6 +26,7 @@ pub struct WhirlsplashLogConfig {
   pub level:      i64,
   pub everything: bool,
   pub test:       bool,
+  pub file:       bool,
 }
 #[derive(Serialize, Deserialize, Debug)]
 pub struct DistributorConfig {
@@ -83,6 +84,7 @@ impl Default for Config {
           level:      1,
           everything: false,
           test:       false,
+          file:       true,
         },
       },
       distributor: DistributorConfig {
