@@ -44,7 +44,7 @@ impl Cli {
       }
       debug!("generated shell completions");
     } else if matches.is_present("clean") {
-      let cleanable_directories = vec!["./log"];
+      let cleanable_directories = vec!["./log/"];
       for dir in cleanable_directories {
         println!("cleaning directory '{}'", dir);
         if let Err(e) = std::fs::remove_dir_all(dir) {
