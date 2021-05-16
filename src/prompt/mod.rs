@@ -9,7 +9,15 @@ use std::{io, io::Write, str::FromStr};
 use crate::{
   config::Config,
   prompt::{
-    builtins::{builtin_echo, builtin_help, builtin_history, BuiltIn},
+    builtins::{
+      builtin_cat,
+      builtin_config,
+      builtin_echo,
+      builtin_help,
+      builtin_history,
+      builtin_ls,
+      BuiltIn,
+    },
     structure::Command,
   },
 };
@@ -18,7 +26,7 @@ pub struct Prompt {
   history: Vec<String>,
 }
 impl Prompt {
-  pub fn handle() -> ! {
+  pub async fn handle() -> ! {
     let mut prompt = Prompt {
       history: vec![]
     };
@@ -28,7 +36,8 @@ impl Prompt {
       Prompt::process_command(
         Prompt::tokenize_command(prompt.read_command()),
         prompt.history.clone(),
-      );
+      )
+      .await;
     }
   }
 
@@ -63,13 +72,16 @@ impl Prompt {
 
   // TODO: Find a way to make this access itself `history` doesn't have to be
   // passed everytime.
-  fn process_command(c: Command, history: Vec<String>) -> i32 {
+  async fn process_command(c: Command, history: Vec<String>) -> i32 {
     match BuiltIn::from_str(&c.keyword) {
       Ok(BuiltIn::Echo) => builtin_echo(&c.args),
       Ok(BuiltIn::Exit) => std::process::exit(0),
       Ok(BuiltIn::History) => builtin_history(history),
       Ok(BuiltIn::Null) => 0,
       Ok(BuiltIn::Help) => builtin_help(),
+      Ok(BuiltIn::Ls) => builtin_ls(),
+      Ok(BuiltIn::Cat) => builtin_cat(&c.args).await,
+      Ok(BuiltIn::Config) => builtin_config(&c.args),
       _ => {
         println!("wsh: command not found: {}", &c.keyword);
         1

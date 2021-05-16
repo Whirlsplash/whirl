@@ -44,6 +44,8 @@ pub struct Config {
   pub hub:         HubConfig,
 }
 impl Config {
+  pub fn refresh() { let _ = config::Config::new().refresh(); }
+
   fn load() -> Result<Self, ConfigError> {
     let mut s = config::Config::new();
 
