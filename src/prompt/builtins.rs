@@ -52,14 +52,20 @@ pub fn builtin_history(history: Vec<String>) -> i32 {
 }
 
 pub fn builtin_help() -> i32 {
-  println!("echo    - display a line of predefined text");
-  println!("history - display the command history");
-  println!("exit    - end the process");
-  println!("ls      - display the present files");
-  println!("cat     - display the contents of a present file");
-  println!("config  - manipulate the configuration");
-  println!("help    - you are here");
-  println!("fetch   - a neofetch like utility loosely based on rfetch");
+  let helpables = vec![
+    "echo    - display a line of predefined text",
+    "history - display the command history",
+    "exit    - end the process",
+    "ls      - display the present files",
+    "cat     - display the contents of a present file",
+    "config  - manipulate the configuration",
+    "help    - you are here",
+    "fetch   - a neofetch like utility loosely based on rfetch",
+  ];
+  for help in helpables {
+    println!("{}", help);
+  }
+
   0
 }
 
@@ -113,9 +119,14 @@ pub fn builtin_config(args: &[String]) -> i32 {
       match sub.as_str() {
         "show" => println!("{:#?}", Config::get()),
         "help" | "--help" | "-h" => {
-          println!("show    - display the current configuration");
-          println!("help    - you are here");
-          println!("refresh - reload the configuration file");
+          let helpables = vec![
+            "show    - display the current configuration",
+            "help    - you are here",
+            "refresh - reload the configuration file",
+          ];
+          for help in helpables {
+            println!("{}", help);
+          }
         }
         "refresh" => Config::refresh(),
         _ => println!("invalid arguments provided"),
