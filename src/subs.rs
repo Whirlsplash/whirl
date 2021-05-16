@@ -13,7 +13,7 @@ use crate::{
   },
 };
 
-pub async fn run() -> ! {
+pub async fn run() {
   let (tx, _rx) = std::sync::mpsc::channel();
 
   let _threads = vec![
@@ -45,7 +45,7 @@ pub async fn run() -> ! {
     }
   } else {
     std::thread::sleep(std::time::Duration::from_secs(2));
-    Prompt::handle();
+    Prompt::handle().await;
   }
 
   // actix_web::rt::System::new("").block_on(rx.recv().unwrap().stop(true));

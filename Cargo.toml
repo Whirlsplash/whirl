@@ -52,3 +52,6 @@ diesel = { version = "1.4.6", features = ["sqlite"] }
 # Web-server
 actix-web = { version = "3.3.2", features = ["rustls"] }
 actix-cors = "0.5.4"
+
+# Web
+curl = "0.4.37"
