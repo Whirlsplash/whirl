@@ -93,6 +93,7 @@ pub async fn builtin_cat(args: &[String]) -> i32 {
       transfer.perform().unwrap();
     }
     "Whirl.toml" => {
+      colour::red_ln!("NOTE: This is just a wrapper for `config show`.");
       println!("{:#?}", Config::get());
     }
     _ => println!("/cat: {}: no such file or directory", file),

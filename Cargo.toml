@@ -27,6 +27,7 @@ flexi_logger = "0.17.1"
 rand = "0.8.3"
 async-trait = "0.1.50"
 sysinfo = "0.17.4"
+colour = "0.6.0"
 
 # Byte Manipulation
 bytes = "1.0.1"
