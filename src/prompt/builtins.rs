@@ -3,6 +3,8 @@
 
 use std::{io::Write, str::FromStr};
 
+use sysinfo::SystemExt;
+
 use crate::config::Config;
 
 const FILES: [&str; 2] = ["README.rst", "Whirl.toml"];
@@ -16,6 +18,7 @@ pub enum BuiltIn {
   Ls,
   Cat,
   Config,
+  Fetch,
 }
 impl FromStr for BuiltIn {
   type Err = ();
@@ -30,6 +33,7 @@ impl FromStr for BuiltIn {
       "ls" => Ok(BuiltIn::Ls),
       "cat" => Ok(BuiltIn::Cat),
       "config" => Ok(BuiltIn::Config),
+      "fetch" => Ok(BuiltIn::Fetch),
       _ => Err(()),
     }
   }
@@ -55,6 +59,7 @@ pub fn builtin_help() -> i32 {
   println!("cat     - display the contents of a present file");
   println!("config  - manipulate the configuration");
   println!("help    - you are here");
+  println!("fetch   - a neofetch like utility loosely based on rfetch");
   0
 }
 
@@ -117,5 +122,21 @@ pub fn builtin_config(args: &[String]) -> i32 {
       },
     None => println!("invalid amount arguments provided"),
   }
+  0
+}
+
+pub fn builtin_fetch() -> i32 {
+  // rfetch: https://github.com/Mangeshrex/rfetch
+
+  let mut sys = sysinfo::System::new();
+  sys.refresh_processes();
+
+  println!("               ");
+  println!("      .-.      os    {}", env!("CARGO_PKG_NAME"));
+  println!("      oo|      ker   {}", env!("CARGO_PKG_VERSION"));
+  println!("     / '\\      sh    /wsh");
+  println!("    (\\_;/)     up    null");
+  println!("               ");
+
   0
 }
