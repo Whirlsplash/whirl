@@ -19,7 +19,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .start()?;
 
   // Execution
-  Cli::execute(matches).await;
+  Cli::execute(matches).await.unwrap();
 
   Ok(())
 }

@@ -19,6 +19,8 @@ extern crate diesel;
 extern crate serde_derive;
 #[macro_use]
 extern crate async_trait;
+#[macro_use]
+extern crate simple_error;
 
 pub mod cli;
 pub mod config;
