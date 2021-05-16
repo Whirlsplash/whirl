@@ -13,6 +13,7 @@ use crate::{
       builtin_cat,
       builtin_config,
       builtin_echo,
+      builtin_fetch,
       builtin_help,
       builtin_history,
       builtin_ls,
@@ -82,6 +83,7 @@ impl Prompt {
       Ok(BuiltIn::Ls) => builtin_ls(),
       Ok(BuiltIn::Cat) => builtin_cat(&c.args).await,
       Ok(BuiltIn::Config) => builtin_config(&c.args),
+      Ok(BuiltIn::Fetch) => builtin_fetch(),
       _ => {
         println!("wsh: command not found: {}", &c.keyword);
         1
