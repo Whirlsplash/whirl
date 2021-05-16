@@ -3,7 +3,7 @@
 
 use std::error::Error;
 
-use whirl::{cli::Cli, utils::log::calculate_log_level};
+use whirl::{cli::Cli, config::Config, utils::log::calculate_log_level};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -12,11 +12,18 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   // Logging
   dotenv::dotenv().ok();
-  flexi_logger::Logger::with_str(calculate_log_level())
-    .log_to_file()
-    .directory("log")
-    .print_message()
-    .start()?;
+  let logger = flexi_logger::Logger::with_str(calculate_log_level());
+  if std::env::var("LOG_FILE").unwrap_or_else(|_| "true".to_string()) == "false"
+    || !Config::get().whirlsplash.log.file
+  {
+    logger.start()?;
+  } else {
+    logger
+      .print_message()
+      .log_to_file()
+      .directory("log")
+      .start()?;
+  }
 
   // Execution
   Cli::execute(matches).await.unwrap();
