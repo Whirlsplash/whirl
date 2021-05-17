@@ -63,7 +63,7 @@ impl Server for Hub {
             for msg in parse_commands_from_packet(msg) {
               match msg.get(2).unwrap().to_owned() as i32 {
                 PROPREQ => {
-                  trace!("received property request from client");
+                  debug!("received property request from client");
 
                   peer.bytes.get_mut()
                     .write_all(&create_property_update_as_hub()).await?;
@@ -75,14 +75,14 @@ impl Server for Hub {
                     VAR_USERNAME,
                   ).value.clone();
 
-                  trace!("received session initialization from {}", username);
+                  debug!("received session initialization from {}", username);
 
                   peer.bytes.get_mut()
                     .write_all(&create_property_request_as_hub()).await?;
                   trace!("sent property request to {}", username);
                 }
                 PROPSET => {
-                  trace!("received property set from {}", username);
+                  debug!("received property set from {}", username);
 
                   peer.bytes.get_mut()
                     .write_all(&Text {
@@ -95,7 +95,7 @@ impl Server for Hub {
                 }
                 BUDDYLISTUPDATE => {
                   let buddy = BuddyList::parse(msg.to_vec());
-                  trace!("received buddy list update from {}: {}", username, buddy.buddy);
+                  debug!("received buddy list update from {}: {}", username, buddy.buddy);
                   peer.bytes.get_mut().write_all(&BuddyList {
                     ..buddy.clone()
                   }.create()).await?;
@@ -104,15 +104,15 @@ impl Server for Hub {
                 // TODO: Figure out if this is actually even needed.
                 // ROOMIDRQ => {
                 //   let room = RoomIdRequest::parse(msg.to_vec());
-                //   trace!("received room id request from {}: {}", username, room.room_name);
-                //   debug!("{:?}", create_room_id_request(&room.room_name, 0x00));
+                //   debug!("received room id request from {}: {}", username, room.room_name);
+                //   trace!("{:?}", create_room_id_request(&room.room_name, 0x00));
                 // }
                 SESSEXIT => {
-                  trace!("received session exit from {}", username); break;
+                  debug!("received session exit from {}", username); break;
                 }
                 TEXT => {
                   let text = Text::parse(msg.to_vec(), &[&username]);
-                  trace!("received text from {}:{}", username, text.content);
+                  debug!("received text from {}:{}", username, text.content);
 
                   {
                     state.lock().await.broadcast(&Text {
@@ -120,21 +120,21 @@ impl Server for Hub {
                       content: text.content,
                     }.create()).await;
                   }
-                  trace!("broadcasted text to hub");
+                  debug!("broadcasted text to hub");
                 }
                 SUBSCRIB => {
                   let subscribe_room = SubscribeRoom::parse(msg[3..].to_vec());
-                  trace!("received subscribe room from {}: {:?}",
+                  debug!("received subscribe room from {}: {:?}",
                     username, subscribe_room);
                 }
                 SUB_DIST => {
                   let subscribe_distance = SubscribeDistance::parse(msg[3..].to_vec());
-                  trace!("received subscribe distance from {}: {:?}",
+                  debug!("received subscribe distance from {}: {:?}",
                     username, subscribe_distance);
                 }
                 TELEPORT => {
                   let teleport = Teleport::parse(msg[3..].to_vec());
-                  trace!("received teleport from {}: {:?}",
+                  debug!("received teleport from {}: {:?}",
                     username, teleport);
                 }
                 _ => (),
@@ -145,18 +145,18 @@ impl Server for Hub {
             error!("error while processing message (s): {}", e); break;
           }
           None => {
-            debug!("nothing"); break;
+            trace!("nothing"); break;
           },
         }
       }
     }
 
     // Deregister client
-    trace!("de-registering client");
+    debug!("de-registering client");
     {
       state.lock().await.peers.remove(&count.to_string());
     }
-    trace!("de-registered client");
+    debug!("de-registered client");
 
     Ok(())
   }
