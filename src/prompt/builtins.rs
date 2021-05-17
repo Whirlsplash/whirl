@@ -8,6 +8,21 @@ use sysinfo::SystemExt;
 use crate::config::Config;
 
 const FILES: [&str; 2] = ["README.rst", "Whirl.toml"];
+const HELPABLES_BUILTINS: [&str; 8] = [
+  "cat     - display the contents of a present file",
+  "config  - manipulate the configuration",
+  "echo    - display a line of predefined text",
+  "exit    - end the process",
+  "fetch   - a neofetch like utility loosely based on rfetch",
+  "help    - you are here",
+  "history - display the command history",
+  "ls      - display the present files",
+];
+const HELPABLES_BUILTIN_CONFIG: [&str; 3] = [
+  "help    - you are here",
+  "refresh - reload the configuration file",
+  "show    - display the current configuration",
+];
 
 pub enum BuiltIn {
   Echo,
@@ -52,17 +67,7 @@ pub fn builtin_history(history: Vec<String>) -> i32 {
 }
 
 pub fn builtin_help() -> i32 {
-  let helpables = vec![
-    "echo    - display a line of predefined text",
-    "history - display the command history",
-    "exit    - end the process",
-    "ls      - display the present files",
-    "cat     - display the contents of a present file",
-    "config  - manipulate the configuration",
-    "help    - you are here",
-    "fetch   - a neofetch like utility loosely based on rfetch",
-  ];
-  for help in helpables {
+  for help in HELPABLES_BUILTINS.iter() {
     println!("{}", help);
   }
 
@@ -118,16 +123,10 @@ pub fn builtin_config(args: &[String]) -> i32 {
     Some(sub) =>
       match sub.as_str() {
         "show" => println!("{:#?}", Config::get()),
-        "help" | "--help" | "-h" => {
-          let helpables = vec![
-            "show    - display the current configuration",
-            "help    - you are here",
-            "refresh - reload the configuration file",
-          ];
-          for help in helpables {
+        "help" | "--help" | "-h" =>
+          for help in HELPABLES_BUILTIN_CONFIG.iter() {
             println!("{}", help);
-          }
-        }
+          },
         "refresh" => Config::refresh(),
         _ => println!("invalid arguments provided"),
       },
