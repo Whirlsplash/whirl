@@ -3,3 +3,4 @@ members = ["whirl_config", "whirl", "whirl_prompt", "whirl_server"]
 
 [profile.release]
 lto = "fat"
+codegen-units = 1
