@@ -23,12 +23,12 @@ dotenv = "0.15.0"
 log = "0.4.14"
 flexi_logger = "0.17.1"
 human-panic = "1.0.3"
+# simple-error = "0.2.3"
 
 # Utility
 rand = "0.8.3"
 async-trait = "0.1.50"
 sysinfo = "0.17.5"
-simple-error = "0.2.3"
 
 # Byte Manipulation
 bytes = "1.0.1"

@@ -17,8 +17,8 @@ extern crate log;
 extern crate diesel;
 #[macro_use]
 extern crate serde_derive;
-#[macro_use]
-extern crate simple_error;
+// #[macro_use]
+// extern crate simple_error;
 
 pub mod cli;
 pub mod subs;

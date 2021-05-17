@@ -47,9 +47,13 @@ impl Cli {
     } else if matches.is_present("clean") {
       let cleanable_directories = vec!["./log/"];
       for dir in cleanable_directories {
-        println!("cleaning directory '{}'", dir);
+        let mut file_type = "directory";
+        if !dir.ends_with('/') {
+          file_type = "file";
+        }
+        println!("cleaning {}: {}", file_type, dir);
         if let Err(e) = std::fs::remove_dir_all(dir) {
-          bail!("error delete directory '{}': {}", dir, e);
+          warn!("cannot delete {}: {}: {}", file_type, dir, e);
         }
       }
     }
