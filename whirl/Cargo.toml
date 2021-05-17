@@ -1,5 +1,5 @@
 [package]
-name = "whirl_core"
+name = "whirl"
 version = "0.1.0"
 authors = ["Fuwn <fuwnzy@gmail.com>"]
 edition = "2018"
