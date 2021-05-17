@@ -16,6 +16,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
   let logger = flexi_logger::Logger::with_str(calculate_log_level());
   if std::env::var("LOG_FILE").unwrap_or_else(|_| "true".to_string()) == "false"
     || !Config::get().whirlsplash.log.file
+    || std::env::args().collect::<Vec<_>>()[1] == "clean" // Cheeky as all hell.
   {
     logger.start()?;
   } else {
