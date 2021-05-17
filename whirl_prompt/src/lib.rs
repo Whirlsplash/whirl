@@ -37,7 +37,7 @@ impl Prompt {
         Prompt::tokenize_command(prompt.read_command()),
         prompt.history.clone(),
       )
-        .await;
+      .await;
     }
   }
 

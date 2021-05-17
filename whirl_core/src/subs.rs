@@ -10,9 +10,7 @@ use whirl_server::{
   ServerType::{AutoServer, RoomServer},
 };
 
-use crate::{
-  api::Api,
-};
+use crate::api::Api;
 
 pub async fn run() {
   let (tx, _rx) = std::sync::mpsc::channel();
