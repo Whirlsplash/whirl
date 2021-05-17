@@ -38,7 +38,7 @@ let
           "LOG_FILE=false"
         ];
         ExposedPorts = {
-          "8000/tcp" = { }; # API
+          "80/tcp" = { }; # API
           "6650/tcp" = { }; # Distributor
           "5673/tcp" = { }; # Hub
         };
