@@ -6,42 +6,18 @@ extern crate serde_derive;
 #[macro_use]
 extern crate log;
 
+mod structures;
+
 use config::{ConfigError, File};
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct WhirlsplashConfig {
-  pub worldsmaster_username: String,
-  pub ip:                    String,
-  pub api:                   WhirlsplashApiConfig,
-  pub prompt:                WhirlsplashPromptConfig,
-  pub log:                   WhirlsplashLogConfig,
-}
-#[derive(Serialize, Deserialize, Debug)]
-pub struct WhirlsplashApiConfig {
-  pub port: i64,
-}
-#[derive(Serialize, Deserialize, Debug)]
-pub struct WhirlsplashPromptConfig {
-  pub enable: bool,
-  pub ps1:    String,
-}
-#[derive(Serialize, Deserialize, Debug)]
-pub struct WhirlsplashLogConfig {
-  pub enable:     bool,
-  pub level:      i64,
-  pub everything: bool,
-  pub test:       bool,
-  pub file:       bool,
-}
-#[derive(Serialize, Deserialize, Debug)]
-pub struct DistributorConfig {
-  pub worldsmaster_greeting: String,
-  pub port:                  i64,
-}
-#[derive(Serialize, Deserialize, Debug)]
-pub struct HubConfig {
-  pub port: i64,
-}
+use crate::structures::{
+  DistributorConfig,
+  HubConfig,
+  WhirlsplashApiConfig,
+  WhirlsplashConfig,
+  WhirlsplashLogConfig,
+  WhirlsplashPromptConfig,
+};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
