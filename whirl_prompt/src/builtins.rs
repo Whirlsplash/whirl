@@ -6,22 +6,7 @@ use std::{io::Write, str::FromStr};
 use sysinfo::SystemExt;
 use whirl_config::Config;
 
-const FILES: [&str; 2] = ["README.rst", "Whirl.toml"];
-const HELPABLES_BUILTINS: [&str; 8] = [
-  "cat     - display the contents of a present file",
-  "config  - manipulate the configuration",
-  "echo    - display a line of predefined text",
-  "exit    - end the process",
-  "fetch   - a neofetch like utility loosely based on rfetch",
-  "help    - you are here",
-  "history - display the command history",
-  "ls      - display the present files",
-];
-const HELPABLES_BUILTIN_CONFIG: [&str; 3] = [
-  "help    - you are here",
-  "refresh - reload the configuration file",
-  "show    - display the current configuration",
-];
+use crate::constants::{FILES, HELPABLES_BUILTINS, HELPABLES_BUILTIN_CONFIG};
 
 pub enum BuiltIn {
   Echo,
