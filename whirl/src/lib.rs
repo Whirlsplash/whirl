@@ -25,6 +25,7 @@ extern crate serde_derive;
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 #[cfg(target_family = "unix")]
+#[global_allocator]
 static GLOBAL: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
 pub mod cli;
