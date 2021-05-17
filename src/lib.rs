@@ -23,7 +23,6 @@ extern crate async_trait;
 extern crate simple_error;
 
 pub mod cli;
-pub mod config;
 pub mod prompt;
 pub mod subs;
 

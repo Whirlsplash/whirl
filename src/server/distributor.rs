@@ -16,30 +16,28 @@ use std::{error::Error, net::SocketAddr, sync::Arc};
 use tokio::{io::AsyncWriteExt, net::TcpStream, sync::Mutex};
 use tokio_stream::StreamExt;
 use tokio_util::codec::{BytesCodec, Decoder};
+use whirl_config::Config;
 
-use crate::{
-  config::Config,
-  server::{
-    cmd::{
-      commands::{
-        action::create_action,
-        buddy_list::BuddyList,
-        property::{
-          create::{create_property_request_as_distributor, create_property_update_as_distributor},
-          parse::find_property_in_property_list,
-        },
-        redirect_id::RedirectId,
-        room_id_request::RoomIdRequest,
-        text::Text,
+use crate::server::{
+  cmd::{
+    commands::{
+      action::create_action,
+      buddy_list::BuddyList,
+      property::{
+        create::{create_property_request_as_distributor, create_property_update_as_distributor},
+        parse::find_property_in_property_list,
       },
-      constants::*,
-      extendable::{Creatable, Parsable},
+      redirect_id::RedirectId,
+      room_id_request::RoomIdRequest,
+      text::Text,
     },
-    interaction::{peer::Peer, shared::Shared},
-    net::{constants::VAR_USERNAME, property_parser::parse_network_property},
-    packet_parser::parse_commands_from_packet,
-    Server,
+    constants::*,
+    extendable::{Creatable, Parsable},
   },
+  interaction::{peer::Peer, shared::Shared},
+  net::{constants::VAR_USERNAME, property_parser::parse_network_property},
+  packet_parser::parse_commands_from_packet,
+  Server,
 };
 
 pub struct Distributor;

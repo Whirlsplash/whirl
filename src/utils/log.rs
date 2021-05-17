@@ -1,7 +1,7 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use crate::config::Config;
+use whirl_config::Config;
 
 pub fn calculate_log_level() -> String {
   let mut level;

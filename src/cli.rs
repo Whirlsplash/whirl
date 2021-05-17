@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 use structopt::clap::{App, AppSettings, Arg, ArgMatches, Shell, SubCommand};
+use whirl_config::Config;
 
-use crate::{config::Config, subs::run};
+use crate::subs::run;
 
 pub struct Cli;
 impl Cli {

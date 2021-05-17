@@ -2,11 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 use bytes::{BufMut, BytesMut};
+use whirl_config::Config;
 
-use crate::{
-  config::Config,
-  server::cmd::{constants::REDIRID, extendable::Creatable},
-};
+use crate::server::cmd::{constants::REDIRID, extendable::Creatable};
 
 #[derive(Debug)]
 pub struct RedirectId {

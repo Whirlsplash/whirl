@@ -3,28 +3,27 @@
 
 // TODO: of2m-ify?
 
-use crate::{
-  config::Config,
-  server::{
-    cmd::constants::{PROPUPD, SESSINIT},
-    net::{
-      constants::{
-        VAR_APPNAME,
-        VAR_CHANNEL,
-        VAR_ERROR,
-        VAR_EXTERNAL_HTTP_SERVER,
-        VAR_MAIL_DOMAIN,
-        VAR_PRIV,
-        VAR_PROTOCOL,
-        VAR_SCRIPT_SERVER,
-        VAR_SERIAL,
-        VAR_SERVERTYPE,
-        VAR_SMTP_SERVER,
-        VAR_UPDATETIME,
-      },
-      converter::property_list_to_bytes,
-      structure::NetworkProperty,
+use whirl_config::Config;
+
+use crate::server::{
+  cmd::constants::{PROPUPD, SESSINIT},
+  net::{
+    constants::{
+      VAR_APPNAME,
+      VAR_CHANNEL,
+      VAR_ERROR,
+      VAR_EXTERNAL_HTTP_SERVER,
+      VAR_MAIL_DOMAIN,
+      VAR_PRIV,
+      VAR_PROTOCOL,
+      VAR_SCRIPT_SERVER,
+      VAR_SERIAL,
+      VAR_SERVERTYPE,
+      VAR_SMTP_SERVER,
+      VAR_UPDATETIME,
     },
+    converter::property_list_to_bytes,
+    structure::NetworkProperty,
   },
 };
 
