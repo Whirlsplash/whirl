@@ -32,4 +32,8 @@ table! {
     }
 }
 
-allow_tables_to_appear_in_same_query!(serial_numbers, user_properties, user_registration,);
+allow_tables_to_appear_in_same_query!(
+    serial_numbers,
+    user_properties,
+    user_registration,
+);
