@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 mod builtins;
+mod constants;
 mod structure;
 
 use std::{io, io::Write, str::FromStr};
