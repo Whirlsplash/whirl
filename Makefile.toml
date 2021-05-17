@@ -11,7 +11,7 @@ CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
 # someone within the Whirlsplash Discord server;
 # https://discord.com/invite/8hn6padWF6.
 #
-# See line 54!
+# See line 56!
 WORLDS_PATH = "C:\\Program Files (x86)\\Worlds Inc\\WorldsPlayer - Win7\\WorldsPlayer.exe"
 
 # ------------
