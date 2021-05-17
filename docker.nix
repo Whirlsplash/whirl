@@ -32,7 +32,11 @@ let
       config = {
         Cmd = [ "run" ];
         WorkingDir = "/";
-        Env = [ "DATABASE_URl=whirl.sqlite3" "DISABLE_PROMPT=true" ];
+        Env = [
+          "DATABASE_URl=whirl.sqlite3"
+          "DISABLE_PROMPT=true"
+          "LOG_FILE=false"
+        ];
         ExposedPorts = {
           "8000/tcp" = { }; # API
           "6650/tcp" = { }; # Distributor

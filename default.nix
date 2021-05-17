@@ -19,7 +19,7 @@ let
   whirl = naersk.buildPackage {
     inherit src;
     doCheck = true;
-    buildInputs = [ ];
+    buildInputs = [ pkg-config openssl git ];
     remapPathPrefix = true;
   };
 
