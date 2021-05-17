@@ -12,6 +12,11 @@ in pkgs.mkShell {
     cargo-make
     diesel-cli
     cargo-watch
+    cargo-udeps
+
+    # System
+    openssl
+    pkg-config
 
     # Dhall
     dhall

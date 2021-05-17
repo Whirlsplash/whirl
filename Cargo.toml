@@ -1,5 +1,5 @@
 [workspace]
-members = ["whirl_config", "whirl_core", "whirl_prompt", "whirl_server"]
+members = ["whirl_config", "whirl", "whirl_prompt", "whirl_server"]
 
 [profile.release]
 lto = true
