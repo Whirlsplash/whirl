@@ -1,0 +1,64 @@
+[package]
+name = "whirl_core"
+version = "0.1.0"
+authors = ["Fuwn <fuwnzy@gmail.com>"]
+edition = "2018"
+description = "Whirl, an open-source WorldServer implementation in Rust."
+documentation = "https://whirlsplash.org/docs/"
+readme = "../README.md"
+homepage = "https://whirlsplash.org"
+repository = "https://github.com/Whirlsplash/whirl"
+license = "GPL-3.0-only"
+# license-file = "LICENSE"
+keywords = ["rust", "worldserver", "whirl", "whirlsplash"]
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# Environment
+dotenv = "0.15.0"
+
+# Logging
+log = "0.4.14"
+flexi_logger = "0.17.1"
+
+# Utility
+rand = "0.8.3"
+async-trait = "0.1.50"
+sysinfo = "0.17.4"
+simple-error = "0.2.3"
+
+# Byte Manipulation
+bytes = "1.0.1"
+byteorder = "1.4.3"
+
+# Serialization
+serde = "1.0.126"
+serde_derive = "1.0.126"
+
+# CLI
+structopt = "0.3.21"
+
+# Config
+whirl_config = { path = "../whirl_config" }
+
+# TCP
+tokio = { version = "1.6.0", features = ["full"] }
+tokio-util = { version = "0.6.7", features = ["codec"] }
+tokio-stream = "0.1.6"
+
+# Database
+libsqlite3-sys = { version = "0.9.1", features = ["bundled"] }
+diesel = { version = "1.4.6", features = ["sqlite"] }
+
+# Web-server
+actix-web = { version = "3.3.2", features = ["rustls"] }
+actix-cors = "0.5.4"
+
+# Prompt
+whirl_prompt = { path = "../whirl_prompt" }
+
+# Server
+whirl_server = { path = "../whirl_server" }
+

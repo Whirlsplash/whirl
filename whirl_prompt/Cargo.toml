@@ -1,0 +1,25 @@
+[package]
+name = "whirl_prompt"
+version = "0.1.0"
+authors = ["Fuwn <fuwnzy@gmail.com>"]
+edition = "2018"
+description = "Whirl, an open-source WorldServer implementation in Rust."
+documentation = "https://whirlsplash.org/docs/"
+readme = "../README.md"
+homepage = "https://whirlsplash.org"
+repository = "https://github.com/Whirlsplash/whirl"
+license = "GPL-3.0-only"
+# license-file = "LICENSE"
+keywords = ["rust", "worldserver", "whirl", "whirlsplash"]
+publish = false
+
+[dependencies]
+# Utility
+sysinfo = "0.17.4"
+colour = "0.6.0"
+
+# Config
+whirl_config = { path = "../whirl_config" }
+
+# Web
+curl = "0.4.37"
