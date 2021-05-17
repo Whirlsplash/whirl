@@ -1,6 +1,11 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+#[macro_use]
+extern crate serde_derive;
+#[macro_use]
+extern crate log;
+
 use config::{ConfigError, File};
 
 #[derive(Serialize, Deserialize, Debug)]
