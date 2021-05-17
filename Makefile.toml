@@ -2,6 +2,8 @@
 # | Variables |
 # -------------
 [env]
+CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
+
 # This variable will vary depending on where you installed Worlds, ideally, you
 # should know the correct value for your own system.
 #
@@ -9,7 +11,7 @@
 # someone within the Whirlsplash Discord server;
 # https://discord.com/invite/8hn6padWF6.
 #
-# See line 49!
+# See line 54!
 WORLDS_PATH = "C:\\Program Files (x86)\\Worlds Inc\\WorldsPlayer - Win7\\WorldsPlayer.exe"
 
 # ------------
