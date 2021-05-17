@@ -1,9 +1,10 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+use whirl_config::Config;
+
 use crate::{
   api::Api,
-  config::Config,
   prompt::Prompt,
   server::{
     distributor::Distributor,

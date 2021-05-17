@@ -15,6 +15,9 @@ publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[workspace]
+members = ["whirl_config"]
+
 [dependencies]
 # Environment
 dotenv = "0.15.0"
@@ -32,15 +35,17 @@ simple-error = "0.2.3"
 
 # Byte Manipulation
 bytes = "1.0.1"
+byteorder = "1.4.3"
+
+# Serialization
 serde = "1.0.126"
 serde_derive = "1.0.126"
-byteorder = "1.4.3"
 
 # CLI
 structopt = "0.3.21"
 
 # Config
-config = "0.11.0"
+whirl_config = { path = "./whirl_config" }
 
 # TCP
 tokio = { version = "1.6.0", features = ["full"] }

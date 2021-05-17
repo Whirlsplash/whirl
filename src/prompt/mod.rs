@@ -6,21 +6,20 @@ mod structure;
 
 use std::{io, io::Write, str::FromStr};
 
-use crate::{
-  config::Config,
-  prompt::{
-    builtins::{
-      builtin_cat,
-      builtin_config,
-      builtin_echo,
-      builtin_fetch,
-      builtin_help,
-      builtin_history,
-      builtin_ls,
-      BuiltIn,
-    },
-    structure::Command,
+use whirl_config::Config;
+
+use crate::prompt::{
+  builtins::{
+    builtin_cat,
+    builtin_config,
+    builtin_echo,
+    builtin_fetch,
+    builtin_help,
+    builtin_history,
+    builtin_ls,
+    BuiltIn,
   },
+  structure::Command,
 };
 
 pub struct Prompt {

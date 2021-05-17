@@ -4,8 +4,7 @@
 use std::{io::Write, str::FromStr};
 
 use sysinfo::SystemExt;
-
-use crate::config::Config;
+use whirl_config::Config;
 
 const FILES: [&str; 2] = ["README.rst", "Whirl.toml"];
 const HELPABLES_BUILTINS: [&str; 8] = [
