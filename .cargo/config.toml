@@ -1,2 +1,4 @@
-[build]
-rustflags = ["-Ctarget-cpu=native"]
+# This does make the final binary a *little bit* fast but it also fails to
+# compile on some machines, it's up to you how you handle this.
+#[build]
+#rustflags = ["-Ctarget-cpu=native"]
