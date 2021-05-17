@@ -13,6 +13,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   // Logging
   dotenv::dotenv().ok();
+  human_panic::setup_panic!();
   let logger = flexi_logger::Logger::with_str(calculate_log_level());
   if std::env::var("LOG_FILE").unwrap_or_else(|_| "true".to_string()) == "false"
     || !Config::get().whirlsplash.log.file
