@@ -3,8 +3,8 @@
 
 use std::error::Error;
 
-use whirl_core::{cli::Cli, utils::log::calculate_log_level};
 use whirl_config::Config;
+use whirl_core::{cli::Cli, utils::log::calculate_log_level};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
