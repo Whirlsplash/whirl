@@ -94,7 +94,7 @@ impl Prompt {
 
 #[cfg(test)]
 mod tokenize_command {
-  use crate::prompt::Prompt;
+  use crate::Prompt;
 
   #[test]
   #[ignore]
