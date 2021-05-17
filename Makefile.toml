@@ -112,7 +112,7 @@ args = [
 workspace = false
 dependencies = ["docker-build", "docker-load"]
 
-[tasks.ask-discord-token]
+[tasks.ask-github-token]
 workspace = false
 script = '''
 #!@duckscript
@@ -126,6 +126,6 @@ set_env GITHUB_TOKEN ${github_token}
 
 [tasks.act]
 workspace = false
-dependencies = ["ask-discord-token"]
+dependencies = ["ask-github-token"]
 command = "act"
 args = ["-s", "GITHUB_TOKEN=${GITHUB_TOKEN}"]
