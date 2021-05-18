@@ -64,7 +64,7 @@ impl Server for Distributor {
             for msg in parse_commands_from_packet(msg) {
               match msg.get(2).unwrap().to_owned() as i32 {
                 PROPREQ => {
-                  trace!("received property request from client");
+                  debug!("received property request from client");
 
                   peer.bytes.get_mut()
                     .write_all(&create_property_update_as_distributor()).await?;
@@ -76,14 +76,14 @@ impl Server for Distributor {
                     VAR_USERNAME,
                   ).value.clone();
 
-                  trace!("received session initialization from {}", username);
+                  debug!("received session initialization from {}", username);
 
                   peer.bytes.get_mut()
                     .write_all(&create_property_request_as_distributor()).await?;
                   trace!("sent property request to {}", username);
                 }
                 PROPSET => {
-                  trace!("received property set from {}", username);
+                  debug!("received property set from {}", username);
 
                   peer.bytes.get_mut()
                     .write_all(&Text {
@@ -96,7 +96,7 @@ impl Server for Distributor {
                 }
                 BUDDYLISTUPDATE => {
                   let buddy = BuddyList::parse(msg.to_vec());
-                  trace!("received buddy list update from {}: {}", username, buddy.buddy);
+                  debug!("received buddy list update from {}: {}", username, buddy.buddy);
                   peer.bytes.get_mut().write_all(&BuddyList {
                     ..buddy.clone()
                   }.create()).await?;
@@ -104,16 +104,16 @@ impl Server for Distributor {
                 }
                 ROOMIDRQ => {
                   let room = RoomIdRequest::parse(msg.to_vec());
-                  trace!("received room id request from {}: {}", username, &room.room_name);
+                  debug!("received room id request from {}: {}", username, &room.room_name);
 
                   let room_id;
                   if !room_ids.contains(&room.room_name) {
                     room_ids.push(room.room_name.clone());
                     room_id = room_ids.iter().position(|r| r == &room.room_name).unwrap();
-                    debug!("inserted room: {}", room.room_name);
+                    trace!("inserted room: {}", room.room_name);
                   } else {
                     let position = room_ids.iter().position(|r| r == &room.room_name).unwrap();
-                    debug!("found room: {}", room.room_name);
+                    trace!("found room: {}", room.room_name);
                     room_id = position;
                   }
 
@@ -124,7 +124,7 @@ impl Server for Distributor {
                   trace!("sent redirect id to {}: {}", username, room.room_name);
                 }
                 SESSEXIT => {
-                  trace!("received session exit from {}", username); break;
+                  debug!("received session exit from {}", username); break;
                 }
                 _ => (),
               }
@@ -139,11 +139,11 @@ impl Server for Distributor {
     }
 
     // Deregister client
-    trace!("de-registering client");
+    debug!("de-registering client");
     {
       state.lock().await.peers.remove(&count.to_string());
     }
-    trace!("de-registered client");
+    debug!("de-registered client");
 
     Ok(())
   }

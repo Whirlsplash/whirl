@@ -65,7 +65,7 @@ pub trait Server {
       counter += 1;
       let state = Arc::clone(&state);
 
-      trace!("accepted client at {}", address);
+      debug!("accepted client at {}", address);
 
       tokio::spawn(async move {
         if let Err(e) = Self::handle(state, stream, address, counter).await {
