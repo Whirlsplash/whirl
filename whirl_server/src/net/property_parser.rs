@@ -16,7 +16,7 @@ pub fn parse_network_property(mut data: Vec<u8>) -> Vec<NetworkProperty> {
     if data.len() <= 2 {
       break;
     }
-    debug!("iteration: {:?}", data);
+    trace!("iteration: {:?}", data);
     // if data[0] == 0 {
     //   break;
     // }

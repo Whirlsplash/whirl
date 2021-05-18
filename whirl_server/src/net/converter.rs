@@ -21,13 +21,13 @@ pub fn property_list_to_bytes(
   // Iterate over all network properties
   loop {
     // Check if there are any properties left
-    debug!("props left: {}", property_list.len());
+    trace!("props left: {}", property_list.len());
     if property_list.is_empty() {
       break;
     }
 
     let property = &property_list[0]; // Property we are currently iterating over
-    debug!("current prop: {}:{}", property.prop_id, property.value);
+    trace!("current prop: {}:{}", property.prop_id, property.value);
 
     command.put_u8(property.prop_id as u8); // Property ID
 
