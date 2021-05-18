@@ -54,12 +54,12 @@ impl Server for Hub {
     loop {
       tokio::select! {
         Some(msg) = peer.rx.recv() => {
-          // dbg!("got peer activity: {:?}", &msg);
+          // trace!("got peer activity: {:?}", &msg);
           peer.bytes.get_mut().write_all(&msg).await?;
         }
         result = peer.bytes.next() => match result {
           Some(Ok(msg)) => {
-            // dbg!("got some bytes: {:?}", &msg);
+            // trace!("got some bytes: {:?}", &msg);
             for msg in parse_commands_from_packet(msg) {
               match msg.get(2).unwrap().to_owned() as i32 {
                 PROPREQ => {
