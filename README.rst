@@ -33,8 +33,8 @@
   </p>
 
 Whirl, an open-source implementation of the
-`WorldServer <http://dev.worlds.net/private/GammaDocs/WorldServer.html>`__
-protocol in `Rust <https://www.rust-lang.org/>`__.
+`WorldServer <http://dev.worlds.net/private/GammaDocs/WorldServer.html>`_
+protocol in `Rust <https://www.rust-lang.org/>`_.
 
 Purpose
 -------
@@ -63,12 +63,12 @@ https://whirlsplash.org/docs/
 Known Issues
 ------------
 
--  https://github.com/Whirlsplash/whirl/issues/2
+- https://github.com/Whirlsplash/whirl/issues/2
 
 Contributing
 ------------
 
-Please reference the `contribution guidelines <./CONTRIBUTING.md>`__ of this repository.
+Please reference the `contribution guidelines <./CONTRIBUTING.md>`_ of this repository.
 
 Development Dependencies
 ------------------------
@@ -76,13 +76,13 @@ Development Dependencies
 Required
 ~~~~~~~~
 
--  `diesel\_cli <https://crates.io/crates/diesel_cli>`__
--  `cargo-make <https://github.com/sagiegurari/cargo-make>`__
+- `diesel\_cli <https://crates.io/crates/diesel_cli>`_
+- `cargo-make <https://github.com/sagiegurari/cargo-make>`_
 
 Optional
 ~~~~~~~~
 
--  `cargo-watch <https://crates.io/crates/cargo-watch>`__
+- `cargo-watch <https://crates.io/crates/cargo-watch>`_
 
 *These development dependencies will automatically be satisfied if you are using the Nix shell
 configuration as provided.*
@@ -90,4 +90,4 @@ configuration as provided.*
 License
 ~~~~~~~
 
-`GNU General Public License v3.0 <./LICENSE>`__
+`GNU General Public License v3.0 <./LICENSE>`_
