@@ -2,3 +2,8 @@
 # compile on some machines, it's up to you how you handle this.
 #[build]
 #rustflags = ["-Ctarget-cpu=native"]
+
+[target.x86_64-pc-windows-gnu]
+linker = "x86_64-w64-mingw-gcc"
+ar = "x86_64-w64-mingw-gcc-ar"
+rustflags = ["-C", "target-feature=+crt-static"]
