@@ -62,9 +62,7 @@ impl Prompt {
       .read_line(&mut input)
       .expect("failed to read command from stdin");
 
-    if input.len() > 2 {
-      self.history.push(input.clone());
-    } else {
+    if input.len() <= 2 {
       input = "null".to_string();
     }
 
@@ -83,10 +81,10 @@ impl Prompt {
   // TODO: Find a way to make this access itself `history` doesn't have to be
   // passed everytime.
   async fn process_command(&mut self, c: Command) -> i32 {
-    match BuiltIn::from_str(&c.keyword) {
+    let exit_code = match BuiltIn::from_str(&c.keyword) {
       Ok(BuiltIn::Echo) => builtin_echo(&c.args),
       Ok(BuiltIn::Exit) => std::process::exit(0),
-      Ok(BuiltIn::History) => builtin_history(self.history.clone()),
+      Ok(BuiltIn::History) => builtin_history(&self.history),
       Ok(BuiltIn::Null) => 0,
       Ok(BuiltIn::Help) => builtin_help(),
       Ok(BuiltIn::Ls) => builtin_ls(),
@@ -97,7 +95,15 @@ impl Prompt {
         println!("wsh: command not found: {}", &c.keyword);
         1
       }
+    };
+
+    if c.keyword != "null" {
+      self
+        .history
+        .push(format!("{} {}", &c.keyword, &c.args.join(" ")));
     }
+
+    exit_code
   }
 }
 
