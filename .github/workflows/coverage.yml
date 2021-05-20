@@ -3,12 +3,16 @@ name: Coverage 🛌
 on:
   push:
     paths:
-      - "src/**"
-      - "Cargo.toml"
+      - "whirl/**"
+      - "whirl_config/**"
+      - "whirl_prompt/**"
+      - "whirl_server/**"
   pull_request:
     paths:
-      - "src/**"
-      - "Cargo.toml"
+      - "whirl/**"
+      - "whirl_config/**"
+      - "whirl_prompt/**"
+      - "whirl_server/**"
 
 jobs:
   coverage:
