@@ -5,3 +5,6 @@ pub struct Command {
   pub keyword: String,
   pub args:    Vec<String>,
 }
+impl Command {
+  pub fn to_line(&self) -> String { format!("{} {}", self.keyword, self.args.join(" ")) }
+}
