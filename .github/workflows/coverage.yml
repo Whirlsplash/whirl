@@ -1,0 +1,44 @@
+name: Coverage 🛌
+
+on:
+  push:
+    paths:
+      - "src/**"
+      - "Cargo.toml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "Cargo.toml"
+
+jobs:
+  coverage:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout 🛒
+        uses: actions/checkout@v2
+
+      - name: Toolchain 🧰
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2021-02-20
+          components: rustfmt, clippy
+          override: true
+
+      - name: Tarpaulin ⛺
+        uses: actions-rs/tarpaulin@v0.1
+        with:
+          version: '0.15.0'
+          args: '-- --test-threads 1'
+
+      - name: Upload to Codecov ✈
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Archive Coverage Results 🗃
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage-report
+          path: cobertura.xml
