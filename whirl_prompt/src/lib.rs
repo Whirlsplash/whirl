@@ -28,7 +28,7 @@ use crate::{
     builtin_help,
     builtin_history,
     builtin_ls,
-    BuiltIn,
+    structures::BuiltIn,
   },
   structure::Command,
 };
