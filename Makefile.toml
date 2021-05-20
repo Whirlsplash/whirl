@@ -12,7 +12,7 @@ EXIT_ON_CLIENT_DISCONNECT = true
 # someone within the Whirlsplash Discord server;
 # https://discord.com/invite/8hn6padWF6.
 #
-# See line 56!
+# See line 59!
 WORLDS_PATH = "C:\\Program Files (x86)\\Worlds Inc\\WorldsPlayer - Win7\\WorldsPlayer.exe"
 
 # ------------
