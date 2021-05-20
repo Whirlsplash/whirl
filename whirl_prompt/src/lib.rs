@@ -98,9 +98,7 @@ impl Prompt {
     };
 
     if c.keyword != "null" {
-      self
-        .history
-        .push(format!("{} {}", &c.keyword, &c.args.join(" ")));
+      self.history.push(c.to_line());
     }
 
     exit_code
