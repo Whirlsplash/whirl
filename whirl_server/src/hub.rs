@@ -70,10 +70,10 @@ impl Server for Hub {
                   trace!("sent property update to client");
                 }
                 SESSINIT => {
-                  username = find_property_in_property_list(
+                  username = (&*find_property_in_property_list(
                     &parse_network_property(msg[3..].to_vec()),
                     VAR_USERNAME,
-                  ).value.clone();
+                  ).value).to_string();
 
                   debug!("received session initialization from {}", username);
 
@@ -96,9 +96,7 @@ impl Server for Hub {
                 BUDDYLISTUPDATE => {
                   let buddy = BuddyList::parse(msg.to_vec());
                   debug!("received buddy list update from {}: {}", username, buddy.buddy);
-                  peer.bytes.get_mut().write_all(&BuddyList {
-                    ..buddy.clone()
-                  }.create()).await?;
+                  peer.bytes.get_mut().write_all(&buddy.clone().create()).await?;
                   trace!("sent buddy list notify to {}: {}", username, buddy.buddy);
                 }
                 // TODO: Figure out if this is actually even needed.
@@ -116,7 +114,7 @@ impl Server for Hub {
 
                   {
                     state.lock().await.broadcast(&Text {
-                      sender: username.clone(),
+                      sender: (&*username).to_string(),
                       content: text.content,
                     }.create()).await;
                   }
