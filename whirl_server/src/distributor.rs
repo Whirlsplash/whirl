@@ -71,10 +71,10 @@ impl Server for Distributor {
                   trace!("sent property update to client");
                 }
                 SESSINIT => {
-                  username = find_property_in_property_list(
+                  username = (&*find_property_in_property_list(
                     &parse_network_property(msg[3..].to_vec()),
                     VAR_USERNAME,
-                  ).value.clone();
+                  ).value).to_string();
 
                   debug!("received session initialization from {}", username);
 
@@ -97,9 +97,7 @@ impl Server for Distributor {
                 BUDDYLISTUPDATE => {
                   let buddy = BuddyList::parse(msg.to_vec());
                   debug!("received buddy list update from {}: {}", username, buddy.buddy);
-                  peer.bytes.get_mut().write_all(&BuddyList {
-                    ..buddy.clone()
-                  }.create()).await?;
+                  peer.bytes.get_mut().write_all(&buddy.clone().create()).await?;
                   trace!("sent buddy list notify to {}: {}", username, buddy.buddy);
                 }
                 ROOMIDRQ => {
@@ -108,7 +106,7 @@ impl Server for Distributor {
 
                   let room_id;
                   if !room_ids.contains(&room.room_name) {
-                    room_ids.push(room.room_name.clone());
+                    room_ids.push((&*room.room_name).to_string());
                     room_id = room_ids.iter().position(|r| r == &room.room_name).unwrap();
                     trace!("inserted room: {}", room.room_name);
                   } else {
@@ -118,7 +116,7 @@ impl Server for Distributor {
                   }
 
                   peer.bytes.get_mut().write_all(&RedirectId {
-                    room_name: room.room_name.clone(),
+                    room_name: (&*room.room_name).to_string(),
                     room_number: room_id as i8,
                   }.create()).await?;
                   trace!("sent redirect id to {}: {}", username, room.room_name);
