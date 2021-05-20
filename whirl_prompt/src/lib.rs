@@ -44,11 +44,10 @@ impl Prompt {
 
     loop {
       Prompt::write_prompt();
-      Prompt::process_command(
-        Prompt::tokenize_command(prompt.read_command()),
-        prompt.history.clone(),
-      )
-      .await;
+      let command = prompt.read_command();
+      prompt
+        .process_command(Prompt::tokenize_command(command))
+        .await;
     }
   }
 
@@ -83,11 +82,11 @@ impl Prompt {
 
   // TODO: Find a way to make this access itself `history` doesn't have to be
   // passed everytime.
-  async fn process_command(c: Command, history: Vec<String>) -> i32 {
+  async fn process_command(&mut self, c: Command) -> i32 {
     match BuiltIn::from_str(&c.keyword) {
       Ok(BuiltIn::Echo) => builtin_echo(&c.args),
       Ok(BuiltIn::Exit) => std::process::exit(0),
-      Ok(BuiltIn::History) => builtin_history(history),
+      Ok(BuiltIn::History) => builtin_history(self.history.clone()),
       Ok(BuiltIn::Null) => 0,
       Ok(BuiltIn::Help) => builtin_help(),
       Ok(BuiltIn::Ls) => builtin_ls(),
