@@ -36,9 +36,11 @@ private = true
 # | Executors |
 # -------------
 [tasks.checkf]
+workspace = false
 dependencies = ["fmt", "check"]
 
 [tasks.checkfc]
+workspace = false
 dependencies = ["fmt", "check", "clippy"]
 
 [tasks.help]
