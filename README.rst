@@ -83,8 +83,9 @@ Optional
 ~~~~~~~~
 
 - `cargo-watch <https://crates.io/crates/cargo-watch>`_
+- `sqlfluff <https://github.com/sqlfluff/sqlfluff>`_
 
-*These development dependencies will automatically be satisfied if you are using the Nix shell
+*These development dependencies (exlcluding sqlfluff) will automatically be satisfied if you are using the Nix shell
 configuration as provided.*
 
 License
