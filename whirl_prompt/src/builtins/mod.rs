@@ -15,7 +15,7 @@ pub fn builtin_echo(args: &[String]) -> i32 {
   0
 }
 
-pub fn builtin_history(history: Vec<String>) -> i32 {
+pub fn builtin_history(history: &[String]) -> i32 {
   for (index, cmd) in history.iter().enumerate() {
     println!("{}  {}", index, cmd.trim());
   }
