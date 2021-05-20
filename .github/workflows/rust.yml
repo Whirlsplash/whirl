@@ -21,6 +21,7 @@ jobs:
     steps:
       - name: Checkout 🛒
         uses: actions/checkout@v2
+
       - name: Toolchain 🧰
         uses: actions-rs/toolchain@v1
         with:
@@ -28,8 +29,10 @@ jobs:
           toolchain: nightly-2021-02-20
           components: rustfmt, clippy
           override: true
+
       - name: Check ✅/ 🚫
         uses: actions-rs/cargo@v1
         continue-on-error: false
         with:
           command: check
+          args: --verbose
