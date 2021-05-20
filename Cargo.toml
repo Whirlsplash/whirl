@@ -1,5 +1,13 @@
 [workspace]
-members = ["whirl_config", "whirl", "whirl_prompt", "whirl_server"]
+members = [
+  "crates/whirl",
+  "crates/whirl_api",
+  "crates/whirl_common",
+  "crates/whirl_config",
+  "crates/whirl_db",
+  "crates/whirl_prompt",
+  "crates/whirl_server"
+]
 
 [profile.release]
 lto = "fat"

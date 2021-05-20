@@ -5,11 +5,9 @@ pub mod structures;
 
 use actix_web::HttpResponse;
 use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
+use whirl_common::system::seconds_to_hrtime;
 
-use crate::{
-  api::routes::stats::structures::{Statistics, StatisticsProcess, StatisticsSystem},
-  utils::system::seconds_to_hrtime,
-};
+use crate::routes::stats::structures::{Statistics, StatisticsProcess, StatisticsSystem};
 
 // This is mostly for developmental testing, it consumes more CPU than it's
 // worth.

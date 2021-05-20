@@ -3,16 +3,10 @@ name: Rust ✅
 on:
   push:
     paths:
-      - "whirl/**"
-      - "whirl_config/**"
-      - "whirl_prompt/**"
-      - "whirl_server/**"
+      - "crates/**"
   pull_request:
     paths:
-      - "whirl/**"
-      - "whirl_config/**"
-      - "whirl_prompt/**"
-      - "whirl_server/**"
+      - "crates/**"
 
 env:
   CARGO_TERM_COLOR: always

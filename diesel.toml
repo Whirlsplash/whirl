@@ -2,4 +2,4 @@
 # see diesel.rs/guides/configuring-diesel-cli
 
 [print_schema]
-file = "whirl/src/db/schema.rs"
+file = "crates/whirl_db/src/schema.rs"

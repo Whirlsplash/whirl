@@ -1,6 +1,7 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+use whirl_api::Api;
 use whirl_config::Config;
 use whirl_prompt::Prompt;
 use whirl_server::{
@@ -9,8 +10,6 @@ use whirl_server::{
   Server,
   ServerType::{AutoServer, RoomServer},
 };
-
-use crate::api::Api;
 
 pub async fn run() {
   let (tx, _rx) = std::sync::mpsc::channel();
