@@ -20,11 +20,11 @@ extern crate serde_derive;
 // #[macro_use]
 // extern crate simple_error;
 
-#[cfg(target_family = "windows")]
+#[cfg(windows)]
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-#[cfg(target_family = "unix")]
+#[cfg(unix)]
 #[global_allocator]
 static GLOBAL: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
