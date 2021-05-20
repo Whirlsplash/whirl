@@ -43,7 +43,6 @@ pub async fn run() {
       std::thread::sleep(std::time::Duration::default());
     }
   } else {
-    // std::thread::sleep(std::time::Duration::from_secs(2));
     Prompt::handle().await;
   }
 
