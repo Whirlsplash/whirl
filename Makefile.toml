@@ -3,6 +3,7 @@
 # -------------
 [env]
 CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
+EXIT_ON_CLIENT_DISCONNECT = true
 
 # This variable will vary depending on where you installed Worlds, ideally, you
 # should know the correct value for your own system.

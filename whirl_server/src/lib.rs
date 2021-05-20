@@ -71,6 +71,12 @@ pub trait Server {
         if let Err(e) = Self::handle(state, stream, address, counter).await {
           error!("an error occurred: {}", e);
         }
+
+        if std::env::var("EXIT_ON_CLIENT_DISCONNECT").unwrap_or_else(|_| "false".to_string())
+          == "true"
+        {
+          std::process::exit(0);
+        }
       });
     }
   }
