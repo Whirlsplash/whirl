@@ -1,4 +1,12 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+# Check if formatting in Rust source files is per standard.
 cargo fmt
+
+# Check if SQLFluff is installed on the system, if it is, run the linting
+# subroutine on SQL source files.
+if command -v sqlfluff > /dev/null; then
+	sqlfluff lint migrations/
+fi
+

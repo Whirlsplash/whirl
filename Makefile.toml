@@ -132,3 +132,9 @@ workspace = false
 dependencies = ["ask-github-token"]
 command = "act"
 args = ["-s", "GITHUB_TOKEN=${GITHUB_TOKEN}"]
+
+[tasks.lint-sql]
+workspace = false
+command = "sqlfluff"
+args = ["lint", "./migrations/"]
+
