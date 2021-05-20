@@ -30,6 +30,7 @@ static GLOBAL: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
 pub mod cli;
 pub mod subs;
+pub mod whirl;
 
 pub mod api;
 pub mod db;
