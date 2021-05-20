@@ -1,16 +1,18 @@
-name: Rust ✅/ 🚫
+name: Rust ✅
 
 on:
   push:
-    # branches: [develop]
     paths:
-      - "src/**"
-      - "Cargo.toml"
+      - "whirl/**"
+      - "whirl_config/**"
+      - "whirl_prompt/**"
+      - "whirl_server/**"
   pull_request:
-    # branches: [develop]
     paths:
-      - "src/**"
-      - "Cargo.toml"
+      - "whirl/**"
+      - "whirl_config/**"
+      - "whirl_prompt/**"
+      - "whirl_server/**"
 
 env:
   CARGO_TERM_COLOR: always
@@ -30,7 +32,7 @@ jobs:
           components: rustfmt, clippy
           override: true
 
-      - name: Check ✅/ 🚫
+      - name: Check ✅
         uses: actions-rs/cargo@v1
         continue-on-error: false
         with:
