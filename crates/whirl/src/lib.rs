@@ -13,10 +13,6 @@
 
 #[macro_use]
 extern crate log;
-#[macro_use]
-extern crate diesel;
-#[macro_use]
-extern crate serde_derive;
 // #[macro_use]
 // extern crate simple_error;
 
@@ -31,7 +27,3 @@ static GLOBAL: jemallocator::Jemalloc = jemallocator::Jemalloc;
 pub mod cli;
 pub mod subs;
 pub mod whirl;
-
-pub mod api;
-pub mod db;
-pub mod utils;

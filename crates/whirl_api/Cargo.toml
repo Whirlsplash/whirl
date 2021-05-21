@@ -1,0 +1,30 @@
+[package]
+name = "whirl_api"
+version = "0.1.0"
+authors = ["Fuwn <fuwnzy@gmail.com>"]
+edition = "2018"
+description = "Whirl, an open-source WorldServer implementation in Rust."
+documentation = "https://whirlsplash.org/docs/"
+readme = "../../README.rst"
+homepage = "https://whirlsplash.org"
+repository = "https://github.com/Whirlsplash/whirl"
+license = "GPL-3.0-only"
+# license-file = "LICENSE"
+keywords = ["rust", "worldserver", "whirl", "whirlsplash"]
+publish = false
+
+[dependencies]
+# Web-server
+actix-web = { version = "3.3.2", features = ["rustls"] }
+actix-cors = "0.5.4"
+
+# Utility
+sysinfo = "0.17.5"
+whirl_common = { path = "../whirl_common" }
+
+# Serialization
+serde = "1.0.126"
+serde_derive = "1.0.126"
+
+# Logging
+log = "0.4.14"
