@@ -1,0 +1,22 @@
+[package]
+name = "whirl_db"
+version = "0.1.0"
+authors = ["Fuwn <fuwnzy@gmail.com>"]
+edition = "2018"
+description = "Whirl, an open-source WorldServer implementation in Rust."
+documentation = "https://whirlsplash.org/docs/"
+readme = "../../README.rst"
+homepage = "https://whirlsplash.org"
+repository = "https://github.com/Whirlsplash/whirl"
+license = "GPL-3.0-only"
+# license-file = "LICENSE"
+keywords = ["rust", "worldserver", "whirl", "whirlsplash"]
+publish = false
+
+[dependencies]
+# Database
+libsqlite3-sys = { version = "0.9.1", features = ["bundled"] }
+diesel = { version = "1.4.6", features = ["sqlite"] }
+
+# Environment
+dotenv = "0.15.0"

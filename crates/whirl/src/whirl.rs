@@ -3,7 +3,9 @@
 
 use std::error::Error;
 
-use crate::{cli::Cli, utils::log::calculate_log_level};
+use whirl_common::log::calculate_log_level;
+
+use crate::cli::Cli;
 
 pub struct Whirl;
 impl Whirl {

@@ -5,7 +5,7 @@ authors = ["Fuwn <fuwnzy@gmail.com>"]
 edition = "2018"
 description = "Whirl, an open-source WorldServer implementation in Rust."
 documentation = "https://whirlsplash.org/docs/"
-readme = "../README.rst"
+readme = "../../README.rst"
 homepage = "https://whirlsplash.org"
 repository = "https://github.com/Whirlsplash/whirl"
 license = "GPL-3.0-only"
@@ -29,6 +29,7 @@ human-panic = "1.0.3"
 rand = "0.8.3"
 async-trait = "0.1.50"
 sysinfo = "0.17.5"
+whirl_common = { path = "../whirl_common" }
 
 # Byte Manipulation
 bytes = "1.0.1"
@@ -49,13 +50,10 @@ tokio = { version = "1.6.0", features = ["full"] }
 tokio-util = { version = "0.6.7", features = ["codec"] }
 tokio-stream = "0.1.6"
 
-# Database
-libsqlite3-sys = { version = "0.9.1", features = ["bundled"] }
-diesel = { version = "1.4.6", features = ["sqlite"] }
-
 # Web-server
 actix-web = { version = "3.3.2", features = ["rustls"] }
 actix-cors = "0.5.4"
+whirl_api = { path = "../whirl_api" }
 
 # Prompt
 whirl_prompt = { path = "../whirl_prompt" }
@@ -69,4 +67,3 @@ mimalloc = { version = "0.1.25", default-features = false }
 
 [target.'cfg(unix)'.dependencies]
 jemallocator = "0.3.2"
-
