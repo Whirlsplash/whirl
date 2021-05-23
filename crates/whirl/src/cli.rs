@@ -45,7 +45,7 @@ impl Cli {
       }
       debug!("generated shell completions");
     } else if matches.is_present("clean") {
-      let cleanable_directories = vec!["./log/"];
+      let cleanable_directories = vec!["log/"];
       for dir in cleanable_directories {
         let mut file_type = "directory";
         if !dir.ends_with('/') {
