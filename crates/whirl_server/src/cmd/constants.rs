@@ -1,6 +1,8 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+#![allow(dead_code)]
+
 pub const LONGLOC: i32 = 1;
 pub const STATE: i32 = 2;
 pub const PROP: i32 = 3;
