@@ -12,7 +12,6 @@
 #![recursion_limit = "128"]
 
 mod builtins;
-mod constants;
 mod structure;
 
 use std::{io, io::Write, str::FromStr};

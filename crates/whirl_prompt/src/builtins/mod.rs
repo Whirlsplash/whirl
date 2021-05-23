@@ -1,14 +1,14 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+pub mod constants;
 pub mod structures;
 
 use std::io::Write;
 
+use constants::{FILES, HELPABLES_BUILTINS, HELPABLES_BUILTIN_CONFIG};
 use sysinfo::SystemExt;
 use whirl_config::Config;
-
-use crate::constants::{FILES, HELPABLES_BUILTINS, HELPABLES_BUILTIN_CONFIG};
 
 pub fn builtin_echo(args: &[String]) -> i32 {
   println!("{}", args.join(" "));
