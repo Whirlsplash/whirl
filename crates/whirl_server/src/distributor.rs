@@ -1,15 +1,15 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-//! The distributor functions as bare-minimal
+//! The Distributor functions as bare-minimal
 //! [AutoServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#AutoServer).
 //!
-//! It intercepts a client and distributes it to a
+//! The Distributor intercepts a client on initial connection and distributes it
+//! to a
 //! [RoomServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#RoomServer).
 //!
-//! This is not meant to be a high performant section of code as the distributor
-//! is only meant to handle the initial and brief session initialization of the
-//! client.
+//! This is not meant to be a high focus module as the Distributor is only meant
+//! to handle the initial and brief session initialization of the client.
 
 use std::{error::Error, net::SocketAddr, sync::Arc};
 
