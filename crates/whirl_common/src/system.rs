@@ -16,6 +16,7 @@ fn make_parts(t: usize, steps: &[usize], mut accum: Vec<usize>) -> Vec<usize> {
   }
 }
 
+/// Convert a Unix (Epoch) Timestamp to a human-readable format.
 pub fn seconds_to_hrtime(seconds: usize) -> String {
   let word = ["week", "day", "hour", "min", "sec"];
 

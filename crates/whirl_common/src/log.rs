@@ -3,6 +3,8 @@
 
 use whirl_config::Config;
 
+/// Grab the log level configuration key (`whirlsplash.log.level`) from the
+/// configuration file and evaluate the proper log level.
 pub fn calculate_log_level() -> String {
   let mut level;
 

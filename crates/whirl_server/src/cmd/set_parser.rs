@@ -3,8 +3,8 @@
 
 use crate::cmd::structure::Command;
 
-/// Iterate over a command set in the from of bytes and return a list of
-/// human-readable commands.
+/// Iterate over a command set in the from of bytes (Vec<u8>) and return a list
+/// of human-readable commands.
 fn _parse_command_set(mut data: Vec<u8>) -> Vec<Command> {
   let mut command_set = vec![];
 
