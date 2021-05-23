@@ -37,6 +37,10 @@ pub struct Config {
 }
 impl Config {
   /// Re-fetch the configuration from the configuration file.
+  #[deprecated(
+    note = "the current implementation of the configurations system automatically performs \
+            refreshes, this method has no effects"
+  )]
   pub fn refresh() { let _ = config::Config::new().refresh(); }
 
   fn load() -> Result<Self, ConfigError> {
