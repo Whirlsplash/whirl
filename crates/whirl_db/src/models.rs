@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 //! Much of the documentation that you will see within this module is quoted
-//! from http://dev.worlds.net/private/GammaDocs/WorldServer.html#RoomServer.
+//! from
+//! [this](http://dev.worlds.net/private/GammaDocs/WorldServer.html#RoomServer)
+//! section from the Gamma Documents.
 
 // use crate::db::schema::*;
 
