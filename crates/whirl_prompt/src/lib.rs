@@ -37,6 +37,7 @@ pub struct Prompt {
   history: Vec<String>,
 }
 impl Prompt {
+  /// Begin handling user input as the prompt.
   pub async fn handle() -> ! {
     let mut prompt = Prompt {
       history: vec![]

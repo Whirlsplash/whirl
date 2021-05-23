@@ -14,13 +14,14 @@
 #[macro_use]
 extern crate diesel;
 
-pub mod models;
+mod models;
 mod schema;
 
 use diesel::prelude::*;
 
 // use crate::db::models::*;
 
+/// Establish a connection to the SQLite database.
 pub fn establish_connection() -> SqliteConnection {
   let database_url = std::env::var("DATABASE_URL").unwrap_or_else(|_| "whirl.sqlite3".to_string());
   SqliteConnection::establish(&database_url)
@@ -31,7 +32,7 @@ pub fn establish_connection() -> SqliteConnection {
 #[cfg(test)]
 #[test]
 #[ignore]
-pub fn show_serials() {
+fn show_serials() {
   use crate::{models::SerialNumber, schema::serial_numbers::dsl::*};
 
   dotenv::dotenv().ok();
