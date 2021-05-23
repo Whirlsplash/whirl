@@ -15,7 +15,7 @@
      - The API, for external interaction.
      - :code:`0.1.0`
    * - :code:`whirl_common`
-     - Assorted utilites, for global use.
+     - Assorted utilities, for global use.
      - :code:`0.1.0`
    * - :code:`whirl_config`
      - Configuration utilities, to interact with the configuration system.
