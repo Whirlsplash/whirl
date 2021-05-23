@@ -5,8 +5,8 @@ use std::str::from_utf8;
 
 use crate::net::structure::NetworkProperty;
 
-/// Iterate over a network property in the form of bytes and return a list of
-/// human-readable properties.
+/// Iterate over a network property in the form of bytes (Vec<u8>) and return a
+/// list of human-readable properties.
 pub fn parse_network_property(mut data: Vec<u8>) -> Vec<NetworkProperty> {
   let mut property_list = vec![];
 
