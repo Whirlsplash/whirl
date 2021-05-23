@@ -46,7 +46,7 @@ impl Config {
     s.try_into()
   }
 
-  // Get a certain configuration key or group from the configuration file.
+  /// Get a certain configuration key or group from the configuration file.
   pub fn get() -> Config {
     return if let Err(why) = Self::load() {
       error!(
