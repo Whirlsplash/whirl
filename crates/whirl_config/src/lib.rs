@@ -36,6 +36,7 @@ pub struct Config {
   pub hub:         HubConfig,
 }
 impl Config {
+  /// Re-fetch the configuration from the configuration file.
   pub fn refresh() { let _ = config::Config::new().refresh(); }
 
   fn load() -> Result<Self, ConfigError> {
@@ -45,6 +46,7 @@ impl Config {
     s.try_into()
   }
 
+  // Get a certain configuration key or group from the configuration file.
   pub fn get() -> Config {
     return if let Err(why) = Self::load() {
       error!(

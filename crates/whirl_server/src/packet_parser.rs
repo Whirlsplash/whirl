@@ -3,13 +3,13 @@
 
 use bytes::BytesMut;
 
-/// Read all commands from the given buffer.
+/// Read all commands from the given `buffer`.
 ///
 /// # Process
-/// 1. Get a command from `buffer` based on first byte.
+/// 1. Read a command from `buffer` based on it's first byte.
 /// 2. Push command to `commands`.
 /// 3. Remove command from `buffer`.
-/// 4. Iterate and do this for all commands within `buffer`.
+/// 4. Iterate and do this for the remaining commands within `buffer`.
 pub fn parse_commands_from_packet(mut buffer: BytesMut) -> Vec<BytesMut> {
   let mut commands: Vec<BytesMut> = Vec::new();
   trace!("initial buffer: {:?}, length: {}", buffer, buffer.len());

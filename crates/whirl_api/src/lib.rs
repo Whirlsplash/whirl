@@ -22,6 +22,7 @@ mod routes;
 
 pub struct Api;
 impl Api {
+  /// Begin handling connections on the web-server.
   pub async fn listen(
     tx: std::sync::mpsc::Sender<actix_web::dev::Server>,
     address: &str,
