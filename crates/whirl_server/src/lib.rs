@@ -16,9 +16,9 @@ extern crate log;
 #[macro_use]
 extern crate async_trait;
 
-pub mod cmd;
+mod cmd;
 mod interaction;
-pub mod net;
+mod net;
 
 pub mod distributor;
 pub mod hub;
