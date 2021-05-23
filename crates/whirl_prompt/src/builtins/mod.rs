@@ -83,7 +83,7 @@ pub fn builtin_config(args: &[String]) -> i32 {
           for help in HELPABLES_BUILTIN_CONFIG.iter() {
             println!("{}", help);
           },
-        "refresh" => Config::refresh(),
+        // "refresh" => Config::refresh(),
         _ => println!("invalid arguments provided"),
       },
     None => println!("invalid amount arguments provided"),

@@ -12,8 +12,8 @@ pub const HELPABLES_BUILTINS: [&str; 8] = [
   "history - display the command history",
   "ls      - display the present files",
 ];
-pub const HELPABLES_BUILTIN_CONFIG: [&str; 3] = [
+pub const HELPABLES_BUILTIN_CONFIG: [&str; 2] = [
   "help    - you are here",
-  "refresh - reload the configuration file",
+  // "refresh - reload the configuration file",
   "show    - display the current configuration",
 ];
