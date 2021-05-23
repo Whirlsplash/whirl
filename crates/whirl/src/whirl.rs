@@ -4,6 +4,7 @@
 use std::error::Error;
 
 use whirl_common::log::calculate_log_level;
+use whirl_config::Config;
 
 use crate::cli::Cli;
 
@@ -16,19 +17,21 @@ impl Whirl {
     // Logging
     dotenv::dotenv().ok();
     human_panic::setup_panic!();
-    let logger = flexi_logger::Logger::with_str(calculate_log_level());
-    if std::env::var("LOG_FILE").unwrap_or_else(|_| "true".to_string()) == "false"
-      || !whirl_config::Config::get().whirlsplash.log.file
-      || std::env::args().collect::<Vec<_>>()[1] == "clean"
-    // Cheeky as all hell.
-    {
-      logger.start()?;
-    } else {
-      logger
-        .print_message()
-        .log_to_file()
-        .directory("log")
-        .start()?;
+    if Config::get().whirlsplash.log.enable {
+      let logger = flexi_logger::Logger::with_str(calculate_log_level());
+      if std::env::var("LOG_FILE").unwrap_or_else(|_| "true".to_string()) == "false"
+        || !whirl_config::Config::get().whirlsplash.log.file
+        || std::env::args().collect::<Vec<_>>()[1] == "clean"
+      // Cheeky as all hell.
+      {
+        logger.start()?;
+      } else {
+        logger
+          .print_message()
+          .log_to_file()
+          .directory("log")
+          .start()?;
+      }
     }
 
     Cli::execute(matches).await.unwrap();
