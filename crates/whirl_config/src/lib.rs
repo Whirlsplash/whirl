@@ -1,6 +1,8 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+//! Configuration utilities, to interact with the configuration system.
+
 #![feature(
   type_ascription,
   hash_set_entry,

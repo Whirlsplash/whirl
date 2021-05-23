@@ -1,6 +1,8 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+//! Exposes the Distributor and Hub for further use.
+
 #![feature(
   type_ascription,
   hash_set_entry,
@@ -34,6 +36,8 @@ use tokio::{
 
 use crate::interaction::shared::Shared;
 
+/// The type of server the `listen` method of the `Server` trait will
+/// implemented for.
 #[derive(Debug)]
 pub enum ServerType {
   AnonRoomServer,
