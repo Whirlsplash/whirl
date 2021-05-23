@@ -40,6 +40,7 @@ use crate::{
   Server,
 };
 
+/// Spawn a Distributor.
 pub struct Distributor;
 #[async_trait]
 impl Server for Distributor {

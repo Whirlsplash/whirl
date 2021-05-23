@@ -37,6 +37,7 @@ use crate::{
   Server,
 };
 
+/// Spawn a Hub.
 pub struct Hub;
 #[async_trait]
 impl Server for Hub {
