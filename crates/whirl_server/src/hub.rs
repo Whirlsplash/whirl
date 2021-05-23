@@ -1,11 +1,12 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-//! The hub functions as a
+//! The Hub functions as a
 //! [RoomServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#AutoServer).
 //!
-//! The RoomServer is responsible for handling just about every request from the
-//! client after they have been redirected to a room (hub).
+//! A RoomServer is responsible for handling just about every request from the
+//! client after they have been redirected to a room (Hub) and finished their
+//! business with the Distributor (AutoServer).
 
 use std::{error::Error, net::SocketAddr, sync::Arc};
 
