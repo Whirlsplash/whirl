@@ -81,6 +81,7 @@ Development Dependencies
 Required
 ~~~~~~~~
 
+- `Rust <https://www.rust-lang.org/>`_
 - `diesel\_cli <https://crates.io/crates/diesel_cli>`_
 - `cargo-make <https://github.com/sagiegurari/cargo-make>`_
 
