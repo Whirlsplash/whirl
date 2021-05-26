@@ -33,8 +33,14 @@ use tokio::{
   net::{TcpListener, TcpStream},
   sync::Mutex,
 };
+use whirl_config::Config;
 
-use crate::interaction::shared::Shared;
+use crate::{
+  distributor::Distributor,
+  hub::Hub,
+  interaction::shared::Shared,
+  ServerType::{AutoServer, RoomServer},
+};
 
 /// The type of server the `listen` method of the `Server` trait will
 /// implemented for.
@@ -91,4 +97,19 @@ pub trait Server {
     _address: SocketAddr,
     count: usize,
   ) -> Result<(), Box<dyn Error>>;
+}
+
+pub fn make() -> Vec<tokio::task::JoinHandle<()>> {
+  vec![
+    tokio::spawn(async move {
+      let _ = Distributor::listen(
+        &*format!("0.0.0.0:{}", Config::get().distributor.port),
+        AutoServer,
+      )
+      .await;
+    }),
+    tokio::spawn(async move {
+      let _ = Hub::listen(&*format!("0.0.0.0:{}", Config::get().hub.port), RoomServer).await;
+    }),
+  ]
 }

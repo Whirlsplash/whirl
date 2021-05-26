@@ -47,3 +47,18 @@ impl Api {
     sys.block_on(server)
   }
 }
+
+pub fn make() -> tokio::task::JoinHandle<()> {
+  // actix_web::rt::System::new("").block_on(rx.recv().unwrap().stop(true));
+
+  tokio::spawn(async move {
+    let _ = crate::Api::listen(
+      std::sync::mpsc::channel().0,
+      &*format!(
+        "0.0.0.0:{}",
+        whirl_config::Config::get().whirlsplash.api.port
+      ),
+    )
+    .await;
+  })
+}

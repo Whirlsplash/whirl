@@ -21,6 +21,7 @@ actix-cors = "0.5.4"
 # Utility
 sysinfo = "0.18.0"
 whirl_common = { path = "../whirl_common" }
+tokio = { version = "1.6.0", features = ["full"] }
 
 # Serialization
 serde = "1.0.126"
@@ -28,3 +29,6 @@ serde_derive = "1.0.126"
 
 # Logging
 log = "0.4.14"
+
+# Config
+whirl_config = { path = "../whirl_config" }
