@@ -73,8 +73,8 @@ impl Cli {
       loop {
         std::thread::sleep(std::time::Duration::default());
       }
-    } else {
-      whirl_prompt::Prompt::handle().await;
     }
+
+    whirl_prompt::Prompt::handle().await;
   }
 }
