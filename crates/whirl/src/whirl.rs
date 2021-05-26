@@ -11,8 +11,8 @@ use crate::cli::Cli;
 pub struct Whirl;
 impl Whirl {
   pub async fn splash() -> Result<(), Box<dyn Error>> {
-    // Environment and CLI
-    let matches = Cli::setup();
+    // Environment
+    std::env::set_var("DATABASE_URL", "whirl.sqlite3");
 
     // Logging
     dotenv::dotenv().ok();
@@ -34,7 +34,7 @@ impl Whirl {
       }
     }
 
-    Cli::execute(matches).await.unwrap();
+    Cli::execute().await.unwrap();
 
     Ok(())
   }
