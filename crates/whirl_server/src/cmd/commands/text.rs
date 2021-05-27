@@ -15,7 +15,7 @@ pub struct Text {
   pub content: String,
 }
 impl Creatable for Text {
-  fn create(self) -> Vec<u8> {
+  fn create(&self) -> Vec<u8> {
     let mut command = BytesMut::new();
 
     // Header
