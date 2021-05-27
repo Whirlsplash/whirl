@@ -10,7 +10,6 @@ use crate::cmd::{
   extendable::{Creatable, Parsable},
 };
 
-#[derive(Clone)]
 pub struct BuddyList {
   pub buddy: String,
   pub add:   i8,
