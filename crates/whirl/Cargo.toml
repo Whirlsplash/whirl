@@ -26,7 +26,6 @@ human-panic = "1.0.3"
 # Utility
 rand = "0.8.3"
 async-trait = "0.1.50"
-sysinfo = "0.17.5"
 whirl_common = { path = "../whirl_common" }
 
 # Byte Manipulation
