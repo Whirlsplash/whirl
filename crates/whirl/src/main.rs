@@ -2,4 +2,4 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> { whirl::whirl::Whirl::splash().await }
+async fn main() -> Result<(), Box<dyn std::error::Error>> { whirl::Whirl::splash().await }
