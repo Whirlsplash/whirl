@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 use structopt::clap::{App, AppSettings, Arg, SubCommand};
-use whirl_api::Api;
 use whirl_config::Config;
-use whirl_prompt::Prompt;
 use whirl_server::{
   distributor::Distributor,
   hub::Hub,
@@ -86,7 +84,7 @@ impl Cli {
         let _ = Hub::listen(&*format!("0.0.0.0:{}", Config::get().hub.port), RoomServer).await;
       }),
       tokio::spawn(async move {
-        let _ = Api::listen(
+        let _ = whirl_api::Api::listen(
           tx,
           &*format!("0.0.0.0:{}", Config::get().whirlsplash.api.port),
         )
@@ -102,7 +100,7 @@ impl Cli {
         std::thread::sleep(std::time::Duration::default());
       }
     } else {
-      Prompt::handle().await;
+      whirl_prompt::Prompt::handle().await;
     }
 
     // actix_web::rt::System::new("").block_on(rx.recv().unwrap().stop(true));
