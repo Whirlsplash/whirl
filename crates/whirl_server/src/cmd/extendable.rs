@@ -6,7 +6,7 @@ pub trait Parsable {
 }
 
 pub trait Creatable {
-  fn create(self) -> Vec<u8>;
+  fn create(&self) -> Vec<u8>;
 }
 
 /// Having to do this makes me with there was operator overloading in Rust.

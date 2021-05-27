@@ -98,7 +98,7 @@ impl Server for Distributor {
                 BUDDYLISTUPDATE => {
                   let buddy = BuddyList::parse(msg.to_vec());
                   debug!("received buddy list update from {}: {}", username, buddy.buddy);
-                  peer.bytes.get_mut().write_all(&buddy.clone().create()).await?;
+                  peer.bytes.get_mut().write_all(&buddy.create()).await?;
                   trace!("sent buddy list notify to {}: {}", username, buddy.buddy);
                 }
                 ROOMIDRQ => {

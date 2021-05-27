@@ -12,7 +12,7 @@ pub struct RedirectId {
   pub room_number: i8,
 }
 impl Creatable for RedirectId {
-  fn create(self) -> Vec<u8> {
+  fn create(&self) -> Vec<u8> {
     let mut command = BytesMut::new();
 
     // Header
