@@ -2,9 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 use structopt::clap::{App, AppSettings, Arg, SubCommand};
+use whirl_api::Api;
 use whirl_config::Config;
-
-use crate::subs::run;
+use whirl_prompt::Prompt;
+use whirl_server::{
+  distributor::Distributor,
+  hub::Hub,
+  Server,
+  ServerType::{AutoServer, RoomServer},
+};
 
 pub struct Cli;
 impl Cli {
@@ -20,7 +26,7 @@ impl Cli {
     }
 
     match matches.subcommand() {
-      ("run", _) => run().await,
+      ("run", _) => Self::run().await,
       ("config", Some(s_matches)) =>
         match s_matches.subcommand() {
           ("show", _) => println!("{:#?}", Config::get()),
@@ -63,5 +69,42 @@ impl Cli {
         Arg::with_name("debug").short("d").long("debug"),
         Arg::with_name("trace").short("t").long("trace"),
       ])
+  }
+
+  async fn run() {
+    let (tx, _rx) = std::sync::mpsc::channel();
+
+    let _threads = vec![
+      tokio::spawn(async move {
+        let _ = Distributor::listen(
+          &*format!("0.0.0.0:{}", Config::get().distributor.port),
+          AutoServer,
+        )
+        .await;
+      }),
+      tokio::spawn(async move {
+        let _ = Hub::listen(&*format!("0.0.0.0:{}", Config::get().hub.port), RoomServer).await;
+      }),
+      tokio::spawn(async move {
+        let _ = Api::listen(
+          tx,
+          &*format!("0.0.0.0:{}", Config::get().whirlsplash.api.port),
+        )
+        .await;
+      }),
+    ];
+
+    if std::env::var("DISABLE_PROMPT").unwrap_or_else(|_| "false".to_string()) == "true"
+      || !Config::get().whirlsplash.prompt.enable
+    {
+      info!("starting with prompt disabled");
+      loop {
+        std::thread::sleep(std::time::Duration::default());
+      }
+    } else {
+      Prompt::handle().await;
+    }
+
+    // actix_web::rt::System::new("").block_on(rx.recv().unwrap().stop(true));
   }
 }
