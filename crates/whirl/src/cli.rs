@@ -3,12 +3,6 @@
 
 use structopt::clap::{App, AppSettings, Arg, SubCommand};
 use whirl_config::Config;
-use whirl_server::{
-  distributor::Distributor,
-  hub::Hub,
-  Server,
-  ServerType::{AutoServer, RoomServer},
-};
 
 pub struct Cli;
 impl Cli {
@@ -70,27 +64,7 @@ impl Cli {
   }
 
   async fn run() {
-    let (tx, _rx) = std::sync::mpsc::channel();
-
-    let _threads = vec![
-      tokio::spawn(async move {
-        let _ = Distributor::listen(
-          &*format!("0.0.0.0:{}", Config::get().distributor.port),
-          AutoServer,
-        )
-        .await;
-      }),
-      tokio::spawn(async move {
-        let _ = Hub::listen(&*format!("0.0.0.0:{}", Config::get().hub.port), RoomServer).await;
-      }),
-      tokio::spawn(async move {
-        let _ = whirl_api::Api::listen(
-          tx,
-          &*format!("0.0.0.0:{}", Config::get().whirlsplash.api.port),
-        )
-        .await;
-      }),
-    ];
+    vec![whirl_api::make()].extend(whirl_server::make());
 
     if std::env::var("DISABLE_PROMPT").unwrap_or_else(|_| "false".to_string()) == "true"
       || !Config::get().whirlsplash.prompt.enable
@@ -102,7 +76,5 @@ impl Cli {
     } else {
       whirl_prompt::Prompt::handle().await;
     }
-
-    // actix_web::rt::System::new("").block_on(rx.recv().unwrap().stop(true));
   }
 }
