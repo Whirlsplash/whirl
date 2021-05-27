@@ -1,22 +1,16 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use structopt::clap::{App, AppSettings, Arg, ArgMatches, SubCommand};
+use structopt::clap::{App, AppSettings, Arg, SubCommand};
 use whirl_config::Config;
 
 use crate::subs::run;
 
 pub struct Cli;
 impl Cli {
-  pub fn setup() -> ArgMatches<'static> {
+  pub async fn execute() -> Result<(), Box<dyn std::error::Error>> {
     let matches = Self::cli().get_matches();
 
-    std::env::set_var("DATABASE_URL", "whirl.sqlite3");
-
-    matches
-  }
-
-  pub async fn execute(matches: ArgMatches<'_>) -> Result<(), Box<dyn std::error::Error>> {
     if Config::get().whirlsplash.log.test {
       error!("error");
       warn!("warn");
