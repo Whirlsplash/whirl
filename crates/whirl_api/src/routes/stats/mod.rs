@@ -5,7 +5,6 @@ pub mod structures;
 
 use actix_web::HttpResponse;
 use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
-use whirl_common::system::seconds_to_hrtime;
 
 use crate::routes::stats::structures::{Statistics, StatisticsProcess, StatisticsSystem};
 
@@ -21,7 +20,9 @@ pub fn statistics() -> HttpResponse {
     system:  StatisticsSystem {
       os_type: sys.get_name().unwrap(),
       release: sys.get_kernel_version().unwrap(),
-      uptime:  seconds_to_hrtime(sysinfo::System::new().get_uptime() as usize),
+      uptime: whirl_common::system::seconds_to_hrtime(
+        sysinfo::System::new().get_uptime() as usize
+      ),
     },
     process: StatisticsProcess {
       // (process.cpu_usage() * 100.0).round() / 100.0
