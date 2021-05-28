@@ -20,11 +20,11 @@ impl Peer {
     state: Arc<Mutex<Shared>>,
     bytes: Framed<TcpStream, BytesCodec>,
     username: String,
-  ) -> std::io::Result<Peer> {
+  ) -> std::io::Result<Self> {
     let (tx, rx) = mpsc::unbounded_channel();
     state.lock().await.peers.insert(username, tx);
 
-    Ok(Peer {
+    Ok(Self {
       bytes,
       rx,
     })

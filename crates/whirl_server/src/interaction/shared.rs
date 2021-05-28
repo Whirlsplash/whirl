@@ -12,13 +12,13 @@ pub struct Shared {
 }
 impl Shared {
   pub fn new() -> Self {
-    Shared {
+    Self {
       peers: HashMap::new(),
     }
   }
 
   pub async fn broadcast(&mut self, message: &[u8]) {
-    for peer in self.peers.iter_mut() {
+    for peer in &mut self.peers {
       peer.1.send(BytesMut::from(message)).unwrap();
     }
   }
