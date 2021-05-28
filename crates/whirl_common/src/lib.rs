@@ -10,7 +10,15 @@
   decl_macro,
   proc_macro_hygiene
 )]
-#![warn(rust_2018_idioms)]
+#![deny(
+  warnings,
+  nonstandard_style,
+  unused,
+  future_incompatible,
+  rust_2018_idioms,
+  unsafe_code
+)]
+#![deny(clippy::all, clippy::nursery, clippy::pedantic)]
 #![recursion_limit = "128"]
 
 pub mod log;

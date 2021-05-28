@@ -8,11 +8,11 @@ pub struct Command {
   pub body:   Vec<u8>,
 }
 impl Command {
-  pub fn _new() -> Self { Command::default() }
+  pub fn _new() -> Self { Self::default() }
 }
 impl Default for Command {
   fn default() -> Self {
-    Command {
+    Self {
       length: 0,
       obj_id: 0,
       id:     0,

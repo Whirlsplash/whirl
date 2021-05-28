@@ -20,9 +20,9 @@ fn _parse_command_set(mut data: Vec<u8>) -> Vec<Command> {
 
     let command_length = data[0];
     let mut command = Command {
-      length: command_length as i32,
-      obj_id: data[1] as i32,
-      id:     data[2] as i32,
+      length: i32::from(command_length),
+      obj_id: i32::from(data[1]),
+      id:     i32::from(data[2]),
       body:   vec![],
     };
     if command.length > 3 {

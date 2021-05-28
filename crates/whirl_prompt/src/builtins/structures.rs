@@ -19,15 +19,15 @@ impl FromStr for BuiltIn {
 
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     match s {
-      "echo" => Ok(BuiltIn::Echo),
-      "history" => Ok(BuiltIn::History),
-      "exit" => Ok(BuiltIn::Exit),
-      "null" => Ok(BuiltIn::Null),
-      "help" => Ok(BuiltIn::Help),
-      "ls" => Ok(BuiltIn::Ls),
-      "cat" => Ok(BuiltIn::Cat),
-      "config" => Ok(BuiltIn::Config),
-      "fetch" => Ok(BuiltIn::Fetch),
+      "echo" => Ok(Self::Echo),
+      "history" => Ok(Self::History),
+      "exit" => Ok(Self::Exit),
+      "null" => Ok(Self::Null),
+      "help" => Ok(Self::Help),
+      "ls" => Ok(Self::Ls),
+      "cat" => Ok(Self::Cat),
+      "config" => Ok(Self::Config),
+      "fetch" => Ok(Self::Fetch),
       _ => Err(()),
     }
   }

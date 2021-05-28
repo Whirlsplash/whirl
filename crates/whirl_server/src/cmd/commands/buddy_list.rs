@@ -4,6 +4,7 @@
 use std::str::from_utf8;
 
 use bytes::{BufMut, BytesMut};
+use num_traits::AsPrimitive;
 
 use crate::cmd::{
   constants::BUDDYLISTNOTIFY,
@@ -22,7 +23,7 @@ impl Parsable for BuddyList {
         .to_string(),
 
       // Get the last byte
-      add: data[data[0] as usize - 1] as i8,
+      add: data[data[0] as usize - 1].as_(): i8,
     }
   }
 }
@@ -32,15 +33,15 @@ impl Creatable for BuddyList {
 
     // Header
     command.put_u8(0x01); // ObjId
-    command.put_i8(BUDDYLISTNOTIFY as i8); // Type
+    command.put_i8(BUDDYLISTNOTIFY.as_(): i8); // Type
 
     // Content
-    command.put_u8(self.buddy.len() as u8); // Buddy (name) length
+    command.put_u8(self.buddy.len().as_(): u8); // Buddy (name) length
     command.put_slice(self.buddy.as_bytes()); // Buddy (name)
-    command.put_u8(self.add as u8); // "Is buddy logged on?" (?)
+    command.put_u8(self.add.as_(): u8); // "Is buddy logged on?" (?)
 
     let mut command_as_vec = command.to_vec();
-    command_as_vec.insert(0, command.len() as u8 + 1);
+    command_as_vec.insert(0, command.len().as_(): u8 + 1);
 
     command_as_vec
   }

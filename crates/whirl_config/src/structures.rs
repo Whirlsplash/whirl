@@ -18,6 +18,7 @@ pub struct WhirlsplashPromptConfig {
   pub enable: bool,
   pub ps1:    String,
 }
+#[allow(clippy::struct_excessive_bools)]
 #[derive(Serialize, Deserialize, Debug)]
 pub struct WhirlsplashLogConfig {
   pub enable:     bool,

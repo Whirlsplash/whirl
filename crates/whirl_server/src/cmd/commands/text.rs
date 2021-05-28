@@ -4,6 +4,7 @@
 use std::str::from_utf8;
 
 use bytes::{BufMut, BytesMut};
+use num_traits::AsPrimitive;
 
 use crate::cmd::{
   constants::TEXT,
@@ -20,7 +21,7 @@ impl Creatable for Text {
 
     // Header
     command.put_u8(0x01);
-    command.put_i8(TEXT as i8);
+    command.put_i8(TEXT.as_(): i8);
 
     // Content
     // TODO: Find a way to parse ObjIds.
@@ -28,14 +29,14 @@ impl Creatable for Text {
     // The below byte is suspected to be the sender's short ObjId.
     command.put_i8(0x00);
 
-    command.put_u8(self.sender.len() as u8);
+    command.put_u8(self.sender.len().as_(): u8);
     command.put_slice(self.sender.as_bytes());
-    command.put_u8(self.content.len() as u8);
+    command.put_u8(self.content.len().as_(): u8);
     command.put_slice(self.content.as_bytes());
 
     // Convert to vector and insert the length
     let mut command_as_vec = command.to_vec();
-    command_as_vec.insert(0, command.len() as u8 + 1);
+    command_as_vec.insert(0, command.len().as_(): u8 + 1);
 
     // Return bytes
     command_as_vec

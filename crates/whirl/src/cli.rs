@@ -6,7 +6,10 @@ use whirl_config::Config;
 
 pub struct Cli;
 impl Cli {
-  pub async fn execute() -> Result<(), Box<dyn std::error::Error>> {
+  /// # Panics
+  /// Though Rust thinks a panic might happen because of the `unreachable`
+  /// macro, all CLI subcommands are handled so it is trully unreachable.
+  pub async fn execute() {
     let matches = Self::cli().get_matches();
 
     if Config::get().whirlsplash.log.test {
@@ -27,10 +30,11 @@ impl Cli {
       ("clean", _) => {
         let cleanable_directories = vec!["log/"];
         for dir in cleanable_directories {
-          let mut file_type = "directory";
-          if !dir.ends_with('/') {
-            file_type = "file";
-          }
+          let file_type = if dir.ends_with('/') {
+            "directory"
+          } else {
+            "file"
+          };
           info!("cleaning {}: {}", file_type, dir);
           if let Err(e) = std::fs::remove_dir_all(dir) {
             warn!("cannot delete {}: {}: {}", file_type, dir, e);
@@ -39,8 +43,6 @@ impl Cli {
       }
       _ => unreachable!(),
     }
-
-    Ok(())
   }
 
   fn cli() -> App<'static, 'static> {

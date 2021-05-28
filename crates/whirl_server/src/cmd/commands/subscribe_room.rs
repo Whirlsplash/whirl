@@ -3,6 +3,7 @@
 
 use byteorder::{BigEndian, ReadBytesExt};
 use bytes::{Buf, BytesMut};
+use num_traits::AsPrimitive;
 
 use crate::cmd::extendable::Parsable;
 
@@ -20,11 +21,11 @@ impl Parsable for SubscribeRoom {
     let mut data = BytesMut::from(data.as_slice()).reader();
 
     Self {
-      room_number: data.read_i16::<BigEndian>().unwrap() as i8,
-      x:           data.read_i16::<BigEndian>().unwrap() as i8 as f32,
-      y:           data.read_i16::<BigEndian>().unwrap() as i8 as f32,
-      z:           data.read_i16::<BigEndian>().unwrap() as i8 as f32,
-      distance:    data.read_i16::<BigEndian>().unwrap() as i8 as f32, // + 100
+      room_number: data.read_i16::<BigEndian>().unwrap().as_(): i8,
+      x:           f32::from(data.read_i16::<BigEndian>().unwrap().as_(): i8),
+      y:           f32::from(data.read_i16::<BigEndian>().unwrap().as_(): i8),
+      z:           f32::from(data.read_i16::<BigEndian>().unwrap().as_(): i8),
+      distance:    f32::from(data.read_i16::<BigEndian>().unwrap().as_(): i8), // + 100
     }
   }
 }

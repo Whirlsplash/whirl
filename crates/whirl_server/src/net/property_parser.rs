@@ -23,7 +23,7 @@ pub fn parse_network_property(mut data: Vec<u8>) -> Vec<NetworkProperty> {
 
     let property_length = data[1] + 2;
     property_list.push(NetworkProperty {
-      prop_id: data[0] as i32,
+      prop_id: i32::from(data[0]),
       value:   from_utf8(&data[2..data[1] as usize + 2])
         .unwrap()
         .to_string(),

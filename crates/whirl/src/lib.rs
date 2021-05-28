@@ -8,7 +8,15 @@
   decl_macro,
   proc_macro_hygiene
 )]
-#![warn(rust_2018_idioms)]
+#![deny(
+  warnings,
+  nonstandard_style,
+  unused,
+  future_incompatible,
+  rust_2018_idioms,
+  unsafe_code
+)]
+#![deny(clippy::all, clippy::nursery, clippy::pedantic)]
 #![recursion_limit = "128"]
 
 #[macro_use]
@@ -30,6 +38,8 @@ use whirl_config::Config;
 
 pub struct Whirl;
 impl Whirl {
+  /// # Errors
+  /// - An error may arise if logger fails to start.
   pub async fn splash() -> Result<(), Box<dyn std::error::Error>> {
     // Environment
     std::env::set_var("DATABASE_URL", "whirl.sqlite3");
@@ -54,7 +64,7 @@ impl Whirl {
       }
     }
 
-    crate::cli::Cli::execute().await.unwrap();
+    crate::cli::Cli::execute().await;
 
     Ok(())
   }

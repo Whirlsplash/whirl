@@ -22,6 +22,7 @@ actix-cors = "0.5.4"
 sysinfo = "0.18.0"
 whirl_common = { path = "../whirl_common" }
 tokio = { version = "1.6.0", features = ["full"] }
+num-traits = "0.2.14"
 
 # Serialization
 serde = "1.0.126"

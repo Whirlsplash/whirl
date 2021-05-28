@@ -10,7 +10,15 @@
   decl_macro,
   proc_macro_hygiene
 )]
-#![warn(rust_2018_idioms)]
+#![deny(
+  warnings,
+  nonstandard_style,
+  unused,
+  future_incompatible,
+  rust_2018_idioms,
+  unsafe_code
+)]
+#![deny(clippy::all, clippy::nursery, clippy::pedantic)] // clippy::pedantic
 #![recursion_limit = "128"]
 
 #[macro_use]
@@ -35,22 +43,17 @@ use tokio::{
 };
 use whirl_config::Config;
 
-use crate::{
-  distributor::Distributor,
-  hub::Hub,
-  interaction::shared::Shared,
-  ServerType::{AutoServer, RoomServer},
-};
+use crate::interaction::shared::Shared;
 
 /// The type of server the `listen` method of the `Server` trait will
 /// implemented for.
 #[derive(Debug)]
 pub enum ServerType {
-  AnonRoomServer,
-  AnonUserServer,
-  AutoServer,
-  RoomServer,
-  UserServer,
+  AnonRoom,
+  AnonUser,
+  Auto,
+  Room,
+  User,
 }
 // https://stackoverflow.com/a/32712140/14452787
 impl fmt::Display for ServerType {
@@ -99,17 +102,26 @@ pub trait Server {
   ) -> Result<(), Box<dyn Error>>;
 }
 
+/// # Panics
+/// - A panic may occur if the TCP server is unable to bind the specified port.
+#[must_use]
 pub fn make() -> Vec<tokio::task::JoinHandle<()>> {
   vec![
     tokio::spawn(async move {
-      let _ = Distributor::listen(
+      crate::distributor::Distributor::listen(
         &*format!("0.0.0.0:{}", Config::get().distributor.port),
-        AutoServer,
+        ServerType::Auto,
       )
-      .await;
+      .await
+      .unwrap();
     }),
     tokio::spawn(async move {
-      let _ = Hub::listen(&*format!("0.0.0.0:{}", Config::get().hub.port), RoomServer).await;
+      crate::hub::Hub::listen(
+        &*format!("0.0.0.0:{}", Config::get().hub.port),
+        ServerType::Room,
+      )
+      .await
+      .unwrap();
     }),
   ]
 }

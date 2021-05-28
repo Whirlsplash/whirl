@@ -2,17 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 //! The Distributor functions as bare-minimal
-//! [AutoServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#AutoServer).
+//! [`AutoServer`](http://dev.worlds.net/private/GammaDocs/WorldServer.html#AutoServer).
 //!
-//! The Distributor intercepts a client on initial connection and distributes it
-//! to a
-//! [RoomServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#RoomServer).
+//! The Distributor intercepts a client on initial connection and distributes
+//! it to a
+//! [`RoomServer`](http://dev.worlds.net/private/GammaDocs/WorldServer.html#RoomServer).
 //!
-//! This is not meant to be a high focus module as the Distributor is only meant
-//! to handle the initial and brief session initialization of the client.
+//! This is not meant to be a high focus module as the Distributor is only
+//! meant to handle the initial and brief session initialization of the client.
 
 use std::{error::Error, net::SocketAddr, sync::Arc};
 
+use num_traits::cast::AsPrimitive;
 use tokio::{io::AsyncWriteExt, net::TcpStream, sync::Mutex};
 use tokio_stream::StreamExt;
 use tokio_util::codec::{BytesCodec, Decoder};
@@ -21,17 +22,17 @@ use whirl_config::Config;
 use crate::{
   cmd::{
     commands::{
-      action::create_action,
+      action::create,
       buddy_list::BuddyList,
       property::{
-        create::{create_property_request_as_distributor, create_property_update_as_distributor},
+        create::{property_request_as_distributor, property_update_as_distributor},
         parse::find_property_in_property_list,
       },
       redirect_id::RedirectId,
       room_id_request::RoomIdRequest,
       text::Text,
     },
-    constants::*,
+    constants::{BUDDYLISTUPDATE, PROPREQ, PROPSET, ROOMIDRQ, SESSEXIT, SESSINIT},
     extendable::{Creatable, Parsable},
   },
   interaction::{peer::Peer, shared::Shared},
@@ -63,12 +64,12 @@ impl Server for Distributor {
         result = peer.bytes.next() => match result {
           Some(Ok(msg)) => {
             for msg in parse_commands_from_packet(msg) {
-              match msg.get(2).unwrap().to_owned() as i32 {
+              match msg.get(2).unwrap().to_owned().as_(): i32 {
                 PROPREQ => {
                   debug!("received property request from client");
 
                   peer.bytes.get_mut()
-                    .write_all(&create_property_update_as_distributor()).await?;
+                    .write_all(&property_update_as_distributor()).await?;
                   trace!("sent property update to client");
                 }
                 SESSINIT => {
@@ -80,7 +81,7 @@ impl Server for Distributor {
                   debug!("received session initialization from {}", username);
 
                   peer.bytes.get_mut()
-                    .write_all(&create_property_request_as_distributor()).await?;
+                    .write_all(&property_request_as_distributor()).await?;
                   trace!("sent property request to {}", username);
                 }
                 PROPSET => {
@@ -92,7 +93,7 @@ impl Server for Distributor {
                     content: Config::get().distributor.worldsmaster_greeting,
                   }.create()).await?;
                   peer.bytes.get_mut()
-                    .write_all(&create_action()).await?;
+                    .write_all(&create()).await?;
                   trace!("sent text to {}", username);
                 }
                 BUDDYLISTUPDATE => {
@@ -106,19 +107,19 @@ impl Server for Distributor {
                   debug!("received room id request from {}: {}", username, &room.room_name);
 
                   let room_id;
-                  if !room_ids.contains(&room.room_name) {
-                    room_ids.push((&*room.room_name).to_string());
-                    room_id = room_ids.iter().position(|r| r == &room.room_name).unwrap();
-                    trace!("inserted room: {}", room.room_name);
-                  } else {
+                  if room_ids.contains(&room.room_name) {
                     let position = room_ids.iter().position(|r| r == &room.room_name).unwrap();
                     trace!("found room: {}", room.room_name);
                     room_id = position;
+                  } else {
+                    room_ids.push((&*room.room_name).to_string());
+                    room_id = room_ids.iter().position(|r| r == &room.room_name).unwrap();
+                    trace!("inserted room: {}", room.room_name);
                   }
 
                   peer.bytes.get_mut().write_all(&RedirectId {
                     room_name: (&*room.room_name).to_string(),
-                    room_number: room_id as i8,
+                    room_number: room_id.as_(): i8,
                   }.create()).await?;
                   trace!("sent redirect id to {}: {}", username, room.room_name);
                 }

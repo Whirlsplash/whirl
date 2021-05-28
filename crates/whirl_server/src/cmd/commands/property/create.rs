@@ -27,7 +27,7 @@ use crate::{
   },
 };
 
-pub fn create_property_update_as_distributor() -> Vec<u8> {
+pub fn property_update_as_distributor() -> Vec<u8> {
   property_list_to_bytes(
     PROPUPD,
     0xFF,
@@ -64,7 +64,7 @@ pub fn create_property_update_as_distributor() -> Vec<u8> {
   )
 }
 
-pub fn create_property_update_as_hub() -> Vec<u8> {
+pub fn property_update_as_hub() -> Vec<u8> {
   property_list_to_bytes(
     PROPUPD,
     0xFF,
@@ -105,7 +105,7 @@ pub fn create_property_update_as_hub() -> Vec<u8> {
   )
 }
 
-pub fn create_property_request_as_distributor() -> Vec<u8> {
+pub fn property_request_as_distributor() -> Vec<u8> {
   property_list_to_bytes(
     SESSINIT as i32,
     0x01,
@@ -142,7 +142,7 @@ pub fn create_property_request_as_distributor() -> Vec<u8> {
   )
 }
 
-pub fn create_property_request_as_hub() -> Vec<u8> {
+pub fn property_request_as_hub() -> Vec<u8> {
   property_list_to_bytes(
     SESSINIT as i32,
     0x01,

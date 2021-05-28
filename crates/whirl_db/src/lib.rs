@@ -10,7 +10,15 @@
   decl_macro,
   proc_macro_hygiene
 )]
-#![warn(rust_2018_idioms)]
+#![deny(
+  warnings,
+  nonstandard_style,
+  unused,
+  future_incompatible,
+  rust_2018_idioms,
+  unsafe_code
+)]
+#![deny(clippy::all, clippy::nursery, clippy::pedantic)]
 #![recursion_limit = "128"]
 
 #[macro_use]
@@ -23,7 +31,11 @@ use diesel::prelude::*;
 
 // use crate::db::models::*;
 
-/// Establish a connection to the SQLite database.
+/// Establish a connection to the `SQLite` database.
+///
+/// # Panics
+/// - May panic if the database URL is inaccessible.
+#[must_use]
 pub fn establish_connection() -> SqliteConnection {
   let database_url = std::env::var("DATABASE_URL").unwrap_or_else(|_| "whirl.sqlite3".to_string());
   SqliteConnection::establish(&database_url)
