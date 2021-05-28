@@ -10,7 +10,15 @@
   decl_macro,
   proc_macro_hygiene
 )]
-#![warn(rust_2018_idioms)]
+#![deny(
+  warnings,
+  nonstandard_style,
+  unused,
+  future_incompatible,
+  rust_2018_idioms,
+  unsafe_code
+)]
+#![deny(clippy::all, clippy::nursery, clippy::pedantic)]
 #![recursion_limit = "128"]
 
 mod builtins;
@@ -40,15 +48,15 @@ pub struct Prompt {
 impl Prompt {
   /// Begin handling user input as the prompt.
   pub async fn handle() -> ! {
-    let mut prompt = Prompt {
+    let mut prompt = Self {
       history: vec![]
     };
 
     loop {
-      Prompt::write_prompt();
-      let command = prompt.read_command();
+      Self::write_prompt();
+      let command = Self::read_command();
       prompt
-        .process_command(Prompt::tokenize_command(command))
+        .process_command(Self::tokenize_command(&command))
         .await;
     }
   }
@@ -58,7 +66,7 @@ impl Prompt {
     io::stdout().flush().unwrap();
   }
 
-  fn read_command(&mut self) -> String {
+  fn read_command() -> String {
     let mut input = String::new();
     io::stdin()
       .read_line(&mut input)
@@ -71,8 +79,11 @@ impl Prompt {
     input
   }
 
-  fn tokenize_command(c: String) -> Command {
-    let mut command_split: Vec<String> = c.split_whitespace().map(|s| s.to_string()).collect();
+  fn tokenize_command(c: &str) -> Command {
+    let mut command_split: Vec<String> = c
+      .split_whitespace()
+      .map(std::string::ToString::to_string)
+      .collect();
 
     Command {
       keyword: command_split.remove(0),
@@ -113,38 +124,26 @@ mod tokenize_command {
 
   #[test]
   #[ignore]
-  fn empty_command() { assert_eq!("", Prompt::tokenize_command("".to_string()).keyword) }
+  fn empty_command() { assert_eq!("", Prompt::tokenize_command("").keyword) }
 
   #[test]
-  fn test_keyword() { assert_eq!("test", Prompt::tokenize_command("test".to_string()).keyword) }
+  fn test_keyword() { assert_eq!("test", Prompt::tokenize_command("test").keyword) }
 
   #[test]
-  fn no_arg() { assert_eq!(0, Prompt::tokenize_command("test".to_string()).args.len()) }
+  fn no_arg() { assert_eq!(0, Prompt::tokenize_command("test").args.len()) }
 
   #[test]
-  fn one_arg() {
-    assert_eq!(
-      1,
-      Prompt::tokenize_command("test one".to_string()).args.len()
-    )
-  }
+  fn one_arg() { assert_eq!(1, Prompt::tokenize_command("test one").args.len()) }
 
   #[test]
-  fn multi_arg() {
-    assert_eq!(
-      3,
-      Prompt::tokenize_command("test one two three".to_string())
-        .args
-        .len()
-    )
-  }
+  fn multi_arg() { assert_eq!(3, Prompt::tokenize_command("test one two three").args.len()) }
 
   #[test]
   #[ignore]
   fn quotes() {
     assert_eq!(
       2,
-      Prompt::tokenize_command("test \"one two\" three".to_string())
+      Prompt::tokenize_command("test \"one two\" three")
         .args
         .len()
     )

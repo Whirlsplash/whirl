@@ -2,14 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 //! The Hub functions as a
-//! [RoomServer](http://dev.worlds.net/private/GammaDocs/WorldServer.html#AutoServer).
+//! [`RoomServer`](http://dev.worlds.net/private/GammaDocs/WorldServer.html#AutoServer).
 //!
-//! A RoomServer is responsible for handling just about every request from the
+//! A `RoomServer` is responsible for handling just about every request from the
 //! client after they have been redirected to a room (Hub) and finished their
-//! business with the Distributor (AutoServer).
+//! business with the Distributor (`AutoServer`).
 
 use std::{error::Error, net::SocketAddr, sync::Arc};
 
+use num_traits::cast::AsPrimitive;
 use tokio::{io::AsyncWriteExt, net::TcpStream, sync::Mutex};
 use tokio_stream::StreamExt;
 use tokio_util::codec::{BytesCodec, Decoder};
@@ -18,10 +19,10 @@ use whirl_config::Config;
 use crate::{
   cmd::{
     commands::{
-      action::create_action,
+      action::create,
       buddy_list::BuddyList,
       property::{
-        create::{create_property_request_as_hub, create_property_update_as_hub},
+        create::{property_request_as_hub, property_update_as_hub},
         parse::find_property_in_property_list,
       },
       subscribe_distance::SubscribeDistance,
@@ -29,7 +30,17 @@ use crate::{
       teleport::Teleport,
       text::Text,
     },
-    constants::*,
+    constants::{
+      BUDDYLISTUPDATE,
+      PROPREQ,
+      PROPSET,
+      SESSEXIT,
+      SESSINIT,
+      SUBSCRIB,
+      SUB_DIST,
+      TELEPORT,
+      TEXT,
+    },
     extendable::{Creatable, Parsable, ParsableWithArguments},
   },
   interaction::{peer::Peer, shared::Shared},
@@ -63,12 +74,12 @@ impl Server for Hub {
           Some(Ok(msg)) => {
             // trace!("got some bytes: {:?}", &msg);
             for msg in parse_commands_from_packet(msg) {
-              match msg.get(2).unwrap().to_owned() as i32 {
+              match msg.get(2).unwrap().to_owned().as_(): i32 {
                 PROPREQ => {
                   debug!("received property request from client");
 
                   peer.bytes.get_mut()
-                    .write_all(&create_property_update_as_hub()).await?;
+                    .write_all(&property_update_as_hub()).await?;
                   trace!("sent property update to client");
                 }
                 SESSINIT => {
@@ -80,7 +91,7 @@ impl Server for Hub {
                   debug!("received session initialization from {}", username);
 
                   peer.bytes.get_mut()
-                    .write_all(&create_property_request_as_hub()).await?;
+                    .write_all(&property_request_as_hub()).await?;
                   trace!("sent property request to {}", username);
                 }
                 PROPSET => {
@@ -92,7 +103,7 @@ impl Server for Hub {
                     content: Config::get().distributor.worldsmaster_greeting,
                   }.create()).await?;
                   peer.bytes.get_mut()
-                    .write_all(&create_action()).await?;
+                    .write_all(&create()).await?;
                   trace!("sent text to {}", username);
                 }
                 BUDDYLISTUPDATE => {

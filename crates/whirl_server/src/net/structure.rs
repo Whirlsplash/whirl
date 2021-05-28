@@ -10,7 +10,7 @@ pub struct NetworkProperty {
 // }
 impl Default for NetworkProperty {
   fn default() -> Self {
-    NetworkProperty {
+    Self {
       prop_id: 0,
       value:   "".to_string(),
     }

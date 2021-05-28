@@ -23,7 +23,7 @@ pub fn builtin_history(history: &[String]) -> i32 {
 }
 
 pub fn builtin_help() -> i32 {
-  for help in HELPABLES_BUILTINS.iter() {
+  for help in &HELPABLES_BUILTINS {
     println!("{}", help);
   }
 
@@ -80,7 +80,7 @@ pub fn builtin_config(args: &[String]) -> i32 {
       match sub.as_str() {
         "show" => println!("{:#?}", Config::get()),
         "help" | "--help" | "-h" =>
-          for help in HELPABLES_BUILTIN_CONFIG.iter() {
+          for help in &HELPABLES_BUILTIN_CONFIG {
             println!("{}", help);
           },
         // "refresh" => Config::refresh(),

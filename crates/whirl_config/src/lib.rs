@@ -10,7 +10,15 @@
   decl_macro,
   proc_macro_hygiene
 )]
-#![warn(rust_2018_idioms)]
+#![deny(
+  warnings,
+  nonstandard_style,
+  unused,
+  future_incompatible,
+  rust_2018_idioms,
+  unsafe_code
+)]
+#![deny(clippy::all, clippy::nursery, clippy::pedantic)]
 #![recursion_limit = "128"]
 
 #[macro_use]
@@ -39,11 +47,14 @@ pub struct Config {
 }
 impl Config {
   /// Re-fetch the configuration from the configuration file.
+  ///
+  /// # Panics
+  /// - May panic if the configuration is unable to be refreshed.
   #[deprecated(
     note = "the current implementation of the configurations system automatically performs \
             refreshes, this method has no effects"
   )]
-  pub fn refresh() { let _ = config::Config::new().refresh(); }
+  pub fn refresh() { let _ = config::Config::new().refresh().unwrap(); }
 
   fn load() -> Result<Self, ConfigError> {
     let mut s = config::Config::new();
@@ -53,7 +64,11 @@ impl Config {
   }
 
   /// Get a certain configuration key or group from the configuration file.
-  pub fn get() -> Config {
+  ///
+  /// # Panics
+  /// - May panic if the configuration is unable to be read.
+  #[must_use]
+  pub fn get() -> Self {
     return if let Err(why) = Self::load() {
       error!(
         "unable to load configuration file, reverting to default value: {}",
@@ -67,7 +82,7 @@ impl Config {
 }
 impl Default for Config {
   fn default() -> Self {
-    Config {
+    Self {
       whirlsplash: WhirlsplashConfig {
         worldsmaster_username: "WORLDSMASTER".to_string(),
         ip:                    "0.0.0.0".to_string(),
