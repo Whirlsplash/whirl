@@ -6,7 +6,7 @@
 use whirl_config::Config;
 
 use crate::{
-  cmd::constants::{PROPUPD, SESSINIT},
+  cmd::constants::Command,
   net::{
     constants::{
       VAR_APPNAME,
@@ -29,7 +29,7 @@ use crate::{
 
 pub fn property_update_as_distributor() -> Vec<u8> {
   property_list_to_bytes(
-    PROPUPD,
+    Command::PropUpd as i32,
     0xFF,
     vec![
       NetworkProperty {
@@ -66,7 +66,7 @@ pub fn property_update_as_distributor() -> Vec<u8> {
 
 pub fn property_update_as_hub() -> Vec<u8> {
   property_list_to_bytes(
-    PROPUPD,
+    Command::PropUpd as i32,
     0xFF,
     vec![
       NetworkProperty {
@@ -107,7 +107,7 @@ pub fn property_update_as_hub() -> Vec<u8> {
 
 pub fn property_request_as_distributor() -> Vec<u8> {
   property_list_to_bytes(
-    SESSINIT as i32,
+    Command::SessInit as i32,
     0x01,
     vec![
       NetworkProperty {
@@ -144,7 +144,7 @@ pub fn property_request_as_distributor() -> Vec<u8> {
 
 pub fn property_request_as_hub() -> Vec<u8> {
   property_list_to_bytes(
-    SESSINIT as i32,
+    Command::SessInit as i32,
     0x01,
     vec![
       NetworkProperty {

@@ -7,7 +7,7 @@ use bytes::{BufMut, BytesMut};
 use num_traits::AsPrimitive;
 
 use crate::cmd::{
-  constants::TEXT,
+  constants::Command,
   extendable::{Creatable, ParsableWithArguments},
 };
 
@@ -21,7 +21,8 @@ impl Creatable for Text {
 
     // Header
     command.put_u8(0x01);
-    command.put_i8(TEXT.as_(): i8);
+    #[allow(clippy::cast_possible_truncation)]
+    command.put_i8(Command::Text as i32 as i8);
 
     // Content
     // TODO: Find a way to parse ObjIds.

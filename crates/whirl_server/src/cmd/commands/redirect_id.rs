@@ -5,7 +5,7 @@ use bytes::{BufMut, BytesMut};
 use num_traits::AsPrimitive;
 use whirl_config::Config;
 
-use crate::cmd::{constants::REDIRID, extendable::Creatable};
+use crate::cmd::{constants::Command, extendable::Creatable};
 
 #[derive(Debug)]
 pub struct RedirectId {
@@ -18,7 +18,8 @@ impl Creatable for RedirectId {
 
     // Header
     command.put_u8(0x01); // ObjId
-    command.put_u8(REDIRID.as_(): u8); // Type
+    #[allow(clippy::cast_possible_truncation)]
+    command.put_i8(Command::RedirId as i32 as i8); // Type
 
     // Content
     command.put_u8(self.room_name.len().as_(): u8); // Room name length
