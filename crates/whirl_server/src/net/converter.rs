@@ -5,7 +5,7 @@ use bytes::{BufMut, BytesMut};
 use num_traits::AsPrimitive;
 
 use crate::{
-  cmd::constants::PROPUPD,
+  cmd::constants::Command,
   net::{
     constants::{PROPACCESS_POSSESS, PROPFLAG_DBSTORE},
     structure::NetworkProperty,
@@ -33,7 +33,7 @@ pub fn property_list_to_bytes(
     command.put_u8(property.prop_id.as_(): u8); // Property ID
 
     // NOTE: THIS IS SUPER BAD DO NOT DO THIS! But it works!
-    if command_id == PROPUPD {
+    if command_id == Command::PropUpd as i32 {
       command.put_u8(PROPFLAG_DBSTORE.as_(): u8); // Flag (s)
       command.put_u8(PROPACCESS_POSSESS.as_(): u8); // Access
     }
