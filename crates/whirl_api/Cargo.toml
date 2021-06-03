@@ -19,7 +19,7 @@ actix-web = { version = "3.3.2", features = ["rustls"] }
 actix-cors = "0.5.4"
 
 # Utility
-sysinfo = "0.18.0"
+sysinfo = "0.18.1"
 whirl_common = { path = "../whirl_common" }
 tokio = { version = "1.6.1", features = ["full"] }
 num-traits = "0.2.14"
