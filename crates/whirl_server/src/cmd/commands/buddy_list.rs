@@ -6,10 +6,7 @@ use std::str::from_utf8;
 use bytes::{BufMut, BytesMut};
 use num_traits::AsPrimitive;
 
-use crate::cmd::{
-  constants::BUDDYLISTNOTIFY,
-  extendable::{Creatable, Parsable},
-};
+use crate::cmd::extendable::{Creatable, Parsable};
 
 pub struct BuddyList {
   pub buddy: String,
@@ -33,7 +30,8 @@ impl Creatable for BuddyList {
 
     // Header
     command.put_u8(0x01); // ObjId
-    command.put_i8(BUDDYLISTNOTIFY.as_(): i8); // Type
+    #[allow(clippy::cast_possible_truncation)]
+    command.put_i8(crate::cmd::constants::Command::BuddyListNotify as i32 as i8); // Type
 
     // Content
     command.put_u8(self.buddy.len().as_(): u8); // Buddy (name) length
