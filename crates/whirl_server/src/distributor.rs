@@ -32,7 +32,7 @@ use crate::{
       room_id_request::RoomIdRequest,
       text::Text,
     },
-    constants::{BUDDYLISTUPDATE, PROPREQ, PROPSET, ROOMIDRQ, SESSEXIT, SESSINIT},
+    constants::Command,
     extendable::{Creatable, Parsable},
   },
   interaction::{peer::Peer, shared::Shared},
@@ -64,15 +64,15 @@ impl Server for Distributor {
         result = peer.bytes.next() => match result {
           Some(Ok(msg)) => {
             for msg in parse_commands_from_packet(msg) {
-              match msg.get(2).unwrap().to_owned().as_(): i32 {
-                PROPREQ => {
+              match num_traits::FromPrimitive::from_i32(msg.get(2).unwrap().to_owned().as_(): i32) {
+                Some(Command::PropReq) => {
                   debug!("received property request from client");
 
                   peer.bytes.get_mut()
                     .write_all(&property_update_as_distributor()).await?;
                   trace!("sent property update to client");
                 }
-                SESSINIT => {
+                Some(Command::SessInit) => {
                   username = (&*find_property_in_property_list(
                     &parse_network_property(msg[3..].to_vec()),
                     VAR_USERNAME,
@@ -84,7 +84,7 @@ impl Server for Distributor {
                     .write_all(&property_request_as_distributor()).await?;
                   trace!("sent property request to {}", username);
                 }
-                PROPSET => {
+                Some(Command::PropSet) => {
                   debug!("received property set from {}", username);
 
                   peer.bytes.get_mut()
@@ -96,13 +96,13 @@ impl Server for Distributor {
                     .write_all(&create()).await?;
                   trace!("sent text to {}", username);
                 }
-                BUDDYLISTUPDATE => {
+                Some(Command::BuddyListUpdate) => {
                   let buddy = BuddyList::parse(msg.to_vec());
                   debug!("received buddy list update from {}: {}", username, buddy.buddy);
                   peer.bytes.get_mut().write_all(&buddy.create()).await?;
                   trace!("sent buddy list notify to {}: {}", username, buddy.buddy);
                 }
-                ROOMIDRQ => {
+                Some(Command::RoomIdRq) => {
                   let room = RoomIdRequest::parse(msg.to_vec());
                   debug!("received room id request from {}: {}", username, &room.room_name);
 
@@ -123,10 +123,10 @@ impl Server for Distributor {
                   }.create()).await?;
                   trace!("sent redirect id to {}: {}", username, room.room_name);
                 }
-                SESSEXIT => {
+                Some(Command::SessExit) => {
                   debug!("received session exit from {}", username); break;
                 }
-                _ => (),
+                _ => {},
               }
             }
           }
