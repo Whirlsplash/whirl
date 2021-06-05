@@ -7,7 +7,7 @@ use crate::net::structure::NetworkProperty;
 
 /// Iterate over a network property in the form of bytes (Vec<u8>) and return a
 /// list of human-readable properties.
-pub fn parse_network_property(mut data: Vec<u8>) -> Vec<NetworkProperty> {
+pub fn parse_network_property(mut data: Vec<u8>) -> crate::net::PropertyList {
   let mut property_list = vec![];
 
   // Iterate over all network properties
