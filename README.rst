@@ -63,7 +63,7 @@ Documentation about the entire Whirlsplash ecosystem can be found
 
 If you are looking for explicit documentation of only Whirl's source code, you
 must generate them yourself be cloning the repository and running the Cargo
-subcommand: `cargo +nightly doc --open --document-private-items --no-deps`.
+subcommand: :code:`cargo +nightly doc --open --document-private-items --no-deps`.
 
 Known Issues
 ------------
