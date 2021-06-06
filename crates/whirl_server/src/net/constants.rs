@@ -1,6 +1,11 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+//! Despite `crate::cmd::constants` being ported from a series of constants to
+//! a single `enum`, this module may not be ported to one *yet* as Rust does
+//! not allows for duplicate discriminant values in `enum`s:
+//! <https://doc.rust-lang.org/error-index.html#E0081>.
+
 #![allow(dead_code)]
 
 pub const VAR_PROTOCOL_VERSION: i32 = 24;
