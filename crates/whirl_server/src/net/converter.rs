@@ -8,14 +8,14 @@ use crate::{
   cmd::constants::Command,
   net::{
     constants::{PROPACCESS_POSSESS, PROPFLAG_DBSTORE},
-    structure::NetworkProperty,
+    PropertyList,
   },
 };
 
 pub fn property_list_to_bytes(
   command_id: i32,
   obj_id: i32,
-  mut property_list: Vec<NetworkProperty>,
+  mut property_list: PropertyList,
 ) -> Vec<u8> {
   let mut command = BytesMut::new();
 
