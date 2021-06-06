@@ -109,7 +109,7 @@ impl Server for Hub {
                 }
                 Some(Command::Text) => {
                   let text = Text::parse(msg.to_vec(), &[&username]);
-                  debug!("received text from {}:{}", username, text.content);
+                  debug!("received text from {}: {}", username, text.content);
 
                   {
                     state.lock().await.broadcast(&Text {
