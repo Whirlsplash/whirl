@@ -5,5 +5,4 @@ pub mod commands;
 
 pub mod constants;
 pub mod extendable;
-mod set_parser;
 mod structure;
