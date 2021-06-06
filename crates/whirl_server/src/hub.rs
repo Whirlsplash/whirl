@@ -21,10 +21,7 @@ use crate::{
     commands::{
       action::create,
       buddy_list::BuddyList,
-      property::{
-        create::{property_request_as_hub, property_update_as_hub},
-        parse::find_property_in_property_list,
-      },
+      property::create::{property_request_as_hub, property_update_as_hub},
       subscribe_distance::SubscribeDistance,
       subscribe_room::SubscribeRoom,
       teleport::Teleport,
@@ -34,7 +31,7 @@ use crate::{
     extendable::{Creatable, Parsable, ParsableWithArguments},
   },
   interaction::{peer::Peer, shared::Shared},
-  net::{constants::VAR_USERNAME, property_parser::parse_network_property},
+  net::constants::VAR_USERNAME,
   packet_parser::parse_commands_from_packet,
   Server,
 };
@@ -73,10 +70,9 @@ impl Server for Hub {
                   trace!("sent property update to client");
                 }
                 Some(Command::SessInit) => {
-                  username = (&*find_property_in_property_list(
-                    &parse_network_property(msg[3..].to_vec()),
-                    VAR_USERNAME,
-                  ).value).to_string();
+                  username = (*crate::net::property_list::PropertyList::from_bytes(msg[3..]
+                    .to_vec())
+                    .find(VAR_USERNAME)).value.to_string();
 
                   debug!("received session initialization from {}", username);
 
