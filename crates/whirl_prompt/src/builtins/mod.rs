@@ -39,7 +39,7 @@ pub fn builtin_ls() -> i32 {
   0
 }
 
-pub async fn builtin_cat(args: &[String]) -> i32 {
+pub fn builtin_cat(args: &[String]) -> i32 {
   let file;
   if let Some(file_name) = args.get(0) {
     file = file_name.to_string();
