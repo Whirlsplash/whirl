@@ -5,10 +5,8 @@ use std::collections::HashMap;
 
 use bytes::BytesMut;
 
-use crate::types::Tx;
-
 pub struct Shared {
-  pub peers: HashMap<String, Tx>,
+  pub peers: HashMap<String, tokio::sync::mpsc::UnboundedSender<BytesMut>>,
 }
 impl Shared {
   pub fn new() -> Self {

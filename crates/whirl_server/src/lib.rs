@@ -33,7 +33,6 @@ mod net;
 pub mod distributor;
 pub mod hub;
 mod packet_parser;
-mod types;
 
 use std::{error::Error, fmt, net::SocketAddr, sync::Arc};
 

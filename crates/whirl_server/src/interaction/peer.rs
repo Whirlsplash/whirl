@@ -9,11 +9,11 @@ use tokio::{
 };
 use tokio_util::codec::{BytesCodec, Framed};
 
-use crate::{interaction::shared::Shared, types::Rx};
+use crate::interaction::shared::Shared;
 
 pub struct Peer {
   pub bytes: Framed<TcpStream, BytesCodec>,
-  pub rx:    Rx,
+  pub rx:    mpsc::UnboundedReceiver<bytes::BytesMut>,
 }
 impl Peer {
   pub async fn new(
