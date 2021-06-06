@@ -138,3 +138,8 @@ workspace = false
 command = "sqlfluff"
 args = ["lint", "./migrations/"]
 
+[tasks.gen-docs]
+workspace = false
+toolchain = "nightly"
+command = "cargo"
+args = ["doc", "--open", "--document-private-items", "--no-deps"]
