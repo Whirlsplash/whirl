@@ -1,10 +1,6 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use std::str::from_utf8;
-
-use crate::net::structure::NetworkProperty;
-
 /// Iterate over a network property in the form of bytes (Vec<u8>) and return a
 /// list of human-readable properties.
 pub fn parse_network_property(mut data: Vec<u8>) -> crate::net::PropertyList {
@@ -22,9 +18,9 @@ pub fn parse_network_property(mut data: Vec<u8>) -> crate::net::PropertyList {
     // }
 
     let property_length = data[1] + 2;
-    property_list.push(NetworkProperty {
+    property_list.push(crate::net::structure::NetworkProperty {
       prop_id: i32::from(data[0]),
-      value:   from_utf8(&data[2..data[1] as usize + 2])
+      value:   std::str::from_utf8(&data[2..data[1] as usize + 2])
         .unwrap()
         .to_string(),
     });
