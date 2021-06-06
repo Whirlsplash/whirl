@@ -55,9 +55,7 @@ impl Prompt {
     loop {
       Self::write_prompt();
       let command = Self::read_command();
-      prompt
-        .process_command(Self::tokenize_command(&command))
-        .await;
+      prompt.process_command(&Self::tokenize_command(&command));
     }
   }
 
@@ -93,7 +91,7 @@ impl Prompt {
 
   // TODO: Find a way to make this access itself `history` doesn't have to be
   // passed everytime.
-  async fn process_command(&mut self, c: Command) -> i32 {
+  fn process_command(&mut self, c: &Command) -> i32 {
     let exit_code = match BuiltIn::from_str(&c.keyword) {
       Ok(BuiltIn::Echo) => builtin_echo(&c.args),
       Ok(BuiltIn::Exit) => std::process::exit(0),
@@ -101,7 +99,7 @@ impl Prompt {
       Ok(BuiltIn::Null) => 0,
       Ok(BuiltIn::Help) => builtin_help(),
       Ok(BuiltIn::Ls) => builtin_ls(),
-      Ok(BuiltIn::Cat) => builtin_cat(&c.args).await,
+      Ok(BuiltIn::Cat) => builtin_cat(&c.args),
       Ok(BuiltIn::Config) => builtin_config(&c.args),
       Ok(BuiltIn::Fetch) => builtin_fetch(),
       _ => {
