@@ -30,8 +30,8 @@ mod cmd;
 mod interaction;
 mod net;
 
-pub mod distributor;
-pub mod hub;
+mod distributor;
+mod hub;
 mod packet_parser;
 
 use std::{error::Error, fmt, net::SocketAddr, sync::Arc};
