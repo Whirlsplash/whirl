@@ -8,6 +8,7 @@ pub struct Command {
   pub body:   Vec<u8>,
 }
 impl Command {
+  /// Create and return a new `Command` with default values (`0`s and empty).
   pub fn _new() -> Self { Self::default() }
 
   pub fn _from_byte(mut data: Vec<u8>) -> Vec<Self> {
