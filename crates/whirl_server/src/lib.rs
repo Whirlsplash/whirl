@@ -101,8 +101,8 @@ pub trait Server {
   ) -> Result<(), Box<dyn Error>>;
 }
 
-/// Spawn and return a vector of thread handles for each sub-server -- which
-/// should be -- instantiated by the `whirl_server` crate.
+/// Spawn and return a vector of thread handles for each sub-server — which
+/// should be — instantiated by the `whirl_server` crate.
 ///
 /// # Panics
 /// - A panic may occur if the TCP server is unable to bind the specified port.

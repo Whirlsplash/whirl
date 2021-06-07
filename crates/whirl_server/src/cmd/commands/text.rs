@@ -59,7 +59,7 @@ impl ParsableWithArguments for Text {
   /// something of the sort but the Rust RFC is probably not focused on that.
   ///
   /// So, right now, trust is in the developers' hands to make sure to pass the
-  /// right -- number -- of elements to `args`.
+  /// right — number — of elements to `args`.
   fn parse(data: Vec<u8>, args: &[&str]) -> Self {
     Self {
       sender:  args[0].to_string(),
