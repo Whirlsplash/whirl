@@ -19,6 +19,7 @@ Cargo.lock
 /Whirl.toml
 /.secrets
 /log/
+/crates/**/target/
 
 # DB Browser
 /whirl.sqlite3-shm

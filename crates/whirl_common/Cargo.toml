@@ -16,3 +16,11 @@ publish = false
 [dependencies]
 # Config
 whirl_config = { path = "../whirl_config" }
+
+[dev-dependencies]
+iai = "0.1.1"
+
+[[bench]]
+name = "whirl_common"
+path = "../../benches/whirl_common.rs"
+harness = false
