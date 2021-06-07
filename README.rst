@@ -63,7 +63,11 @@ Documentation about the entire Whirlsplash ecosystem can be found
 
 If you are looking for explicit documentation of only Whirl's source code, you
 must generate them yourself be cloning the repository and running the Cargo
-subcommand: :code:`cargo +nightly doc --open --document-private-items --no-deps`.
+subcommand;
+
+.. code-block:: shell
+
+  $ cargo +nightly doc --open --document-private-items --no-deps
 
 Known Issues
 ------------
@@ -92,8 +96,8 @@ Optional
 - `sqlfluff <https://github.com/sqlfluff/sqlfluff>`_
 - `Valgrind <https://www.valgrind.org/>`_
 
-*These development dependencies (excluding sqlfluff) will automatically be satisfied if you are using the Nix shell
-configuration as provided.*
+*These development dependencies (excluding sqlfluff) will automatically be satisfied if you are
+using the Nix shell configuration as provided.*
 
 Benchmarking
 ------------
