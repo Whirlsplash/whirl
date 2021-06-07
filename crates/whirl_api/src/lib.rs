@@ -64,6 +64,9 @@ impl Api {
   }
 }
 
+/// Spawn and return a thread handle for the API -- which
+/// should be -- instantiated by the `whirl_api` crate.
+///
 /// # Panics
 /// - A panic may occur if the mpsc sender is unable to send a clone of the
 ///   server.
