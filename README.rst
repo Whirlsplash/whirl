@@ -85,17 +85,17 @@ Development Dependencies
 Required
 ~~~~~~~~
 
-- `Rust <https://www.rust-lang.org/>`_ — the backbone of it all.
-- `diesel\_cli <https://crates.io/crates/diesel_cli>`_ — database migrations, setup, et cetera.
-- `cargo-make <https://github.com/sagiegurari/cargo-make>`_ — cross-platform
+- `Rust <https://www.rust-lang.org/>`_ — The backbone of it all.
+- `diesel\_cli <https://crates.io/crates/diesel_cli>`_ — Database migrations, setup, et cetera.
+- `cargo-make <https://github.com/sagiegurari/cargo-make>`_ — Cross-platform
   `make <https://www.gnu.org/software/make/>`_ substitute.
 
 Optional
 ~~~~~~~~
 
-- `cargo-watch <https://crates.io/crates/cargo-watch>`_ — recompilation on file-system changes.
+- `cargo-watch <https://crates.io/crates/cargo-watch>`_ — Recompilation on file-system changes.
 - `sqlfluff <https://github.com/sqlfluff/sqlfluff>`_ — SQL linting.
-- `Valgrind <https://www.valgrind.org/>`_ — benchmarking.
+- `Valgrind <https://www.valgrind.org/>`_ — Benchmarking.
 
 *These development dependencies (excluding sqlfluff) will automatically be satisfied if you are
 using the Nix shell configuration as provided.*
