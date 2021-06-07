@@ -90,9 +90,28 @@ Optional
 
 - `cargo-watch <https://crates.io/crates/cargo-watch>`_
 - `sqlfluff <https://github.com/sqlfluff/sqlfluff>`_
+- `Valgrind <https://www.valgrind.org/>`_
 
-*These development dependencies (exlcluding sqlfluff) will automatically be satisfied if you are using the Nix shell
+*These development dependencies (excluding sqlfluff) will automatically be satisfied if you are using the Nix shell
 configuration as provided.*
+
+Benchmarking
+------------
+
+For the time being; benchmarking is only available for *nix-based environments as the benchmarking
+utility currently in place, `Iai <https://github.com/bheisler/iai>`_, has a hard dependency on
+`Valgrind <https://github.com/bheisler/iai>`_ which is only accessible within *nix-based
+environments.
+
+More so, the current benchmarks which have been set-up do not cover the full extent of Whirl, but a
+small portion of the crates which make up Whirl as a whole. In the future, benchmarks may be
+expanded upon.
+
+To execute the available benchmarks, use the following Cargo subcommand;
+
+.. code-block:: shell
+
+  $ cargo bench
 
 License
 ~~~~~~~
