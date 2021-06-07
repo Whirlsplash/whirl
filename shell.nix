@@ -13,6 +13,7 @@ in pkgs.mkShell {
     diesel-cli
     cargo-watch
     cargo-udeps
+    valgrind # Iai
 
     # System
     openssl
