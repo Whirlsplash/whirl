@@ -9,25 +9,25 @@
      - Description
      - Version
    * - :code:`whirl`
-     - The CLI, links everything together.
+     - Links everything together in a neat, little CLI.
      - :code:`0.1.0`
    * - :code:`whirl_api`
-     - The API, for external interaction.
+     - Enables for remote interaction.
      - :code:`0.1.0`
    * - :code:`whirl_common`
-     - Assorted utilities, for global use.
+     - Provides assorted utilities for global use.
      - :code:`0.1.0`
    * - :code:`whirl_config`
-     - Configuration utilities, to interact with the configuration system.
+     - Provides abstractions to interact with the configuration system.
      - :code:`0.1.0`
    * - :code:`whirl_db`
-     - Database utilities, to interact with the database.
+     - Provides abstractions to interact with the database layer.
      - :code:`0.1.0`
    * - :code:`whirl_prompt`
-     - The Whirl Shell, for local interaction.
+     - Enables for local interaction.
      - :code:`0.1.0`
    * - :code:`whirl_server`
-     - The meat and potatoes, exposes the Distributor and Hub for further use.
+     - The meat and potatoes; instantiates the sub-servers which a WorldServer *should* accommodate.
      - :code:`0.1.0`
 
 Graph
