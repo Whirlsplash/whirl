@@ -18,7 +18,7 @@
   rust_2018_idioms,
   unsafe_code
 )]
-#![deny(clippy::all, clippy::nursery, clippy::pedantic)] // clippy::pedantic
+#![deny(clippy::all, clippy::nursery, clippy::pedantic)]
 #![recursion_limit = "128"]
 
 #[macro_use]
