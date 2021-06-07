@@ -14,6 +14,7 @@ use crate::{
 
 pub struct PropertyList(pub Vec<crate::net::network_property::NetworkProperty>);
 impl PropertyList {
+  /// Convert a `PropertyList` to a ready-to-be sent command.
   pub fn as_bytes(&mut self, command_id: i32, obj_id: i32) -> Vec<u8> {
     let mut command = BytesMut::new();
     let property_list = &mut self.0;
@@ -56,12 +57,15 @@ impl PropertyList {
     command_as_vec
   }
 
+  /// Find and return a reference to a `NetworkProperty` within the associated
+  /// `PropertyList`.
   pub fn find(&self, property: i32) -> &NetworkProperty {
     self.0.iter().find(|i| i.prop_id == property).unwrap()
   }
 
-  /// Iterate over a network property in the form of bytes (Vec<u8>) and return
-  /// a list of human-readable properties.
+  /// Iterate over a property list in it's original, encoded, byte form
+  /// (`Vec<u8>`), and return a list of human-readable network properties
+  /// (`PropertyList`).
   pub fn from_bytes(mut data: Vec<u8>) -> Self {
     let mut property_list = vec![];
 
