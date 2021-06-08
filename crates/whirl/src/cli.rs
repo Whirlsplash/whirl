@@ -1,8 +1,29 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+use std::str::FromStr;
+
 use structopt::clap::{App, AppSettings, Arg, SubCommand};
 use whirl_config::Config;
+
+enum RunType {
+  Distributor,
+  Hub,
+  Api,
+  All,
+}
+impl FromStr for RunType {
+  type Err = &'static str;
+
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    match s {
+      "distributor" => Ok(Self::Distributor),
+      "hub" => Ok(Self::Hub),
+      "api" => Ok(Self::Api),
+      _ => Ok(Self::All),
+    }
+  }
+}
 
 pub struct Cli;
 impl Cli {
@@ -21,7 +42,17 @@ impl Cli {
     }
 
     match matches.subcommand() {
-      ("run", _) => Self::run().await,
+      ("run", Some(s_matches)) =>
+        Self::run({
+          RunType::from_str(match s_matches.value_of("type") {
+            Some("distributor") => "distributor",
+            Some("hub") => "hub",
+            Some("api") => "api",
+            _ => "all",
+          })
+          .unwrap()
+        })
+        .await,
       ("config", Some(s_matches)) =>
         match s_matches.subcommand() {
           ("show", _) => println!("{:#?}", Config::get()),
@@ -52,7 +83,15 @@ impl Cli {
       .author(env!("CARGO_PKG_AUTHORS"))
       .settings(&[AppSettings::SubcommandRequiredElseHelp])
       .subcommands(vec![
-        SubCommand::with_name("run").about("Start the WorldServer"),
+        SubCommand::with_name("run")
+          .about("Start the WorldServer or a single sub-server.")
+          .arg(
+            Arg::with_name("type")
+              .required(false)
+              .takes_value(true)
+              .index(1)
+              .possible_values(&["distributor", "hub", "api", "all"]),
+          ),
         SubCommand::with_name("config")
           .setting(AppSettings::SubcommandRequiredElseHelp)
           .subcommands(vec![SubCommand::with_name("show")]),
@@ -65,8 +104,18 @@ impl Cli {
       ])
   }
 
-  async fn run() {
-    vec![whirl_api::make()].extend(whirl_server::make::all());
+  async fn run(server_type: RunType) {
+    match server_type {
+      RunType::Distributor => vec![whirl_server::make::distributor()],
+      RunType::Hub => vec![whirl_server::make::hub()],
+      RunType::Api => vec![whirl_api::make()],
+      RunType::All =>
+        vec![
+          whirl_api::make(),
+          whirl_server::make::distributor(),
+          whirl_server::make::hub(),
+        ],
+    };
 
     if std::env::var("DISABLE_PROMPT").unwrap_or_else(|_| "false".to_string()) == "true"
       || !Config::get().whirlsplash.prompt.enable

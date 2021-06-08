@@ -147,5 +147,8 @@ pub mod make {
   /// - A panic may occur if the TCP server is unable to bind the specified
   ///   port.
   #[must_use]
+  #[deprecated(
+    note = "The `distributor` and `hub` functions are more extensible, use them instead."
+  )]
   pub fn all() -> Vec<JoinHandle<()>> { vec![distributor(), hub()] }
 }
