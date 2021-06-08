@@ -87,6 +87,7 @@ docker load < result
 '''
 
 [tasks.docker-run]
+deprecated = true
 workspace = false
 command = "docker"
 args = [
@@ -98,6 +99,7 @@ args = [
 ]
 
 [tasks.docker-run-i]
+deprecated = true
 workspace = false
 command = "docker"
 args = [
