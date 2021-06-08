@@ -40,7 +40,6 @@ use tokio::{
   net::{TcpListener, TcpStream},
   sync::Mutex,
 };
-use whirl_config::Config;
 
 use crate::interaction::shared::Shared;
 
@@ -101,14 +100,19 @@ pub trait Server {
   ) -> Result<(), Box<dyn Error>>;
 }
 
-/// Spawn and return a vector of thread handles for each sub-server — which
-/// should be — instantiated by the `whirl_server` crate.
-///
-/// # Panics
-/// - A panic may occur if the TCP server is unable to bind the specified port.
-#[must_use]
-pub fn make() -> Vec<tokio::task::JoinHandle<()>> {
-  vec![
+pub mod make {
+  use tokio::task::JoinHandle;
+  use whirl_config::Config;
+
+  use crate::{Server, ServerType};
+
+  /// Spawn and return a thread handle for a Distributor sub-server.
+  ///
+  /// # Panics
+  /// - A panic may occur if the TCP server is unable to bind the specified
+  ///   port.
+  #[must_use]
+  pub fn distributor() -> JoinHandle<()> {
     tokio::spawn(async move {
       crate::distributor::Distributor::listen(
         &*format!("0.0.0.0:{}", Config::get().distributor.port),
@@ -116,7 +120,16 @@ pub fn make() -> Vec<tokio::task::JoinHandle<()>> {
       )
       .await
       .unwrap();
-    }),
+    })
+  }
+
+  /// Spawn and return a thread handle for a Hub sub-server.
+  ///
+  /// # Panics
+  /// - A panic may occur if the TCP server is unable to bind the specified
+  ///   port.
+  #[must_use]
+  pub fn hub() -> JoinHandle<()> {
     tokio::spawn(async move {
       crate::hub::Hub::listen(
         &*format!("0.0.0.0:{}", Config::get().hub.port),
@@ -124,6 +137,15 @@ pub fn make() -> Vec<tokio::task::JoinHandle<()>> {
       )
       .await
       .unwrap();
-    }),
-  ]
+    })
+  }
+
+  /// Spawn and return a vector of thread handles for each sub-server — which
+  /// should be — instantiated by the `whirl_server` crate.
+  ///
+  /// # Panics
+  /// - A panic may occur if the TCP server is unable to bind the specified
+  ///   port.
+  #[must_use]
+  pub fn all() -> Vec<JoinHandle<()>> { vec![distributor(), hub()] }
 }

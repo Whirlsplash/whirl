@@ -66,7 +66,7 @@ impl Cli {
   }
 
   async fn run() {
-    vec![whirl_api::make()].extend(whirl_server::make());
+    vec![whirl_api::make()].extend(whirl_server::make::all());
 
     if std::env::var("DISABLE_PROMPT").unwrap_or_else(|_| "false".to_string()) == "true"
       || !Config::get().whirlsplash.prompt.enable
