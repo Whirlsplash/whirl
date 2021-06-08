@@ -41,8 +41,8 @@ Purpose
 
 Two *main* reasons;
 
-1. Worlds' official servers are old, slowly deteriorating, and *probably unmaintained*.
-2. Worlds is **old**. The shutdown of the servers is inevitable.
+1. Worlds' official servers are old, slowly deteriorating, and *probably* unmaintained.
+2. Worlds is **old**; the shutdown of the servers is inevitable.
 
 **TLDR**: To keep Worlds' legacy going for future generations.
 
