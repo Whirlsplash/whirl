@@ -27,7 +27,7 @@ in pkgs.mkShell {
     niv
   ];
 
-  DATABASE_URL = ".whirl/whirl.sqlite3";
+  DATABASE_URL = ".whirl/db.sqlite3";
   RUST_SRC_PATH = "${pkgs.latest.rustChannels.nightly.rust-src}/lib/rustlib/src/rust/library";
   RUST_BACKTRACE = "1";
 }

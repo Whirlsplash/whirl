@@ -19,7 +19,7 @@ Cargo.lock
 /crates/**/target/
 /.whirl/log/
 /.whirl/Config.toml
-/.whirl/whirl.sqlite3
+/.whirl/db.sqlite3
 
 # Wireshark
 *.pcapng
