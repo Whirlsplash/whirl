@@ -64,7 +64,7 @@ pub fn builtin_cat(args: &[String]) -> i32 {
         .unwrap();
       transfer.perform().unwrap();
     }
-    "Whirl.toml" => {
+    "Config.toml" => {
       colour::red_ln!("NOTE: This is just a wrapper for `config show`.");
       println!("{:#?}", Config::get());
     }

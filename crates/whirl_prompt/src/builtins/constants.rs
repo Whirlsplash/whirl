@@ -1,7 +1,7 @@
 // Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-pub const FILES: [&str; 2] = ["README.rst", "Whirl.toml"];
+pub const FILES: [&str; 2] = ["README.rst", "Config.toml"];
 pub const HELPABLES_BUILTINS: [&str; 8] = [
   "cat     - display the contents of a present file",
   "config  - manipulate the configuration",
