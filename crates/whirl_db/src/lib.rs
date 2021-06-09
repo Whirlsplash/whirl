@@ -38,7 +38,7 @@ use diesel::prelude::*;
 #[must_use]
 pub fn establish_connection() -> SqliteConnection {
   let database_url =
-    std::env::var("DATABASE_URL").unwrap_or_else(|_| ".whirl/whirl.sqlite3".to_string());
+    std::env::var("DATABASE_URL").unwrap_or_else(|_| ".whirl/db.sqlite3".to_string());
   SqliteConnection::establish(&database_url)
     .unwrap_or_else(|_| panic!("error connecting to {}", database_url))
 }
