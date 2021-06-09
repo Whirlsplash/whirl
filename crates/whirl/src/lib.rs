@@ -46,7 +46,7 @@ impl Whirl {
   /// - An error may arise if logger fails to start.
   pub async fn splash() -> Result<(), Box<dyn std::error::Error>> {
     // Environment
-    std::env::set_var("DATABASE_URL", "whirl.sqlite3");
+    std::env::set_var("DATABASE_URL", ".whirl/whirl.sqlite3");
 
     // Logging
     dotenv::dotenv().ok();

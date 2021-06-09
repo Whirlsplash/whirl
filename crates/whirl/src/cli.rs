@@ -59,7 +59,7 @@ impl Cli {
           _ => unreachable!(),
         },
       ("clean", _) => {
-        let cleanable_directories = vec!["log/"];
+        let cleanable_directories = vec![".whirl/log/"];
         for dir in cleanable_directories {
           let file_type = if dir.ends_with('/') {
             "directory"
