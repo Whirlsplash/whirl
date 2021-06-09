@@ -33,7 +33,7 @@ let
         Cmd = [ "run" ];
         WorkingDir = "/";
         Env = [
-          "DATABASE_URl=whirl.sqlite3"
+          "DATABASE_URl=.whirl/whirl.sqlite3"
           "DISABLE_PROMPT=true"
           "LOG_FILE=false"
         ];
