@@ -41,6 +41,12 @@ impl Cli {
       trace!("trace");
     }
 
+    debug!("attempting to create .whirl directory...");
+    match std::fs::create_dir(".whirl/") {
+      Ok(_) => debug!("successfully created .whirl directory"),
+      Err(e) => debug!("error creating .whirl directory: {}", e),
+    }
+
     match matches.subcommand() {
       ("run", Some(s_matches)) =>
         Self::run({
