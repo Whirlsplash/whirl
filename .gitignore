@@ -15,9 +15,11 @@ Cargo.lock
 
 # Development
 /src/_*.*
-/.whirl/
 /.secrets
 /crates/**/target/
+/.whirl/log/
+/.whirl/Config.toml
+/.whirl/whirl.sqlite3
 
 # Wireshark
 *.pcapng
