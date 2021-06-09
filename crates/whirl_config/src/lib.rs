@@ -59,7 +59,7 @@ impl Config {
   fn load() -> Result<Self, ConfigError> {
     let mut s = config::Config::new();
 
-    s.merge(File::with_name(".whirl/Whirl.toml").required(false))?;
+    s.merge(File::with_name(".whirl/Config.toml").required(false))?;
     s.try_into()
   }
 
