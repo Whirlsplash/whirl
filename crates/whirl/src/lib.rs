@@ -63,7 +63,7 @@ impl Whirl {
         logger
           .print_message()
           .log_to_file()
-          .directory("log")
+          .directory(".whirl/log")
           .start()?;
       }
     }
