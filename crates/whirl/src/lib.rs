@@ -43,7 +43,10 @@ use whirl_config::Config;
 pub struct Whirl;
 impl Whirl {
   /// # Errors
-  /// - An error may arise if logger fails to start.
+  /// if the Logger fails to start.
+  ///
+  /// # Panics
+  /// if the Logger fails to be created.
   pub async fn splash() -> Result<(), Box<dyn std::error::Error>> {
     // Environment
     std::env::set_var("DATABASE_URL", ".whirl/db.sqlite3");
@@ -52,7 +55,8 @@ impl Whirl {
     dotenv::dotenv().ok();
     human_panic::setup_panic!();
     if Config::get().whirlsplash.log.enable {
-      let logger = flexi_logger::Logger::with_str(whirl_common::log::calculate_log_level());
+      let logger =
+        flexi_logger::Logger::try_with_str(whirl_common::log::calculate_log_level()).unwrap();
       if std::env::var("LOG_FILE").unwrap_or_else(|_| "true".to_string()) == "false"
         || !whirl_config::Config::get().whirlsplash.log.file
         || std::env::args().collect::<Vec<_>>()[1] == "clean"
@@ -62,8 +66,7 @@ impl Whirl {
       } else {
         logger
           .print_message()
-          .log_to_file()
-          .directory(".whirl/log")
+          .log_to_file(flexi_logger::FileSpec::default().directory(".whirl/log"))
           .start()?;
       }
     }
