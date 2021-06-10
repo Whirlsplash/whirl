@@ -67,7 +67,7 @@ subcommand;
 
 .. code-block:: shell
 
-  $ cargo +nightly doc --open --document-private-items --no-deps
+  $ cargo +nightly doc --open --document-private-items --no-deps # or `cargo make gen-docs`
 
 Known Issues
 ------------
