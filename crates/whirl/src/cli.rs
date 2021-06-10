@@ -101,8 +101,9 @@ impl Cli {
         SubCommand::with_name("config")
           .setting(AppSettings::SubcommandRequiredElseHelp)
           .subcommands(vec![SubCommand::with_name("show")]),
-        SubCommand::with_name("clean")
-          .about("Delete Whirl-generated files/ directories which are NOT critical. E.g., logs/"),
+        SubCommand::with_name("clean").about(
+          "Delete Whirl-generated files/ directories which are NOT critical. E.g., .whirl/logs/",
+        ),
       ])
       .args(&[
         Arg::with_name("debug").short("d").long("debug"),
