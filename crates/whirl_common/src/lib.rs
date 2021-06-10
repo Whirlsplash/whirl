@@ -20,6 +20,10 @@
 )]
 #![deny(clippy::all, clippy::nursery, clippy::pedantic)]
 #![recursion_limit = "128"]
+#![doc(
+  html_logo_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png",
+  html_favicon_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png"
+)]
 
 pub mod log;
 pub mod sort;
