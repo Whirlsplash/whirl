@@ -34,8 +34,8 @@ let
         WorkingDir = "/";
         Env = [
           "DATABASE_URl=.whirl/db.sqlite3"
-          "DISABLE_PROMPT=true"
-          "LOG_FILE=false"
+          # "DISABLE_PROMPT=true"
+          # "LOG_FILE=false"
         ];
         ExposedPorts = {
           "80/tcp" = { }; # API

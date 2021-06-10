@@ -7,3 +7,5 @@ services:
       - '5673:5673'
     container_name: Whirlsplash
     image: whirlsplash/whirl
+    volumes:
+      - ./.whirl-data:/.whirl
