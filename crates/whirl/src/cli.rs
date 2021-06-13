@@ -10,7 +10,6 @@ enum RunType {
   Distributor,
   Hub,
   Api,
-  All,
 }
 impl FromStr for RunType {
   type Err = &'static str;
@@ -20,8 +19,25 @@ impl FromStr for RunType {
       "distributor" => Ok(Self::Distributor),
       "hub" => Ok(Self::Hub),
       "api" => Ok(Self::Api),
-      _ => Ok(Self::All),
+      _ => Err("no match"),
     }
+  }
+}
+
+// https://stackoverflow.com/questions/57888454/how-to-remove-duplicates-from-a-vector-of-structures
+trait Dedup<T: PartialEq + Clone> {
+  fn clear_duplicates(&mut self);
+}
+impl<T: PartialEq + Clone> Dedup<T> for Vec<T> {
+  fn clear_duplicates(&mut self) {
+    let mut already_seen = vec![];
+    self.retain(|item| match already_seen.contains(item) {
+      true => false,
+      _ => {
+        already_seen.push(item.clone());
+        true
+      }
+    })
   }
 }
 
@@ -50,13 +66,38 @@ impl Cli {
     match matches.subcommand() {
       ("run", Some(s_matches)) =>
         Self::run({
-          RunType::from_str(match s_matches.value_of("type") {
-            Some("distributor") => "distributor",
-            Some("hub") => "hub",
-            Some("api") => "api",
-            _ => "all",
-          })
-          .unwrap()
+          // Make a vector of the passed types for the `run` sub-command, if the
+          // vector cannot be unwrapped, the must mean that the user did not
+          // pass any sub-server types meaning that the subcommand `run` was
+          // called without any arguments, in other words: "run everything".
+          let mut types = {
+            // s_matches.values_of("type").unwrap().collect::<Vec<_>>();
+            match s_matches.values_of("type") {
+              Some(values) => values.collect::<Vec<_>>(),
+              None => vec!["distributor", "hub", "api"],
+            }
+          };
+          // Remove any duplicate sub-commands, we don't want to start two
+          // instances of the same sub-server.
+          types.clear_duplicates();
+
+          let mut run_types = vec![];
+          // Iterate over all of the types and push them to a vector that we'll
+          // pass to the `run` method.
+          loop {
+            match types.last() {
+              Some(run_type) => match run_type.to_owned() {
+                "distributor" => run_types.push(RunType::Distributor),
+                "hub" => run_types.push(RunType::Hub),
+                "api" => run_types.push(RunType::Api),
+                _ => {}
+              },
+              None => break,
+            }
+            types.pop();
+          }
+
+          run_types
         })
         .await,
       ("config", Some(s_matches)) =>
@@ -90,13 +131,17 @@ impl Cli {
       .settings(&[AppSettings::SubcommandRequiredElseHelp])
       .subcommands(vec![
         SubCommand::with_name("run")
-          .about("Start the WorldServer or a single sub-server.")
+          .about("Start the WorldServer or a selection of sub-servers.")
+          .long_about("Start the WorldServer by running this sub-command \
+          WITHOUT any arguments, start a selection of sub-servers by passing a \
+          comma-separated list of sub-server types.")
           .arg(
             Arg::with_name("type")
               .required(false)
               .takes_value(true)
               .index(1)
-              .possible_values(&["distributor", "hub", "api", "all"]),
+              .use_delimiter(true)
+              .possible_values(&["distributor", "hub", "api"]),
           ),
         SubCommand::with_name("config")
           .setting(AppSettings::SubcommandRequiredElseHelp)
@@ -111,18 +156,20 @@ impl Cli {
       ])
   }
 
-  async fn run(server_type: RunType) {
-    match server_type {
-      RunType::Distributor => vec![whirl_server::make::distributor()],
-      RunType::Hub => vec![whirl_server::make::hub()],
-      RunType::Api => vec![whirl_api::make()],
-      RunType::All =>
-        vec![
-          whirl_api::make(),
-          whirl_server::make::distributor(),
-          whirl_server::make::hub(),
-        ],
-    };
+  async fn run(mut server_type: Vec<RunType>) {
+    let mut threads = vec![];
+    // Iterate over all of of the requested sub-servers and spawn one of each.
+    loop {
+      match server_type.last() {
+        Some(run_type) => match run_type {
+          RunType::Distributor => threads.push(whirl_server::make::distributor()),
+          RunType::Hub => threads.push(whirl_server::make::hub()),
+          RunType::Api => threads.push(whirl_api::make()),
+        },
+        None => break,
+      }
+      server_type.pop();
+    }
 
     if std::env::var("DISABLE_PROMPT").unwrap_or_else(|_| "false".to_string()) == "true"
       || !Config::get().whirlsplash.prompt.enable
