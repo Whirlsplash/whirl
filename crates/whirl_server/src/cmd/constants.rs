@@ -1,4 +1,4 @@
-// Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
+// Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
 // Have to use this until https://github.com/rust-num/num-derive/issues/47 gets

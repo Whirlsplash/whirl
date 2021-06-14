@@ -1,4 +1,4 @@
-// Copyleft (ɔ) 2021-2021 The Whirlsplash Collective
+// Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
 /// Sort a vector by alphabetical order based on the first character of each
