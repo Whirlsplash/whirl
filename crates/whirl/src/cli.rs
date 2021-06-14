@@ -31,13 +31,15 @@ trait Dedup<T: PartialEq + Clone> {
 impl<T: PartialEq + Clone> Dedup<T> for Vec<T> {
   fn clear_duplicates(&mut self) {
     let mut already_seen = vec![];
-    self.retain(|item| match already_seen.contains(item) {
-      true => false,
-      _ => {
+    self.retain(|item| {
+      if already_seen.contains(item) {
+        false
+      } else {
         already_seen.push(item.clone());
+
         true
       }
-    })
+    });
   }
 }
 
@@ -84,15 +86,12 @@ impl Cli {
           let mut run_types = vec![];
           // Iterate over all of the types and push them to a vector that we'll
           // pass to the `run` method.
-          loop {
-            match types.last() {
-              Some(run_type) => match run_type.to_owned() {
-                "distributor" => run_types.push(RunType::Distributor),
-                "hub" => run_types.push(RunType::Hub),
-                "api" => run_types.push(RunType::Api),
-                _ => {}
-              },
-              None => break,
+          while let Some(run_type) = types.last() {
+            match run_type.to_owned() {
+              "distributor" => run_types.push(RunType::Distributor),
+              "hub" => run_types.push(RunType::Hub),
+              "api" => run_types.push(RunType::Api),
+              _ => {}
             }
             types.pop();
           }
@@ -132,9 +131,10 @@ impl Cli {
       .subcommands(vec![
         SubCommand::with_name("run")
           .about("Start the WorldServer or a selection of sub-servers.")
-          .long_about("Start the WorldServer by running this sub-command \
-          WITHOUT any arguments, start a selection of sub-servers by passing a \
-          comma-separated list of sub-server types.")
+          .long_about(
+            "Start the WorldServer by running this sub-command WITHOUT any arguments, start a \
+             selection of sub-servers by passing a comma-separated list of sub-server types.",
+          )
           .arg(
             Arg::with_name("type")
               .required(false)
@@ -159,14 +159,11 @@ impl Cli {
   async fn run(mut server_type: Vec<RunType>) {
     let mut threads = vec![];
     // Iterate over all of of the requested sub-servers and spawn one of each.
-    loop {
-      match server_type.last() {
-        Some(run_type) => match run_type {
-          RunType::Distributor => threads.push(whirl_server::make::distributor()),
-          RunType::Hub => threads.push(whirl_server::make::hub()),
-          RunType::Api => threads.push(whirl_api::make()),
-        },
-        None => break,
+    while let Some(run_type) = server_type.last() {
+      match run_type {
+        RunType::Distributor => threads.push(whirl_server::make::distributor()),
+        RunType::Hub => threads.push(whirl_server::make::hub()),
+        RunType::Api => threads.push(whirl_api::make()),
       }
       server_type.pop();
     }
