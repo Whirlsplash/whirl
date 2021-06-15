@@ -106,3 +106,9 @@ pub fn builtin_fetch() -> i32 {
 
   0
 }
+
+pub fn builtin_clear() -> i32 {
+  println!("\x1B[2J\x1B[1;1H");
+
+  0
+}
