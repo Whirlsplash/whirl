@@ -24,7 +24,7 @@ human-panic = "1.0.3"
 # simple-error = "0.2.3"
 
 # Utility
-rand = "0.8.3"
+rand = "0.8.4"
 async-trait = "0.1.50"
 whirl_common = { path = "../whirl_common" }
 
