@@ -45,6 +45,7 @@ use crate::structures::{
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
+  pub version:     String,
   pub whirlsplash: WhirlsplashConfig,
   pub distributor: DistributorConfig,
   pub hub:         HubConfig,
@@ -87,6 +88,7 @@ impl Config {
 impl Default for Config {
   fn default() -> Self {
     Self {
+      version:     "0.1.0".to_string(),
       whirlsplash: WhirlsplashConfig {
         worldsmaster_username: "WORLDSMASTER".to_string(),
         ip:                    "0.0.0.0".to_string(),
