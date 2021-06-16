@@ -1,5 +1,7 @@
 # See more keys and their definitions at https://whirlsplash.org/docs/whirl/configuration
 
+version = "0.1.0"
+
 [whirlsplash]
 worldsmaster_username = "WORLDSMASTER"
 ip = "0.0.0.0"
