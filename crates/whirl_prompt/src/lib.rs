@@ -35,6 +35,7 @@ use whirl_config::Config;
 use crate::{
   builtins::{
     builtin_cat,
+    builtin_clear,
     builtin_config,
     builtin_echo,
     builtin_fetch,
@@ -106,6 +107,7 @@ impl Prompt {
       Ok(BuiltIn::Cat) => builtin_cat(&c.args),
       Ok(BuiltIn::Config) => builtin_config(&c.args),
       Ok(BuiltIn::Fetch) => builtin_fetch(),
+      Ok(BuiltIn::Clear) => builtin_clear(),
       _ => {
         println!("wsh: command not found: {}", &c.keyword);
         1
