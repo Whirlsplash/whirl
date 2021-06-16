@@ -13,6 +13,7 @@ pub enum BuiltIn {
   Cat,
   Config,
   Fetch,
+  Clear,
 }
 impl FromStr for BuiltIn {
   type Err = ();
@@ -28,6 +29,7 @@ impl FromStr for BuiltIn {
       "cat" => Ok(Self::Cat),
       "config" => Ok(Self::Config),
       "fetch" => Ok(Self::Fetch),
+      "clear" => Ok(Self::Clear),
       _ => Err(()),
     }
   }
