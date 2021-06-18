@@ -93,8 +93,9 @@ command = "docker"
 args = [
   "run",
   "--name", "Whirlsplash",
-  #     API                Distributor        Hub
+  #     API              Distributor        Hub
   "-p", "8000:80", "-p", "6650:6650", "-p", "5673:5673",
+  "-v", "/var/lib/whirl:/.whirl",
   "whirlsplash/whirl"
 ]
 
@@ -106,8 +107,9 @@ args = [
   "run",
   "-it",
   "--name", "Whirlsplash",
-  #     API                Distributor        Hub
+  #     API              Distributor        Hub
   "-p", "8000:80", "-p", "6650:6650", "-p", "5673:5673",
+  "-v", "/var/lib/whirl:/.whirl",
   "--env", "DISABLE_PROMPT=false",
   "whirlsplash/whirl"
 ]
