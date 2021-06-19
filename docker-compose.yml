@@ -1,11 +1,10 @@
-version: '3.3'
+version: "3.3"
 services:
   whirl:
     ports:
-      - '8080:80'
-      - '6650:6650'
-      - '5673:5673'
-    container_name: Whirlsplash
-    image: whirlsplash/whirl
+      - "8080:80"
+      - "6650:6650"
+      - "5673:5673"
     volumes:
       - ./.whirl-data:/.whirl
+    image: whirlsplash/whirl
