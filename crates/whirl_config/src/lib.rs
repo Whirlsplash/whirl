@@ -79,6 +79,10 @@ impl Config {
         "unable to load configuration file, reverting to default value: {}",
         why
       );
+      warn!(
+        "you should probably generate yourself a configuration file with `whirl config generate`!"
+      );
+
       Self::default()
     } else {
       Self::load().unwrap()
