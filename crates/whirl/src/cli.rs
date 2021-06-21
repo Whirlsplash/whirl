@@ -1,7 +1,7 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use std::str::FromStr;
+use std::{io::Write, str::FromStr};
 
 use structopt::clap::{App, AppSettings, Arg, SubCommand};
 use whirl_config::Config;
@@ -102,6 +102,23 @@ impl Cli {
       ("config", Some(s_matches)) =>
         match s_matches.subcommand() {
           ("show", _) => println!("{:#?}", Config::get()),
+          ("generate", Some(s_s_matches)) => {
+            if std::path::Path::new(".whirl/Config.toml").exists()
+              && !s_s_matches.is_present("force")
+            {
+              info!(
+                "a configuration file is already present, if you would like to regenerate the \
+                 configuration file, execute this sub-command with the `--force` (`-f`) flag"
+              );
+            } else {
+              let mut file = std::fs::File::create(".whirl/Config.toml")
+                .expect("unable to create configuration file");
+              file
+                .write_all(include_bytes!("../../whirl_config/Config.default.toml"))
+                .expect("unable to write default configuration to generated configuration file");
+              info!("successfully generated a new configuration file");
+            }
+          }
           _ => unreachable!(),
         },
       ("clean", _) => {
@@ -132,7 +149,7 @@ impl Cli {
         SubCommand::with_name("run")
           .about("Start the WorldServer or a selection of sub-servers.")
           .long_about(
-            "Start the WorldServer by running this sub-command WITHOUT any arguments, start a \
+            "Start the WorldServer by executing this sub-command WITHOUT any arguments, start a \
              selection of sub-servers by passing a comma-separated list of sub-server types.",
           )
           .arg(
@@ -145,7 +162,12 @@ impl Cli {
           ),
         SubCommand::with_name("config")
           .setting(AppSettings::SubcommandRequiredElseHelp)
-          .subcommands(vec![SubCommand::with_name("show")]),
+          .subcommands(vec![
+            SubCommand::with_name("show"),
+            SubCommand::with_name("generate")
+              .alias("gen")
+              .arg(Arg::with_name("force").short("f").long("force")),
+          ]),
         SubCommand::with_name("clean").about(
           "Delete Whirl-generated files/ directories which are NOT critical. E.g., .whirl/logs/",
         ),
