@@ -32,3 +32,6 @@ result*
 
 # Docker
 /.whirl-data/
+
+# Vagrant
+/.vagrant/
