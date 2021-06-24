@@ -9,7 +9,6 @@ readme = "../../README.rst"
 homepage = "https://whirlsplash.org"
 repository = "https://github.com/Whirlsplash/whirl"
 license = "GPL-3.0-only"
-# license-file = "LICENSE"
 keywords = ["rust", "worldserver", "whirl", "whirlsplash"]
 publish = false
 
