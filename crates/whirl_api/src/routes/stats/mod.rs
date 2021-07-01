@@ -17,20 +17,20 @@ pub fn statistics() -> HttpResponse {
   let mut sys = System::new_all();
   sys.refresh_all();
 
-  let process = sys.get_process(get_current_pid().unwrap()).unwrap();
+  let process = sys.process(get_current_pid().unwrap()).unwrap();
 
   HttpResponse::Ok().json(Statistics {
     system:  StatisticsSystem {
-      os_type: sys.get_name().unwrap(),
-      release: sys.get_kernel_version().unwrap(),
+      os_type: sys.name().unwrap(),
+      release: sys.kernel_version().unwrap(),
       uptime:  whirl_common::system::seconds_to_hrtime(
-        usize::try_from(sysinfo::System::new().get_uptime()).unwrap(),
+        usize::try_from(sysinfo::System::new().uptime()).unwrap(),
       ),
     },
     process: StatisticsProcess {
       // (process.cpu_usage() * 100.0).round() / 100.0
       memory_usage: (process.memory() / 1000).to_string(),
-      cpu_usage:    (process.cpu_usage() / sys.get_processors().len().as_(): f32).to_string(),
+      cpu_usage:    (process.cpu_usage() / sys.processors().len().as_(): f32).to_string(),
       // uptime: seconds_to_hrtime((sys.get_uptime() - process.start_time()) as usize),
     },
   })
