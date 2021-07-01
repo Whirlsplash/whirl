@@ -24,7 +24,7 @@ pub fn statistics() -> HttpResponse {
       os_type: sys.name().unwrap(),
       release: sys.kernel_version().unwrap(),
       uptime:  whirl_common::system::seconds_to_hrtime(
-        usize::try_from(sysinfo::System::new().uptime()).unwrap(),
+        usize::try_from(sys.uptime()).unwrap(),
       ),
     },
     process: StatisticsProcess {
