@@ -115,7 +115,7 @@ impl Server for Distributor {
                   } else {
                     room_ids.push((&*room.room_name).to_string());
                     room_id = room_ids.iter().position(|r| r == &room.room_name).unwrap();
-                    trace!("inserted room: {}", room.room_name);
+                    trace!("inserted room {}: {}", room.room_name, room_id);
                   }
 
                   peer.bytes.get_mut().write_all(&RedirectId {
