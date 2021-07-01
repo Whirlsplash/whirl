@@ -27,13 +27,18 @@ use crate::{
       property::create::{property_request_as_distributor, property_update_as_distributor},
       redirect_id::RedirectId,
       room_id_request::RoomIdRequest,
+      session_exit::SessionExit,
       text::Text,
     },
     constants::Command,
     extendable::{Creatable, Parsable},
   },
   interaction::{peer::Peer, shared::Shared},
-  net::constants::VAR_USERNAME,
+  net::{
+    constants::{VAR_ERROR, VAR_USERNAME},
+    network_property::NetworkProperty,
+    property_list::PropertyList,
+  },
   packet_parser::parse_commands_from_packet,
   Server,
 };
@@ -120,7 +125,17 @@ impl Server for Distributor {
                   trace!("sent redirect id to {}: {}", username, room.room_name);
                 }
                 Some(Command::SessExit) => {
-                  debug!("received session exit from {}", username); break;
+                  debug!("received session exit from {}", username);
+
+                  peer.bytes.get_mut().write_all(&SessionExit(PropertyList(vec![
+                    NetworkProperty {
+                      prop_id: VAR_ERROR,
+                      value: "0".to_string(),
+                    }
+                  ])).create()).await?;
+                  trace!("sent session exit to {}", username);
+
+                  break;
                 }
                 _ => {},
               }
