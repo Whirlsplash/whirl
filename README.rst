@@ -105,8 +105,7 @@ Benchmarking
 
 For the time being; benchmarking is only available for \*nix-based environments as the benchmarking
 utility currently in place, `Iai <https://github.com/bheisler/iai>`_, has a hard dependency on
-`Valgrind <https://github.com/bheisler/iai>`_ which is only accessible within \*nix-based
-environments.
+`Valgrind <https://www.valgrind.org/>`_ which is only accessible within \*nix-based environments.
 
 More so, the current benchmarks which have been set-up do not cover the full extent of Whirl, but a
 small portion of the crates which make up Whirl as a whole. In the future, benchmarks may be
