@@ -12,6 +12,7 @@ use crate::{
   },
 };
 
+#[derive(Clone)]
 pub struct PropertyList(pub Vec<crate::net::network_property::NetworkProperty>);
 impl PropertyList {
   /// Convert a `PropertyList` to a ready-to-be sent command.
