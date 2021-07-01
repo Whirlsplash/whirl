@@ -22,6 +22,7 @@ use crate::{
       action::create,
       buddy_list::BuddyList,
       property::create::{property_request_as_hub, property_update_as_hub},
+      session_exit::SessionExit,
       subscribe_distance::SubscribeDistance,
       subscribe_room::SubscribeRoom,
       teleport::Teleport,
@@ -31,7 +32,11 @@ use crate::{
     extendable::{Creatable, Parsable, ParsableWithArguments},
   },
   interaction::{peer::Peer, shared::Shared},
-  net::constants::VAR_USERNAME,
+  net::{
+    constants::{VAR_ERROR, VAR_USERNAME},
+    network_property::NetworkProperty,
+    property_list::PropertyList,
+  },
   packet_parser::parse_commands_from_packet,
   Server,
 };
@@ -105,7 +110,17 @@ impl Server for Hub {
                 //   trace!("{:?}", create_room_id_request(&room.room_name, 0x00));
                 // }
                 Some(Command::SessExit) => {
-                  debug!("received session exit from {}", username); break;
+                  debug!("received session exit from {}", username);
+
+                  peer.bytes.get_mut().write_all(&SessionExit(PropertyList(vec![
+                    NetworkProperty {
+                      prop_id: VAR_ERROR,
+                      value: "0".to_string(),
+                    }
+                  ])).create()).await?;
+                  trace!("sent session exit to {}", username);
+
+                  break;
                 }
                 Some(Command::Text) => {
                   let text = Text::parse(msg.to_vec(), &[&username]);
