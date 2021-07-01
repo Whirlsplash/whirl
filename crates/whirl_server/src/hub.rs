@@ -45,6 +45,7 @@ use crate::{
 pub struct Hub;
 #[async_trait]
 impl Server for Hub {
+  #[allow(clippy::too_many_lines)]
   async fn handle(
     state: Arc<Mutex<Shared>>,
     stream: TcpStream,
@@ -55,6 +56,8 @@ impl Server for Hub {
     let mut peer = Peer::new(state.clone(), bytes, count.to_string()).await?;
     // let mut room_ids = vec![];
     let mut username = String::from("unknown");
+
+    let mut show_avatar = false;
 
     loop {
       tokio::select! {
@@ -103,11 +106,21 @@ impl Server for Hub {
                   peer.bytes.get_mut().write_all(&buddy.create()).await?;
                   trace!("sent buddy list notify to {}: {}", username, buddy.buddy);
                 }
-                // TODO: Figure out if this is actually even needed.
+                // TODO: IMPLEMENT
+                //
+                // This will be interesting to implement as it looks like the
+                // AutoServer and RoomServer room ID collectors are linked.
+                //
+                // There are two possibilities to link these two vectors:
+                // create a global, lazy-static vector or add the room ID
+                // collector to a shared struct (somehow).
                 // Some(Command::RoomIdRq) => {
                 //   let room = RoomIdRequest::parse(msg.to_vec());
                 //   debug!("received room id request from {}: {}", username, room.room_name);
-                //   trace!("{:?}", create_room_id_request(&room.room_name, 0x00));
+                //   peer.bytes.get_mut().write_all(&RedirectId {
+                //     room_name: (&*room.room_name).to_string(),
+                //     room_number: 103,
+                //   }.create()).await?;
                 // }
                 Some(Command::SessExit) => {
                   debug!("received session exit from {}", username);
@@ -129,10 +142,68 @@ impl Server for Hub {
                   {
                     state.lock().await.broadcast(&Text {
                       sender: (&*username).to_string(),
-                      content: text.content,
+                      content: text.content.clone(),
                     }.create()).await;
                   }
                   debug!("broadcasted text to hub");
+
+                  match text.content.as_str() {
+                    // Makes the friend "fuwn" come online
+                    "/friend online fuwn" => {
+                      peer.bytes.get_mut().write_all(&[
+                        0x09, 0x01, 0x1e, 0x04, 0x66, 0x75, 0x77, 0x6e,
+                        0x01,
+                      ]).await?;
+                    }
+                    // Makes the friend "fuwn" go offline
+                    "/friend offline fuwn" => {
+                      peer.bytes.get_mut().write_all(&[
+                        0x09, 0x01, 0x1e, 0x04, 0x66, 0x75, 0x77, 0x6e,
+                        0x00,
+                      ]).await?;
+                    }
+                    // Spawns a test avatar with the name "fuwn"
+                    "/spawn fuwn" => {
+                      show_avatar = true;
+
+                      peer.bytes.get_mut().write_all(&[
+                        // REGOBJID
+                        0x09, 0xff, 0x0d, 0x04, 0x66, 0x75, 0x77, 0x6e,
+                        0x02,
+
+                        // TELEPORT
+                        //
+                        // It was way more difficult for me to figure out how to
+                        // change this command's room ID then it should have
+                        // been...
+                        //
+                        // The room ID in this command is actually the fifth and
+                        // sixth bytes (a short), however, the constructor
+                        // implies that the FOURTH byte is where the room ID
+                        // short begins. I would attempt to change the room ID
+                        // of this command (now `0x00, 0x01` or `0x0001`),
+                        // modifying the fourth and fifth bytes, effectively
+                        // creating a malformed command which would then cause
+                        // the client to go unresponsive...
+                        0x10, 0xfe, 0x12, 0x02, 0x00, 0x01, 0x00, 0x01,
+                        0x00, 0xbf, 0x00, 0xad, 0x00, 0x00, 0x00, 0x2d,
+
+                        // PROPUPD
+                        0x16, 0x02, 0x10, 0x05, 0x40, 0x01, 0x0f, 0x61,
+                        0x76, 0x61, 0x74, 0x61, 0x72, 0x3a, 0x56, 0x61,
+                        0x6d, 0x70, 0x2e, 0x6d, 0x6f, 0x76,
+                      ]).await?;
+                    }
+                    // Puts the test avatar "fuwn" into the asleep action
+                    "/sleep fuwn" => {
+                      peer.bytes.get_mut().write_all(&[
+                        0x12, 0x00, 0x04, 0x66, 0x75, 0x77, 0x6e, 0x10,
+                        0x17, 0x40, 0x01, 0x06, 0x61, 0x73, 0x6c, 0x65,
+                        0x65, 0x70,
+                      ]).await?;
+                    }
+                    _ => (),
+                  }
                 }
                 Some(Command::Subscrib) => {
                   let subscribe_room = SubscribeRoom::parse(msg[3..].to_vec());
@@ -148,6 +219,22 @@ impl Server for Hub {
                   let teleport = Teleport::parse(msg[3..].to_vec());
                   debug!("received teleport from {}: {:?}",
                     username, teleport);
+                }
+                Some(Command::ShortLoc) => {
+                  // This is all just test stuff. Once the drone system has been
+                  // finalized, this should all be in it's own module (s).
+                  if show_avatar {
+                    peer.bytes.get_mut().write_all(&[
+                      0x29, 0x00, 0x04, 0x66, 0x75, 0x77, 0x6e, 0x10,
+                      0x09, 0x80, 0x01, 0x0a, 0x32, 0x30, 0x32, 0x30,
+                      0x30, 0x33, 0x31, 0x32, 0x30, 0x30, 0x05, 0x40,
+                      0x01, 0x0f, 0x61, 0x76, 0x61, 0x74, 0x61, 0x72,
+                      0x3a, 0x56, 0x61, 0x6d, 0x70, 0x2e, 0x6d, 0x6f,
+                      0x76,
+                    ]).await?;
+
+                    show_avatar = false;
+                  }
                 }
                 _ => (),
               }
