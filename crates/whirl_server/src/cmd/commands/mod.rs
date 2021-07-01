@@ -6,6 +6,7 @@ pub mod buddy_list;
 pub mod property;
 pub mod redirect_id;
 pub mod room_id_request;
+pub mod session_exit;
 pub mod subscribe_distance;
 pub mod subscribe_room;
 pub mod teleport;
