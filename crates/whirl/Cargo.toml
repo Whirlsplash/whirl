@@ -42,7 +42,7 @@ structopt = "0.3.21"
 whirl_config = { path = "../whirl_config" }
 
 # TCP
-tokio = { version = "1.7.1", features = ["full"] }
+tokio = { version = "1.8.0", features = ["full"] }
 tokio-util = { version = "0.6.7", features = ["codec"] }
 tokio-stream = "0.1.6"
 
