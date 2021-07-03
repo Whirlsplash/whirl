@@ -17,9 +17,16 @@ publish = false
 whirl_config = { path = "../whirl_config" }
 
 [dev-dependencies]
+# Benchmark
 iai = "0.1.1"
+criterion = { version = "0.3.4", features = ["html_reports"] }
 
 [[bench]]
 name = "whirl_common"
-path = "../../benches/whirl_common.rs"
+path = "../../benches/whirl_common_iai.rs"
+harness = false
+
+[[bench]]
+name = "whirl_common_criterion"
+path = "../../benches/whirl_common_criterion.rs"
 harness = false
