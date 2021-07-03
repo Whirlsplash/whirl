@@ -16,6 +16,6 @@ fn vec_alphabetically() {
 fn seconds_to_hrtime() {
   assert_eq!(
     "125 weeks, 14 days, 9 hours, 37 mins, 57 secs",
-    whirl_common::system::seconds_to_hrtime(1623058677),
+    whirl_common::system::unixts_to_hrtime(1623058677),
   );
 }

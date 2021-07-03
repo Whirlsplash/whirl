@@ -9,15 +9,15 @@ fn criterion_benchmark_sort_vec_alphabetically(c: &mut Criterion) {
   });
 }
 
-fn criterion_benchmark_system_seconds_to_hrtime(c: &mut Criterion) {
-  c.bench_function("system seconds to human readable time", |b| {
-    b.iter(|| whirl_common::system::seconds_to_hrtime(1623058677))
+fn criterion_benchmark_system_unixts_to_hrtime(c: &mut Criterion) {
+  c.bench_function("system unix timestamp to human readable time", |b| {
+    b.iter(|| whirl_common::system::unixts_to_hrtime(1623058677))
   });
 }
 
 criterion_group!(
   benches,
   criterion_benchmark_sort_vec_alphabetically,
-  criterion_benchmark_system_seconds_to_hrtime,
+  criterion_benchmark_system_unixts_to_hrtime,
 );
 criterion_main!(benches);
