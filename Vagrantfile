@@ -118,4 +118,7 @@ Vagrant.configure("2") do |config|
 
   # Provision SQLite
   config.vm.provision "shell", path: "./bin/sqlite.sh"
+
+  # Provision Rust
+  config.vm.provision "shell", path: "./bin/rust.sh"
 end
