@@ -59,8 +59,15 @@ impl Whirl {
         flexi_logger::Logger::try_with_str(whirl_common::log::calculate_log_level()).unwrap();
       if std::env::var("LOG_FILE").unwrap_or_else(|_| "true".to_string()) == "false"
         || !whirl_config::Config::get().whirlsplash.log.file
-        || std::env::args().collect::<Vec<_>>()[1] == "clean"
-      // Cheeky as all hell.
+        || ({
+          // Cheeky as all hell.
+          let args = std::env::args().collect::<Vec<_>>();
+          if args.len() == 2 {
+            args[1] == "clean"
+          } else {
+            false
+          }
+        })
       {
         logger.start()?;
       } else {
