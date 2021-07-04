@@ -20,8 +20,10 @@ use crate::{
   cmd::{
     commands::{
       action::create,
+      appear_actor::AppearActor,
       buddy_list::BuddyList,
       property::create::{property_request_as_hub, property_update_as_hub},
+      register_object_id::RegisterObjectId,
       session_exit::SessionExit,
       subscribe_distance::SubscribeDistance,
       subscribe_room::SubscribeRoom,
@@ -209,6 +211,19 @@ impl Server for Hub {
                   let subscribe_room = SubscribeRoom::parse(msg[3..].to_vec());
                   debug!("received subscribe room from {}: {:?}",
                     username, subscribe_room);
+
+                  peer.bytes.get_mut().write_all(&RegisterObjectId {
+                    long_object_id: "fuwn".to_string(),
+                    short_object_id: 2,
+                  }.create()).await?;
+                  peer.bytes.get_mut().write_all(&AppearActor {
+                    short_object_id: 2,
+                    room_id: 1,
+                    x: 191,
+                    y: 173,
+                    z: 0,
+                    direction: 45,
+                  }.create()).await?;
                 }
                 Some(Command::SubDist) => {
                   let subscribe_distance = SubscribeDistance::parse(msg[3..].to_vec());
