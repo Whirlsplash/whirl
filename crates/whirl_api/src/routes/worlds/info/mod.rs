@@ -16,7 +16,7 @@ pub fn info(req: HttpRequest) -> HttpResponse {
       "http://www-dynamic.us.worlds.net/cgi-bin/profile.pl?{}",
       qstring::QString::from(req.query_string())
         .get("username")
-        .unwrap_or("null"),
+        .unwrap_or(""),
     ))
     .unwrap();
 
