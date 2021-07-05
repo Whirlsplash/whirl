@@ -57,6 +57,7 @@ impl Api {
         .service(resource("/").to(|| async { "Whirlsplash" }))
         .service(resource("/api/v1/statistics").to(routes::stats::statistics))
         .service(resource("/api/v1/worlds/vip").to(routes::worlds::vip::vip))
+        .service(resource("/api/v1/worlds/info").to(routes::worlds::info::info))
     })
     .bind(address)?
     .run();
