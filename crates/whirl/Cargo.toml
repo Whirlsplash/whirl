@@ -36,7 +36,7 @@ serde = "1.0.126"
 serde_derive = "1.0.126"
 
 # CLI
-structopt = "0.3.21"
+structopt = "0.3.22"
 
 # Config
 whirl_config = { path = "../whirl_config" }
