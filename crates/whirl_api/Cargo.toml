@@ -22,6 +22,7 @@ sysinfo = "0.19.0"
 whirl_common = { path = "../whirl_common" }
 tokio = { version = "1.8.0", features = ["full"] }
 num-traits = "0.2.14"
+qstring = "0.7.2"
 
 # Serialization
 serde = "1.0.126"
@@ -32,3 +33,6 @@ log = "0.4.14"
 
 # Config
 whirl_config = { path = "../whirl_config" }
+
+# Web
+curl = "0.4.38"

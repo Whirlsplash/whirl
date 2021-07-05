@@ -56,6 +56,7 @@ impl Api {
         .wrap(actix_cors::Cors::default().allow_any_origin())
         .service(resource("/").to(|| async { "Whirlsplash" }))
         .service(resource("/api/v1/statistics").to(routes::stats::statistics))
+        .service(resource("/api/v1/worlds/vip").to(routes::worlds::vip::vip))
     })
     .bind(address)?
     .run();
