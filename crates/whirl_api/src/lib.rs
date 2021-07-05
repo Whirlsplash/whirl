@@ -30,7 +30,7 @@ extern crate log;
 #[macro_use]
 extern crate serde_derive;
 
-use actix_web::web::resource;
+use actix_web::web::{resource, scope};
 
 mod routes;
 
@@ -55,9 +55,15 @@ impl Api {
       actix_web::App::new()
         .wrap(actix_cors::Cors::default().allow_any_origin())
         .service(resource("/").to(|| async { "Whirlsplash" }))
-        .service(resource("/api/v1/statistics").to(routes::stats::statistics))
-        .service(resource("/api/v1/worlds/vip").to(routes::worlds::vip::vip))
-        .service(resource("/api/v1/worlds/info").to(routes::worlds::info::info))
+        .service(
+          scope("/api/v1")
+            .service(resource("/statistics").to(routes::stats::statistics))
+            .service(
+              scope("/worlds")
+                .service(resource("/vip").to(routes::worlds::vip::vip))
+                .service(resource("/info").to(routes::worlds::info::info)),
+            ),
+        )
     })
     .bind(address)?
     .run();
