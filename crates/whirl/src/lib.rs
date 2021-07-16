@@ -38,6 +38,7 @@ static GLOBAL: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
 pub mod cli;
 
+use signal_hook::consts::{SIGINT, SIGTERM};
 use whirl_config::Config;
 
 pub struct Whirl;
@@ -77,6 +78,17 @@ impl Whirl {
           .start()?;
       }
     }
+
+    // Ctrl+C handling
+    tokio::spawn(async move {
+      for signal in signal_hook::iterator::Signals::new(&[SIGTERM, SIGINT])
+        .unwrap()
+        .forever()
+      {
+        info!("signal received: {:?}, killing whirl", signal);
+        std::process::exit(0);
+      }
+    });
 
     crate::cli::Cli::execute().await;
 
