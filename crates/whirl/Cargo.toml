@@ -37,6 +37,7 @@ serde_derive = "1.0.126"
 
 # CLI
 structopt = "0.3.22"
+signal-hook = "0.3.9"
 
 # Config
 whirl_config = { path = "../whirl_config" }
