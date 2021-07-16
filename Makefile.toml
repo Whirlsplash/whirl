@@ -161,3 +161,8 @@ workspace = false
 toolchain = "nightly"
 command = "cargo"
 args = ["doc", "--open", "--document-private-items", "--no-deps"]
+
+[tasks.kill]
+workspace = false
+command = "sudo"
+args = ["killall", "-s", "SIGKILL", "whirl", "--exact", "--wait"]
