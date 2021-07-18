@@ -10,3 +10,15 @@ if command -v sqlfluff > /dev/null; then
 	sqlfluff lint migrations/
 fi
 
+# Check if nixfmt is installed on the system, if it is, run the linting
+# subroutine on Nix source files.
+if command -v nixfmt > /dev/null; then
+  # Lazy...
+  for i in $(ls *.nix); do
+    nixfmt $i
+  done
+  for i in $(ls nix/*.nix); do
+    nixfmt $i
+  done
+fi
+
