@@ -6,8 +6,8 @@ let
 
   srcNoTarget = dir:
     builtins.filterSource
-      (path: type: type != "directory" || builtins.baseNameOf path != "target")
-      dir;
+    (path: type: type != "directory" || builtins.baseNameOf path != "target")
+    dir;
 
   naersk = pkgs.callPackage sources.naersk {
     rustc = rust;
@@ -28,10 +28,10 @@ let
     version = "HEAD";
     buildInputs = [ dhallpkgs.dhall-simple ];
 
-#    phases = "installPhase";
-#
-#    installPhase = ''
-#    '';
+    #    phases = "installPhase";
+    #
+    #    installPhase = ''
+    #    '';
   };
 
 in pkgs.stdenv.mkDerivation {
