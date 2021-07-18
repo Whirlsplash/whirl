@@ -14,7 +14,8 @@ let
 
       fromImage = pkgs.dockerTools.pullImage {
         imageName = "alpine";
-        imageDigest = "sha256:def822f9851ca422481ec6fee59a9966f12b351c62ccb9aca841526ffaa9f748";
+        imageDigest =
+          "sha256:def822f9851ca422481ec6fee59a9966f12b351c62ccb9aca841526ffaa9f748";
         # https://nixos.wiki/wiki/Docker
         #
         # The above article didn't even work for me, ROFL.

@@ -1,6 +1,7 @@
 let
   sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs { overlays = [ (import sources.nixpkgs-mozilla) ]; };
+  pkgs =
+    import sources.nixpkgs { overlays = [ (import sources.nixpkgs-mozilla) ]; };
   dhallpkgs = import sources.easy-dhall-nix { inherit pkgs; };
   dhall-yaml = dhallpkgs.dhall-yaml-simple;
   dhall = dhallpkgs.dhall-simple;
@@ -28,6 +29,7 @@ in pkgs.mkShell {
   ];
 
   DATABASE_URL = ".whirl/db.sqlite3";
-  RUST_SRC_PATH = "${pkgs.latest.rustChannels.nightly.rust-src}/lib/rustlib/src/rust/library";
+  RUST_SRC_PATH =
+    "${pkgs.latest.rustChannels.nightly.rust-src}/lib/rustlib/src/rust/library";
   RUST_BACKTRACE = "1";
 }
