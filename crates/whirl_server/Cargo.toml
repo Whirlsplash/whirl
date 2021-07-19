@@ -30,7 +30,7 @@ serde = "1.0.126"
 serde_derive = "1.0.126"
 
 # TCP
-tokio = { version = "1.8.1", features = ["full"] }
+tokio = { version = "1.8.2", features = ["full"] }
 tokio-util = { version = "0.6.7", features = ["codec"] }
 tokio-stream = "0.1.7"
 
