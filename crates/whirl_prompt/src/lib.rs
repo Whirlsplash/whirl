@@ -75,7 +75,7 @@ impl Prompt {
       .read_line(&mut input)
       .expect("failed to read command from stdin");
 
-    if input.len() <= 2 {
+    if input.len() <= 1 {
       input = "null".to_string();
     }
 
