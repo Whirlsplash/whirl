@@ -18,3 +18,9 @@ pub const HELPABLES_BUILTIN_CONFIG: [&str; 2] = [
   // "refresh - reload the configuration file",
   "show    - display the current configuration",
 ];
+pub const HELPABLES_BUILTIN_FETCH: [&str; 4] = [
+  "help        - you are here",
+  "show        - display the current configuration",
+  "",
+  "-w, --whirl - replace tux with the whirlsplash logo",
+];
