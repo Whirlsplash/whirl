@@ -6,7 +6,7 @@ pub mod structures;
 
 use std::io::Write;
 
-use constants::{FILES, HELPABLES_BUILTINS, HELPABLES_BUILTIN_CONFIG};
+use constants::{FILES, HELPABLES_BUILTINS, HELPABLES_BUILTIN_CONFIG, HELPABLES_BUILTIN_FETCH};
 use sysinfo::SystemExt;
 use whirl_config::Config;
 
@@ -91,18 +91,43 @@ pub fn builtin_config(args: &[String]) -> i32 {
   0
 }
 
-pub fn builtin_fetch() -> i32 {
+pub fn builtin_fetch(args: &[String]) -> i32 {
   // rfetch: https://github.com/Mangeshrex/rfetch
 
   let mut sys = sysinfo::System::new();
   sys.refresh_processes();
+  let mut whirl_image = false;
 
-  println!("               ");
-  println!("      .-.      os    {}", env!("CARGO_PKG_NAME"));
-  println!("      oo|      ker   {}", env!("CARGO_PKG_VERSION"));
-  println!("     / '\\      sh    /wsh");
-  println!("    (\\_;/)     up    null");
-  println!("               ");
+  match args.get(0) {
+    Some(sub) =>
+      match sub.as_str() {
+        "--whirl" | "-w" => whirl_image = true,
+        "help" | "--help" | "-h" => {
+          for help in &HELPABLES_BUILTIN_FETCH {
+            println!("{}", help);
+          }
+          return 0;
+        }
+        _ => println!("invalid arguments provided"),
+      },
+    _ => (),
+  }
+
+  if whirl_image {
+    println!(" -----:::::--- ");
+    println!(" ---:///::/+:- os    {}", env!("CARGO_PKG_NAME"));
+    println!(" ---//-//--//- ker   {}", env!("CARGO_PKG_VERSION"));
+    println!(" -:/:+-+:://-- sh    /wsh");
+    println!(" -//:+-::::--- up    null");
+    println!(" --:::-------- ");
+  } else {
+    println!("               ");
+    println!("      .-.      os    {}", env!("CARGO_PKG_NAME"));
+    println!("      oo|      ker   {}", env!("CARGO_PKG_VERSION"));
+    println!("     / '\\      sh    /wsh");
+    println!("    (\\_;/)     up    null");
+    println!("               ");
+  }
 
   0
 }

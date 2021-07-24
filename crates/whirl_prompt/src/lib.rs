@@ -106,7 +106,7 @@ impl Prompt {
       Ok(BuiltIn::Ls) => builtin_ls(),
       Ok(BuiltIn::Cat) => builtin_cat(&c.args),
       Ok(BuiltIn::Config) => builtin_config(&c.args),
-      Ok(BuiltIn::Fetch) => builtin_fetch(),
+      Ok(BuiltIn::Fetch) => builtin_fetch(&c.args),
       Ok(BuiltIn::Clear) => builtin_clear(),
       _ => {
         println!("wsh: command not found: {}", &c.keyword);
