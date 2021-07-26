@@ -19,7 +19,7 @@ whirl_config = { path = "../whirl_config" }
 [dev-dependencies]
 # Benchmark
 iai = "0.1.1"
-criterion = { version = "0.3.4", features = ["html_reports"] }
+criterion = { version = "0.3.5", features = ["html_reports"] }
 
 [[bench]]
 name = "whirl_common"
