@@ -37,7 +37,6 @@ serde_derive = "1.0.127"
 
 # CLI
 structopt = "0.3.22"
-signal-hook = "0.3.9"
 
 # Config
 whirl_config = { path = "../whirl_config" }
@@ -64,3 +63,7 @@ mimalloc = { version = "0.1.26", default-features = false }
 
 [target.'cfg(unix)'.dependencies]
 jemallocator = "0.3.2"
+
+# Signal
+signal-hook = "0.3.9"
+signal-hook-tokio = "0.3.0"
