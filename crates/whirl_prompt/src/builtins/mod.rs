@@ -98,6 +98,7 @@ pub fn builtin_fetch(args: &[String]) -> i32 {
   sys.refresh_processes();
   let mut whirl_image = false;
 
+  #[allow(clippy::single_match)]
   match args.get(0) {
     Some(sub) =>
       match sub.as_str() {
