@@ -38,7 +38,10 @@ static GLOBAL: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
 pub mod cli;
 
-use signal_hook::consts::{SIGINT, SIGTERM};
+#[cfg(unix)]
+use signal_hook::consts::signal::{SIGINT, SIGTERM};
+#[cfg(unix)]
+use tokio_stream::StreamExt;
 use whirl_config::Config;
 
 pub struct Whirl;
@@ -80,13 +83,15 @@ impl Whirl {
     }
 
     // Ctrl+C handling
-    tokio::spawn(async move {
-      for signal in signal_hook::iterator::Signals::new(&[SIGTERM, SIGINT])
-        .unwrap()
-        .forever()
-      {
-        info!("signal received: {:?}, killing whirl", signal);
-        std::process::exit(0);
+    #[cfg(unix)]
+    tokio::spawn({
+      while let Some(signal) = signal_hook_tokio::Signals::new(&[SIGTERM, SIGINT]).fuse() {
+        match signal {
+          _ => {
+            info!("signal received: {:?}, killing whirl", signal);
+            std::process::exit(0);
+          }
+        }
       }
     });
 
