@@ -66,4 +66,3 @@ jemallocator = "0.3.2"
 
 # Signal
 signal-hook = "0.3.9"
-signal-hook-tokio = "0.3.0"
