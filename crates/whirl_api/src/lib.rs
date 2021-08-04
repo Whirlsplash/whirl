@@ -30,7 +30,7 @@ extern crate log;
 #[macro_use]
 extern crate serde_derive;
 
-use actix_web::web::{resource, scope};
+use axum::prelude::*;
 
 mod routes;
 
@@ -45,34 +45,19 @@ impl Api {
   /// # Panics
   /// - A panic may occur if the mpsc sender is unable to send a clone of the
   ///   server.
-  pub async fn listen(
-    tx: std::sync::mpsc::Sender<actix_web::dev::Server>,
-    address: &str,
-  ) -> std::io::Result<()> {
-    let mut sys = actix_web::rt::System::new("api");
+  pub async fn listen(address: &str) {
+    // TODO: Version handler
+    let app = route("/", get(|| async { "Whirlsplash" }))
+      .route("/api/v1/stats", get(routes::stats::statistics))
+      .route("/api/v1/worlds/info", get(routes::worlds::info::info))
+      .route("/api/v1/worlds/vip", get(routes::worlds::vip::vip));
 
-    let server = actix_web::HttpServer::new(|| {
-      actix_web::App::new()
-        .wrap(actix_cors::Cors::default().allow_any_origin())
-        .service(resource("/").to(|| async { "Whirlsplash" }))
-        .service(
-          scope("/api/v1")
-            .service(resource("/statistics").to(routes::stats::statistics))
-            .service(
-              scope("/worlds")
-                .service(resource("/vip").to(routes::worlds::vip::vip))
-                .service(resource("/info").to(routes::worlds::info::info)),
-            ),
-        )
-    })
-    .bind(address)?
-    .run();
+    hyper::Server::bind(&address.parse().unwrap())
+      .serve(app.into_make_service())
+      .await
+      .unwrap();
 
     info!("http api now listening at {}", address);
-
-    tx.send(server.clone()).unwrap();
-
-    sys.block_on(server)
   }
 }
 
@@ -84,17 +69,11 @@ impl Api {
 ///   server.
 #[must_use]
 pub fn make() -> tokio::task::JoinHandle<()> {
-  // actix_web::rt::System::new("").block_on(rx.recv().unwrap().stop(true));
-
   tokio::spawn(async move {
-    crate::Api::listen(
-      std::sync::mpsc::channel().0,
-      &*format!(
-        "0.0.0.0:{}",
-        whirl_config::Config::get().whirlsplash.api.port
-      ),
-    )
-    .await
-    .unwrap();
+    crate::Api::listen(&*format!(
+      "0.0.0.0:{}",
+      whirl_config::Config::get().whirlsplash.api.port
+    ))
+    .await;
   })
 }

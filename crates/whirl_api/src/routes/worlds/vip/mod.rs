@@ -5,27 +5,35 @@ mod structures;
 
 use std::str::from_utf8;
 
-use actix_web::{HttpRequest, HttpResponse};
+use axum::response;
 
 use crate::routes::worlds::vip::structures::Vip;
 
-// error: this argument is passed by value, but not consumed in the function
-// body
-#[allow(clippy::needless_pass_by_value)]
-pub fn vip(req: HttpRequest) -> HttpResponse {
-  let queries = qstring::QString::from(req.query_string());
+#[derive(Serialize, Deserialize)]
+pub struct Parameters {
+  username: Option<String>,
+}
+
+#[allow(clippy::needless_pass_by_value, clippy::unused_async)]
+pub async fn vip(
+  axum::extract::Query(req): axum::extract::Query<Parameters>,
+) -> impl response::IntoResponse {
   let mut easy = curl::easy::Easy::new();
   let mut error = String::new();
 
-  let username = queries.get("username");
-  if username.is_none() || username.map_or(false, str::is_empty) {
+  let username = req.username;
+  if username.is_none()
+    || username
+      .as_ref()
+      .map_or(false, std::string::String::is_empty)
+  {
     error = "no username query parameter provided, defaulting to 'null'".to_string();
   }
 
   easy
     .url(&format!(
       "http://www-dynamic.us.worlds.net/cgi-bin/vip.pl?Username={}",
-      username.unwrap_or("null"),
+      username.unwrap_or_else(|| "null".to_string()),
     ))
     .unwrap();
 
@@ -43,11 +51,14 @@ pub fn vip(req: HttpRequest) -> HttpResponse {
     transfer.perform().unwrap();
   }
 
-  HttpResponse::Ok().json(Vip {
-    vip:   from_utf8(&response)
-      .unwrap()
-      .to_string()
-      .contains("You're already a VIP!"),
-    error: if error.is_empty() { None } else { Some(error) },
-  })
+  (
+    hyper::StatusCode::OK,
+    response::Json(Vip {
+      vip:   from_utf8(&response)
+        .unwrap()
+        .to_string()
+        .contains("You're already a VIP!"),
+      error: if error.is_empty() { None } else { Some(error) },
+    }),
+  )
 }
