@@ -68,7 +68,7 @@ args = ["run", "--", "help"]
 workspace = false
 dependencies = ["checkf"]
 command = "cargo"
-args = ["run", "--", "run"]
+args = ["run", "--", "run", "distributor,hub"]
 
 # This task also depends on your system configuration, same goes as read above.
 [tasks.start-client]
@@ -85,7 +85,7 @@ workspace = false
 env = { "DISABLE_PROMPT" = true }
 dependencies = ["checkf"]
 command = "cargo"
-args = ["run", "--", "run"]
+args = ["run", "--", "run", "distributor,hub"]
 watch = true
 
 [tasks.docker-build]
