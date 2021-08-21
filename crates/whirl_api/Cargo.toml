@@ -28,7 +28,7 @@ qstring = "0.7.2"
 
 # Serialization
 serde = "1.0.128"
-serde_derive = "1.0.127"
+serde_derive = "1.0.128"
 
 # Logging
 log = "0.4.14"
