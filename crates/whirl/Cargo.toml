@@ -28,7 +28,7 @@ async-trait = "0.1.51"
 whirl_common = { path = "../whirl_common" }
 
 # Byte Manipulation
-bytes = "1.0.1"
+bytes = "1.1.0"
 byteorder = "1.4.3"
 
 # Serialization
