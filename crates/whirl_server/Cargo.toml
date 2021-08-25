@@ -22,7 +22,7 @@ num-traits = "0.2.14"
 num-derive = "0.3.3"
 
 # Byte Manipulation
-bytes = "1.0.1"
+bytes = "1.1.0"
 byteorder = "1.4.3"
 
 # Serialization
