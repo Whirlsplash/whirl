@@ -65,4 +65,4 @@ mimalloc = { version = "0.1.26", default-features = false }
 jemallocator = "0.3.2"
 
 # Signal
-signal-hook = "0.3.9"
+signal-hook = "0.3.10"
