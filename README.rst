@@ -8,7 +8,8 @@
         width="220">
     </a>
   </p>
-  <h1 align="center">The Open-Source WorldServer.</h1>
+  <h1 align="center">The Open-Source WorldServer</h1>
+  <h3 align="center">A Worlds united</h3>
 
   <p align="center">
 
