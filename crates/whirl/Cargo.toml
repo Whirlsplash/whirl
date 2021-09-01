@@ -18,7 +18,7 @@ dotenv = "0.15.0"
 
 # Logging
 log = "0.4.14"
-flexi_logger = "0.18.0"
+flexi_logger = "0.18.1"
 human-panic = "1.0.3"
 # simple-error = "0.2.3"
 
@@ -28,21 +28,21 @@ async-trait = "0.1.51"
 whirl_common = { path = "../whirl_common" }
 
 # Byte Manipulation
-bytes = "1.0.1"
+bytes = "1.1.0"
 byteorder = "1.4.3"
 
 # Serialization
-serde = "1.0.127"
-serde_derive = "1.0.127"
+serde = "1.0.130"
+serde_derive = "1.0.130"
 
 # CLI
-structopt = "0.3.22"
+structopt = "0.3.23"
 
 # Config
 whirl_config = { path = "../whirl_config" }
 
 # TCP
-tokio = { version = "1.10.0", features = ["full"] }
+tokio = { version = "1.11.0", features = ["full"] }
 tokio-util = { version = "0.6.7", features = ["codec"] }
 tokio-stream = "0.1.7"
 
@@ -65,4 +65,4 @@ mimalloc = { version = "0.1.26", default-features = false }
 jemallocator = "0.3.2"
 
 # Signal
-signal-hook = "0.3.9"
+signal-hook = "0.3.10"
