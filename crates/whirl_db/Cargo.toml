@@ -15,7 +15,7 @@ publish = false
 [dependencies]
 # Database
 libsqlite3-sys = { version = "0.9.1", features = ["bundled"] }
-diesel = { version = "1.4.7", features = ["sqlite"] }
+diesel = { version = "1.4.8", features = ["sqlite"] }
 
 # Environment
 dotenv = "0.15.0"
