@@ -21,4 +21,4 @@ colour = "0.6.0"
 whirl_config = { path = "../whirl_config" }
 
 # Web
-curl = "0.4.38"
+curl = "0.4.39"
