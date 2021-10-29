@@ -22,7 +22,7 @@ hyper = "0.14.13"
 # Utility
 sysinfo = "0.20.5"
 whirl_common = { path = "../whirl_common" }
-tokio = { version = "1.12.0", features = ["full"] }
+tokio = { version = "1.13.0", features = ["full"] }
 num-traits = "0.2.14"
 qstring = "0.7.2"
 
