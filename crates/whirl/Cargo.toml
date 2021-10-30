@@ -44,7 +44,7 @@ whirl_config = { path = "../whirl_config" }
 # TCP
 tokio = { version = "1.13.0", features = ["full"] }
 tokio-util = { version = "0.6.9", features = ["codec"] }
-tokio-stream = "0.1.7"
+tokio-stream = "0.1.8"
 
 # Web-server
 actix-web = { version = "3.3.2", features = ["rustls"] }
