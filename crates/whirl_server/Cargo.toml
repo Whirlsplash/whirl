@@ -32,7 +32,7 @@ serde_derive = "1.0.130"
 # TCP
 tokio = { version = "1.13.0", features = ["full"] }
 tokio-util = { version = "0.6.9", features = ["codec"] }
-tokio-stream = "0.1.7"
+tokio-stream = "0.1.8"
 
 # Config
 whirl_config = { path = "../whirl_config" }
