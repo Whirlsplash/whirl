@@ -14,7 +14,7 @@ publish = false
 
 [dependencies]
 # Database
-libsqlite3-sys = { version = "0.9.1", features = ["bundled"] }
+libsqlite3-sys = { version = "0.23.2", features = ["bundled"] }
 diesel = { version = "1.4.8", features = ["sqlite"] }
 
 # Environment
