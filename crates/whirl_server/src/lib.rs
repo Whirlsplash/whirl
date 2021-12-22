@@ -80,7 +80,11 @@ pub trait Server {
       counter += 1;
       let state = Arc::clone(&state);
 
-      debug!("accepted client at {}", address);
+      debug!(
+        "server of type {} accepted client at {}",
+        server_type.to_string(),
+        address
+      );
 
       tokio::spawn(async move {
         if let Err(e) = Self::handle(state, stream, address, counter).await {
