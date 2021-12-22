@@ -119,7 +119,7 @@ pub mod make {
   pub fn distributor() -> JoinHandle<()> {
     tokio::spawn(async move {
       crate::distributor::Distributor::listen(
-        &*format!("0.0.0.0:{}", Config::get().distributor.port),
+        &*format!("{}:{}", Config::get().whirlsplash.ip, Config::get().distributor.port),
         ServerType::Auto,
       )
       .await
@@ -136,7 +136,7 @@ pub mod make {
   pub fn hub() -> JoinHandle<()> {
     tokio::spawn(async move {
       crate::hub::Hub::listen(
-        &*format!("0.0.0.0:{}", Config::get().hub.port),
+        &*format!("{}:{}", Config::get().whirlsplash.ip, Config::get().hub.port),
         ServerType::Room,
       )
       .await

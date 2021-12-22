@@ -95,7 +95,7 @@ impl Default for Config {
       version:     "0.1.0".to_string(),
       whirlsplash: WhirlsplashConfig {
         worldsmaster_username: "WORLDSMASTER".to_string(),
-        ip:                    "0.0.0.0".to_string(),
+        ip:                    "127.0.0.1".to_string(),
         api:                   WhirlsplashApiConfig {
           port: 80
         },

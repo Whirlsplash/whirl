@@ -71,7 +71,8 @@ impl Api {
 pub fn make() -> tokio::task::JoinHandle<()> {
   tokio::spawn(async move {
     crate::Api::listen(&*format!(
-      "0.0.0.0:{}",
+      "{}:{}",
+      whirl_config::Config::get().whirlsplash.ip,
       whirl_config::Config::get().whirlsplash.api.port
     ))
     .await;
