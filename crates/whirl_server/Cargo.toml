@@ -27,7 +27,7 @@ byteorder = "1.4.3"
 
 # Serialization
 serde = "1.0.130"
-serde_derive = "1.0.130"
+serde_derive = "1.0.133"
 
 # TCP
 tokio = { version = "1.13.0", features = ["full"] }
