@@ -47,7 +47,7 @@ tokio-util = { version = "0.6.8", features = ["codec"] }
 tokio-stream = "0.1.7"
 
 # Web-server
-actix-web = { version = "3.3.2", features = ["rustls"] }
+actix-web = { version = "3.3.3", features = ["rustls"] }
 actix-cors = "0.5.4"
 whirl_api = { path = "../whirl_api" }
 
