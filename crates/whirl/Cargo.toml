@@ -32,7 +32,7 @@ bytes = "1.1.0"
 byteorder = "1.4.3"
 
 # Serialization
-serde = "1.0.130"
+serde = "1.0.133"
 serde_derive = "1.0.130"
 
 # CLI
