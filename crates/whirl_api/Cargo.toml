@@ -16,7 +16,7 @@ publish = false
 # Web-server
 actix-web = { version = "3.3.3", features = ["rustls"] }
 actix-cors = "0.5.4"
-axum = "0.1.3"
+axum = "0.4.4"
 hyper = "0.14.13"
 
 # Utility
