@@ -23,7 +23,6 @@ human-panic = "1.0.3"
 # simple-error = "0.2.3"
 
 # Utility
-rand = "0.8.4"
 async-trait = "0.1.51"
 whirl_common = { path = "../whirl_common" }
 
@@ -47,8 +46,6 @@ tokio-util = { version = "0.6.8", features = ["codec"] }
 tokio-stream = "0.1.7"
 
 # Web-server
-actix-web = { version = "3.3.2", features = ["rustls"] }
-actix-cors = "0.5.4"
 whirl_api = { path = "../whirl_api" }
 
 # Prompt

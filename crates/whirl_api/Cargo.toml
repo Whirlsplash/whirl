@@ -22,7 +22,6 @@ sysinfo = "0.20.4"
 whirl_common = { path = "../whirl_common" }
 tokio = { version = "1.12.0", features = ["full"] }
 num-traits = "0.2.14"
-qstring = "0.7.2"
 
 # Serialization
 serde = "1.0.130"
