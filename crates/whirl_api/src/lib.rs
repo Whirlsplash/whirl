@@ -30,7 +30,7 @@ extern crate log;
 #[macro_use]
 extern crate serde_derive;
 
-use axum::prelude::*;
+use axum::routing::get;
 
 mod routes;
 
@@ -47,12 +47,13 @@ impl Api {
   ///   server.
   pub async fn listen(address: &str) {
     // TODO: Version handler
-    let app = route("/", get(|| async { "Whirlsplash" }))
+    let app = axum::Router::new()
+      .route("/", get(|| async { "Whirlsplash" }))
       .route("/api/v1/stats", get(routes::stats::statistics))
       .route("/api/v1/worlds/info", get(routes::worlds::info::info))
       .route("/api/v1/worlds/vip", get(routes::worlds::vip::vip));
 
-    hyper::Server::bind(&address.parse().unwrap())
+    axum::Server::bind(&address.parse().unwrap())
       .serve(app.into_make_service())
       .await
       .unwrap();
