@@ -18,14 +18,14 @@ axum = "0.4.4"
 hyper = "0.14.13"
 
 # Utility
-sysinfo = "0.20.4"
+sysinfo = "0.20.5"
 whirl_common = { path = "../whirl_common" }
-tokio = { version = "1.12.0", features = ["full"] }
+tokio = { version = "1.13.0", features = ["full"] }
 num-traits = "0.2.14"
 
 # Serialization
-serde = "1.0.130"
-serde_derive = "1.0.130"
+serde = "1.0.133"
+serde_derive = "1.0.133"
 
 # Logging
 log = "0.4.14"
@@ -34,4 +34,4 @@ log = "0.4.14"
 whirl_config = { path = "../whirl_config" }
 
 # Web
-curl = "0.4.39"
+curl = "0.4.42"
