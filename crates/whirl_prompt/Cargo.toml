@@ -14,11 +14,11 @@ publish = false
 
 [dependencies]
 # Utility
-sysinfo = "0.20.4"
+sysinfo = "0.20.5"
 colour = "0.6.0"
 
 # Config
 whirl_config = { path = "../whirl_config" }
 
 # Web
-curl = "0.4.39"
+curl = "0.4.42"
