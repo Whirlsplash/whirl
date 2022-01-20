@@ -9,7 +9,7 @@
     "commit:signed": "cz -S"
   },
   "devDependencies": {
-    "@commitlint/cli": "16.0.2",
+    "@commitlint/cli": "16.1.0",
     "@commitlint/config-conventional": "16.0.0",
     "commitizen": "4.2.4",
     "cz-conventional-changelog": "3.3.0",
