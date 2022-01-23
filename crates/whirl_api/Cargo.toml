@@ -24,7 +24,7 @@ tokio = { version = "1.13.0", features = ["full"] }
 num-traits = "0.2.14"
 
 # Serialization
-serde = "1.0.134"
+serde = "1.0.135"
 serde_derive = "1.0.135"
 
 # Logging
