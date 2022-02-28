@@ -18,7 +18,7 @@ axum = "0.4.4"
 hyper = "0.14.13"
 
 # Utility
-sysinfo = "0.20.5"
+sysinfo = "0.23.5"
 whirl_common = { path = "../whirl_common" }
 tokio = { version = "1.13.0", features = ["full"] }
 num-traits = "0.2.14"
