@@ -56,7 +56,7 @@ whirl_server = { path = "../whirl_server" }
 
 # Allocator
 [target.'cfg(windows)'.dependencies]
-mimalloc = { version = "0.1.26", default-features = false }
+mimalloc = { version = "0.1.28", default-features = false }
 
 [target.'cfg(unix)'.dependencies]
 jemallocator = "0.3.2"
