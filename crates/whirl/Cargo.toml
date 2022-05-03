@@ -17,7 +17,7 @@ publish = false
 dotenv = "0.15.0"
 
 # Logging
-log = "0.4.14"
+log = "0.4.17"
 flexi_logger = "0.22.3"
 human-panic = "1.0.3"
 # simple-error = "0.2.3"
