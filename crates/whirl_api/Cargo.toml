@@ -15,7 +15,7 @@ publish = false
 [dependencies]
 # Web-server
 axum = "0.4.4"
-hyper = "0.14.17"
+hyper = "0.14.28"
 
 # Utility
 sysinfo = "0.23.5"
