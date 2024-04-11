@@ -23,7 +23,7 @@ human-panic = "1.0.3"
 # simple-error = "0.2.3"
 
 # Utility
-async-trait = "0.1.52"
+async-trait = "0.1.80"
 whirl_common = { path = "../whirl_common" }
 
 # Byte Manipulation
