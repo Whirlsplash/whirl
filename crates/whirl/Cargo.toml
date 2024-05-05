@@ -59,7 +59,7 @@ whirl_server = { path = "../whirl_server" }
 mimalloc = { version = "0.1.28", default-features = false }
 
 [target.'cfg(unix)'.dependencies]
-jemallocator = "0.3.2"
+jemallocator = "0.5.0"
 
 # Signal
 signal-hook = "0.3.13"
