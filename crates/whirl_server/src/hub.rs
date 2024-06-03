@@ -10,7 +10,6 @@
 
 use std::{error::Error, net::SocketAddr, sync::Arc};
 
-use num_traits::cast::AsPrimitive;
 use tokio::{io::AsyncWriteExt, net::TcpStream, sync::Mutex};
 use tokio_stream::StreamExt;
 use tokio_util::codec::{BytesCodec, Decoder};
@@ -71,7 +70,7 @@ impl Server for Hub {
           Some(Ok(msg)) => {
             // trace!("got some bytes: {:?}", &msg);
             for msg in parse_commands_from_packet(msg) {
-              match num_traits::FromPrimitive::from_i32(msg.get(2).unwrap().to_owned().as_(): i32) {
+              match num_traits::FromPrimitive::from_i32(msg.get(2).unwrap().to_owned() as i32) {
                 Some(Command::PropReq) => {
                   debug!("received property request from client");
 

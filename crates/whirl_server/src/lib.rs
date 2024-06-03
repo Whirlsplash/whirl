@@ -3,13 +3,7 @@
 
 //! Exposes the Distributor and Hub for further use.
 
-#![feature(
-  type_ascription,
-  hash_set_entry,
-  type_name_of_val,
-  decl_macro,
-  proc_macro_hygiene
-)]
+#![feature(type_ascription, hash_set_entry, decl_macro, proc_macro_hygiene)]
 #![deny(
   warnings,
   nonstandard_style,
@@ -24,6 +18,7 @@
   html_logo_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png",
   html_favicon_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png"
 )]
+#![allow(non_local_definitions, dead_code)]
 
 #[macro_use]
 extern crate log;

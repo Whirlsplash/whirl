@@ -8,7 +8,6 @@
 // of actions, it will be of2m-ified.
 
 use bytes::{BufMut, BytesMut};
-use num_traits::AsPrimitive;
 
 pub fn create() -> Vec<u8> {
   let mut command = BytesMut::new();
@@ -20,7 +19,7 @@ pub fn create() -> Vec<u8> {
 
   // Convert to vector and insert the length
   let mut command_as_vec = command.to_vec();
-  command_as_vec.insert(0, command.len().as_(): u8 + 1);
+  command_as_vec.insert(0, command.len() as u8 + 1);
 
   // Return bytes
   command_as_vec

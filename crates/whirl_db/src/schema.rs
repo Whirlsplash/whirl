@@ -1,4 +1,6 @@
-table! {
+// @generated automatically by Diesel CLI.
+
+diesel::table! {
     serial_numbers (user_name) {
         serial_number -> Text,
         user_name -> Text,
@@ -6,7 +8,7 @@ table! {
     }
 }
 
-table! {
+diesel::table! {
     user_properties (user_name) {
         user_name -> Text,
         property_id -> Integer,
@@ -17,12 +19,12 @@ table! {
     }
 }
 
-table! {
+diesel::table! {
     user_registration (user_name) {
         user_name_lower -> Text,
         user_name -> Text,
         serial_number -> Text,
-        password -> Text,
+        pass_wordword -> Text,
         client_version -> Text,
         account_status -> Integer,
         registration_date -> Text,
@@ -32,4 +34,8 @@ table! {
     }
 }
 
-allow_tables_to_appear_in_same_query!(serial_numbers, user_properties, user_registration,);
+diesel::allow_tables_to_appear_in_same_query!(
+    serial_numbers,
+    user_properties,
+    user_registration,
+);

@@ -13,7 +13,6 @@
 
 use std::{error::Error, net::SocketAddr, sync::Arc};
 
-use num_traits::cast::AsPrimitive;
 use tokio::{io::AsyncWriteExt, net::TcpStream, sync::Mutex};
 use tokio_stream::StreamExt;
 use tokio_util::codec::{BytesCodec, Decoder};
@@ -66,7 +65,7 @@ impl Server for Distributor {
         result = peer.bytes.next() => match result {
           Some(Ok(msg)) => {
             for msg in parse_commands_from_packet(msg) {
-              match num_traits::FromPrimitive::from_i32(msg.get(2).unwrap().to_owned().as_(): i32) {
+              match num_traits::FromPrimitive::from_i32(msg.get(2).unwrap().to_owned() as i32) {
                 Some(Command::PropReq) => {
                   debug!("received property request from client");
 
@@ -120,7 +119,7 @@ impl Server for Distributor {
 
                   peer.bytes.get_mut().write_all(&RedirectId {
                     room_name: (&*room.room_name).to_string(),
-                    room_number: room_id.as_(): i8,
+                    room_number: room_id as i8,
                   }.create()).await?;
                   trace!("sent redirect id to {}: {}", username, room.room_name);
                 }
