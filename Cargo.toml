@@ -6,9 +6,9 @@ members = [
   "crates/whirl_api",
   "crates/whirl_common",
   "crates/whirl_config",
-  "crates/whirl_db",
+  # "crates/whirl_db",
   "crates/whirl_prompt",
-  "crates/whirl_server"
+  "crates/whirl_server",
 ]
 
 [profile.release]

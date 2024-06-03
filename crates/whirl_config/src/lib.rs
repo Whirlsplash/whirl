@@ -3,13 +3,7 @@
 
 //! Configuration utilities, to interact with the configuration system.
 
-#![feature(
-  type_ascription,
-  hash_set_entry,
-  type_name_of_val,
-  decl_macro,
-  proc_macro_hygiene
-)]
+#![feature(type_ascription, hash_set_entry, decl_macro, proc_macro_hygiene)]
 #![deny(
   warnings,
   nonstandard_style,
@@ -74,7 +68,7 @@ impl Config {
   /// - May panic if the configuration is unable to be read.
   #[must_use]
   pub fn get() -> Self {
-    return if let Err(why) = Self::load() {
+    if let Err(why) = Self::load() {
       error!(
         "unable to load configuration file, reverting to default value: {}",
         why
@@ -86,7 +80,7 @@ impl Config {
       Self::default()
     } else {
       Self::load().unwrap()
-    };
+    }
   }
 }
 impl Default for Config {

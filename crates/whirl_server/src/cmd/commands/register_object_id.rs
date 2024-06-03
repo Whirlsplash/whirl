@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 use bytes::{BufMut, BytesMut};
-use num_traits::AsPrimitive;
 
 use crate::cmd::{constants::Command, extendable::Creatable};
 
@@ -21,13 +20,13 @@ impl Creatable for RegisterObjectId {
     command.put_i8(Command::RegObjId as i32 as i8); // Type
 
     // Content
-    command.put_u8(self.long_object_id.len().as_(): u8); // Long object ID length
+    command.put_u8(self.long_object_id.len() as u8); // Long object ID length
     command.put_slice(self.long_object_id.as_bytes()); // Long object ID
-    command.put_i8(self.short_object_id.as_(): i8); // Short object ID
+    command.put_i8(self.short_object_id as i8); // Short object ID
 
     // Length
     let mut command_as_vec = command.to_vec();
-    command_as_vec.insert(0, command.len().as_(): u8 + 1);
+    command_as_vec.insert(0, command.len() as u8 + 1);
 
     // Return
     command_as_vec
