@@ -19,10 +19,8 @@
   html_favicon_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png"
 )]
 
-#[macro_use]
-extern crate log;
-#[macro_use]
-extern crate serde_derive;
+#[macro_use] extern crate log;
+#[macro_use] extern crate serde_derive;
 
 use axum::routing::get;
 

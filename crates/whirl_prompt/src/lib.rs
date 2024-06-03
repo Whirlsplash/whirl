@@ -28,23 +28,16 @@
 mod builtins;
 mod structure;
 
-use std::{io, io::Write, str::FromStr};
-
-use whirl_config::Config;
-
-use crate::{
-  builtins::{
-    builtin_cat,
-    builtin_clear,
-    builtin_config,
-    builtin_echo,
-    builtin_fetch,
-    builtin_help,
-    builtin_history,
-    builtin_ls,
-    structures::BuiltIn,
+use {
+  crate::{
+    builtins::{
+      builtin_cat, builtin_clear, builtin_config, builtin_echo, builtin_fetch,
+      builtin_help, builtin_history, builtin_ls, structures::BuiltIn,
+    },
+    structure::Command,
   },
-  structure::Command,
+  std::{io, io::Write, str::FromStr},
+  whirl_config::Config,
 };
 
 pub struct Prompt {
@@ -53,9 +46,7 @@ pub struct Prompt {
 impl Prompt {
   /// Begin handling user input as the prompt.
   pub async fn handle() -> ! {
-    let mut prompt = Self {
-      history: vec![]
-    };
+    let mut prompt = Self { history: vec![] };
 
     loop {
       Self::write_prompt();
@@ -83,15 +74,10 @@ impl Prompt {
   }
 
   fn tokenize_command(c: &str) -> Command {
-    let mut command_split: Vec<String> = c
-      .split_whitespace()
-      .map(std::string::ToString::to_string)
-      .collect();
+    let mut command_split: Vec<String> =
+      c.split_whitespace().map(std::string::ToString::to_string).collect();
 
-    Command {
-      keyword: command_split.remove(0),
-      args:    command_split,
-    }
+    Command { keyword: command_split.remove(0), args: command_split }
   }
 
   // TODO: Find a way to make this access itself `history` doesn't have to be
@@ -131,25 +117,26 @@ mod tokenize_command {
   fn empty_command() { assert_eq!("", Prompt::tokenize_command("").keyword) }
 
   #[test]
-  fn test_keyword() { assert_eq!("test", Prompt::tokenize_command("test").keyword) }
+  fn test_keyword() {
+    assert_eq!("test", Prompt::tokenize_command("test").keyword)
+  }
 
   #[test]
   fn no_arg() { assert_eq!(0, Prompt::tokenize_command("test").args.len()) }
 
   #[test]
-  fn one_arg() { assert_eq!(1, Prompt::tokenize_command("test one").args.len()) }
+  fn one_arg() {
+    assert_eq!(1, Prompt::tokenize_command("test one").args.len())
+  }
 
   #[test]
-  fn multi_arg() { assert_eq!(3, Prompt::tokenize_command("test one two three").args.len()) }
+  fn multi_arg() {
+    assert_eq!(3, Prompt::tokenize_command("test one two three").args.len())
+  }
 
   #[test]
   #[ignore]
   fn quotes() {
-    assert_eq!(
-      2,
-      Prompt::tokenize_command("test \"one two\" three")
-        .args
-        .len()
-    )
+    assert_eq!(2, Prompt::tokenize_command("test \"one two\" three").args.len())
   }
 }

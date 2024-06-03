@@ -1,13 +1,13 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use std::str::from_utf8;
-
-use bytes::{BufMut, BytesMut};
-
-use crate::cmd::{
-  constants::Command,
-  extendable::{Creatable, ParsableWithArguments},
+use {
+  crate::cmd::{
+    constants::Command,
+    extendable::{Creatable, ParsableWithArguments},
+  },
+  bytes::{BufMut, BytesMut},
+  std::str::from_utf8,
 };
 
 pub struct Text {

@@ -1,9 +1,7 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use std::str::from_utf8;
-
-use crate::cmd::extendable::Parsable;
+use {crate::cmd::extendable::Parsable, std::str::from_utf8};
 
 #[derive(Debug)]
 pub struct RoomIdRequest {

@@ -8,5 +8,7 @@ use crate::{
 
 pub struct SessionExit(pub PropertyList);
 impl Creatable for SessionExit {
-  fn create(&self) -> Vec<u8> { self.0.clone().as_bytes(Command::SessExit as i32, 0x01) }
+  fn create(&self) -> Vec<u8> {
+    self.0.clone().as_bytes(Command::SessExit as i32, 0x01)
+  }
 }

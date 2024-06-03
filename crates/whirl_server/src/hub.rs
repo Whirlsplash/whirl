@@ -8,38 +8,38 @@
 //! client after they have been redirected to a room (Hub) and finished their
 //! business with the Distributor (`AutoServer`).
 
-use std::{error::Error, net::SocketAddr, sync::Arc};
-
-use tokio::{io::AsyncWriteExt, net::TcpStream, sync::Mutex};
-use tokio_stream::StreamExt;
-use tokio_util::codec::{BytesCodec, Decoder};
-use whirl_config::Config;
-
-use crate::{
-  cmd::{
-    commands::{
-      action::create,
-      appear_actor::AppearActor,
-      buddy_list::BuddyList,
-      property::create::{property_request_as_hub, property_update_as_hub},
-      register_object_id::RegisterObjectId,
-      session_exit::SessionExit,
-      subscribe_distance::SubscribeDistance,
-      subscribe_room::SubscribeRoom,
-      teleport::Teleport,
-      text::Text,
+use {
+  crate::{
+    cmd::{
+      commands::{
+        action::create,
+        appear_actor::AppearActor,
+        buddy_list::BuddyList,
+        property::create::{property_request_as_hub, property_update_as_hub},
+        register_object_id::RegisterObjectId,
+        session_exit::SessionExit,
+        subscribe_distance::SubscribeDistance,
+        subscribe_room::SubscribeRoom,
+        teleport::Teleport,
+        text::Text,
+      },
+      constants::Command,
+      extendable::{Creatable, Parsable, ParsableWithArguments},
     },
-    constants::Command,
-    extendable::{Creatable, Parsable, ParsableWithArguments},
+    interaction::{peer::Peer, shared::Shared},
+    net::{
+      constants::{VAR_ERROR, VAR_USERNAME},
+      network_property::NetworkProperty,
+      property_list::PropertyList,
+    },
+    packet_parser::parse_commands_from_packet,
+    Server,
   },
-  interaction::{peer::Peer, shared::Shared},
-  net::{
-    constants::{VAR_ERROR, VAR_USERNAME},
-    network_property::NetworkProperty,
-    property_list::PropertyList,
-  },
-  packet_parser::parse_commands_from_packet,
-  Server,
+  std::{error::Error, net::SocketAddr, sync::Arc},
+  tokio::{io::AsyncWriteExt, net::TcpStream, sync::Mutex},
+  tokio_stream::StreamExt,
+  tokio_util::codec::{BytesCodec, Decoder},
+  whirl_config::Config,
 };
 
 /// Spawn a Hub.

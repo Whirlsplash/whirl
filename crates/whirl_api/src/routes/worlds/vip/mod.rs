@@ -3,11 +3,10 @@
 
 mod structures;
 
-use std::str::from_utf8;
-
-use axum::response;
-
-use crate::routes::worlds::vip::structures::Vip;
+use {
+  crate::routes::worlds::vip::structures::Vip, axum::response,
+  std::str::from_utf8,
+};
 
 #[derive(Serialize, Deserialize)]
 pub struct Parameters {
@@ -23,11 +22,10 @@ pub async fn vip(
 
   let username = req.username;
   if username.is_none()
-    || username
-      .as_ref()
-      .map_or(false, std::string::String::is_empty)
+    || username.as_ref().map_or(false, std::string::String::is_empty)
   {
-    error = "no username query parameter provided, defaulting to 'null'".to_string();
+    error =
+      "no username query parameter provided, defaulting to 'null'".to_string();
   }
 
   easy

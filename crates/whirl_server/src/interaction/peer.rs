@@ -1,15 +1,15 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use std::sync::Arc;
-
-use tokio::{
-  net::TcpStream,
-  sync::{mpsc, Mutex},
+use {
+  crate::interaction::shared::Shared,
+  std::sync::Arc,
+  tokio::{
+    net::TcpStream,
+    sync::{mpsc, Mutex},
+  },
+  tokio_util::codec::{BytesCodec, Framed},
 };
-use tokio_util::codec::{BytesCodec, Framed};
-
-use crate::interaction::shared::Shared;
 
 pub struct Peer {
   pub bytes: Framed<TcpStream, BytesCodec>,
@@ -24,10 +24,7 @@ impl Peer {
     let (tx, rx) = mpsc::unbounded_channel();
     state.lock().await.peers.insert(username, tx);
 
-    Ok(Self {
-      bytes,
-      rx,
-    })
+    Ok(Self { bytes, rx })
   }
 
   pub async fn _change_username(
@@ -42,8 +39,6 @@ impl Peer {
     }
 
     // Add the peer back with the new username
-    Self::new(state, self.bytes, new_username.to_string())
-      .await
-      .unwrap();
+    Self::new(state, self.bytes, new_username.to_string()).await.unwrap();
   }
 }
