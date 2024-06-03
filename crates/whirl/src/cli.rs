@@ -1,10 +1,11 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use std::{io::Write, str::FromStr};
-
-use structopt::clap::{App, AppSettings, Arg, SubCommand};
-use whirl_config::Config;
+use {
+  std::{io::Write, str::FromStr},
+  structopt::clap::{App, AppSettings, Arg, SubCommand},
+  whirl_config::Config,
+};
 
 enum RunType {
   Distributor,
@@ -99,36 +100,37 @@ impl Cli {
           run_types
         })
         .await,
-      ("config", Some(s_matches)) =>
-        match s_matches.subcommand() {
-          ("show", _) => println!("{:#?}", Config::get()),
-          ("generate", Some(s_s_matches)) => {
-            if std::path::Path::new(".whirl/Config.toml").exists()
-              && !s_s_matches.is_present("force")
-            {
-              info!(
-                "a configuration file is already present, if you would like to regenerate the \
-                 configuration file, execute this sub-command with the `--force` (`-f`) flag"
+      ("config", Some(s_matches)) => match s_matches.subcommand() {
+        ("show", _) => println!("{:#?}", Config::get()),
+        ("generate", Some(s_s_matches)) => {
+          if std::path::Path::new(".whirl/Config.toml").exists()
+            && !s_s_matches.is_present("force")
+          {
+            info!(
+              "a configuration file is already present, if you would like to \
+               regenerate the configuration file, execute this sub-command \
+               with the `--force` (`-f`) flag"
+            );
+          } else {
+            let mut file = std::fs::File::create(".whirl/Config.toml")
+              .expect("unable to create configuration file");
+            file
+              .write_all(include_bytes!(
+                "../../whirl_config/Config.default.toml"
+              ))
+              .expect(
+                "unable to write default configuration to generated \
+                 configuration file",
               );
-            } else {
-              let mut file = std::fs::File::create(".whirl/Config.toml")
-                .expect("unable to create configuration file");
-              file
-                .write_all(include_bytes!("../../whirl_config/Config.default.toml"))
-                .expect("unable to write default configuration to generated configuration file");
-              info!("successfully generated a new configuration file");
-            }
+            info!("successfully generated a new configuration file");
           }
-          _ => unreachable!(),
-        },
+        }
+        _ => unreachable!(),
+      },
       ("clean", _) => {
         let cleanable_directories = vec![".whirl/log/"];
         for dir in cleanable_directories {
-          let file_type = if dir.ends_with('/') {
-            "directory"
-          } else {
-            "file"
-          };
+          let file_type = if dir.ends_with('/') { "directory" } else { "file" };
           info!("cleaning {}: {}", file_type, dir);
           if let Err(e) = std::fs::remove_dir_all(dir) {
             warn!("cannot delete {}: {}: {}", file_type, dir, e);
@@ -149,8 +151,9 @@ impl Cli {
         SubCommand::with_name("run")
           .about("Start the WorldServer or a selection of sub-servers.")
           .long_about(
-            "Start the WorldServer by executing this sub-command WITHOUT any arguments, start a \
-             selection of sub-servers by passing a comma-separated list of sub-server types.",
+            "Start the WorldServer by executing this sub-command WITHOUT any \
+             arguments, start a selection of sub-servers by passing a \
+             comma-separated list of sub-server types.",
           )
           .arg(
             Arg::with_name("type")
@@ -169,7 +172,8 @@ impl Cli {
               .arg(Arg::with_name("force").short("f").long("force")),
           ]),
         SubCommand::with_name("clean").about(
-          "Delete Whirl-generated files/ directories which are NOT critical. E.g., .whirl/logs/",
+          "Delete Whirl-generated files/ directories which are NOT critical. \
+           E.g., .whirl/logs/",
         ),
       ])
       .args(&[
@@ -190,7 +194,8 @@ impl Cli {
       server_type.pop();
     }
 
-    if std::env::var("DISABLE_PROMPT").unwrap_or_else(|_| "false".to_string()) == "true"
+    if std::env::var("DISABLE_PROMPT").unwrap_or_else(|_| "false".to_string())
+      == "true"
       || !Config::get().whirlsplash.prompt.enable
     {
       info!("starting with prompt disabled");

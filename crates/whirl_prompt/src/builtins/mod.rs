@@ -4,11 +4,15 @@
 pub mod constants;
 pub mod structures;
 
-use std::io::Write;
-
-use constants::{FILES, HELPABLES_BUILTINS, HELPABLES_BUILTIN_CONFIG, HELPABLES_BUILTIN_FETCH};
-use sysinfo::SystemExt;
-use whirl_config::Config;
+use {
+  constants::{
+    FILES, HELPABLES_BUILTINS, HELPABLES_BUILTIN_CONFIG,
+    HELPABLES_BUILTIN_FETCH,
+  },
+  std::io::Write,
+  sysinfo::SystemExt,
+  whirl_config::Config,
+};
 
 pub fn builtin_echo(args: &[String]) -> i32 {
   println!("{}", args.join(" "));
@@ -76,16 +80,15 @@ pub fn builtin_cat(args: &[String]) -> i32 {
 
 pub fn builtin_config(args: &[String]) -> i32 {
   match args.get(0) {
-    Some(sub) =>
-      match sub.as_str() {
-        "show" => println!("{:#?}", Config::get()),
-        "help" | "--help" | "-h" =>
-          for help in &HELPABLES_BUILTIN_CONFIG {
-            println!("{}", help);
-          },
-        // "refresh" => Config::refresh(),
-        _ => println!("invalid arguments provided"),
-      },
+    Some(sub) => match sub.as_str() {
+      "show" => println!("{:#?}", Config::get()),
+      "help" | "--help" | "-h" =>
+        for help in &HELPABLES_BUILTIN_CONFIG {
+          println!("{}", help);
+        },
+      // "refresh" => Config::refresh(),
+      _ => println!("invalid arguments provided"),
+    },
     None => println!("invalid amount arguments provided"),
   }
   0
@@ -100,17 +103,16 @@ pub fn builtin_fetch(args: &[String]) -> i32 {
 
   #[allow(clippy::single_match)]
   match args.get(0) {
-    Some(sub) =>
-      match sub.as_str() {
-        "--whirl" | "-w" => whirl_image = true,
-        "help" | "--help" | "-h" => {
-          for help in &HELPABLES_BUILTIN_FETCH {
-            println!("{}", help);
-          }
-          return 0;
+    Some(sub) => match sub.as_str() {
+      "--whirl" | "-w" => whirl_image = true,
+      "help" | "--help" | "-h" => {
+        for help in &HELPABLES_BUILTIN_FETCH {
+          println!("{}", help);
         }
-        _ => println!("invalid arguments provided"),
-      },
+        return 0;
+      }
+      _ => println!("invalid arguments provided"),
+    },
     _ => (),
   }
 

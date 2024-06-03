@@ -1,10 +1,11 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use bytes::{BufMut, BytesMut};
-use whirl_config::Config;
-
-use crate::cmd::{constants::Command, extendable::Creatable};
+use {
+  crate::cmd::{constants::Command, extendable::Creatable},
+  bytes::{BufMut, BytesMut},
+  whirl_config::Config,
+};
 
 #[derive(Debug)]
 pub struct RedirectId {
@@ -23,8 +24,8 @@ impl Creatable for RedirectId {
     // Content
     command.put_u8(self.room_name.len() as u8); // Room name length
     command.put_slice(self.room_name.as_bytes()); // Room name
-                                                  // command.put_u8(0x00); // Unimplemented byte (?)
-                                                  // command.put_u8(room_id); // Room ID
+    // command.put_u8(0x00); // Unimplemented byte (?)
+    // command.put_u8(room_id); // Room ID
     command.put_u16(self.room_number as u16); // Room ID
 
     // IP

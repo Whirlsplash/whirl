@@ -1,10 +1,11 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use byteorder::{BigEndian, ReadBytesExt};
-use bytes::{Buf, BytesMut};
-
-use crate::cmd::extendable::Parsable;
+use {
+  crate::cmd::extendable::Parsable,
+  byteorder::{BigEndian, ReadBytesExt},
+  bytes::{Buf, BytesMut},
+};
 
 #[derive(Debug)]
 pub struct Teleport {

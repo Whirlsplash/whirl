@@ -45,12 +45,5 @@ impl Command {
   }
 }
 impl Default for Command {
-  fn default() -> Self {
-    Self {
-      length: 0,
-      obj_id: 0,
-      id:     0,
-      body:   vec![],
-    }
-  }
+  fn default() -> Self { Self { length: 0, obj_id: 0, id: 0, body: vec![] } }
 }

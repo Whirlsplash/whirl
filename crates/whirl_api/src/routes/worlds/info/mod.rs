@@ -7,7 +7,9 @@ pub struct Parameters {
 }
 
 #[allow(clippy::needless_pass_by_value, clippy::unused_async)]
-pub async fn info(axum::extract::Query(req): axum::extract::Query<Parameters>) -> &'static str {
+pub async fn info(
+  axum::extract::Query(req): axum::extract::Query<Parameters>,
+) -> &'static str {
   let mut easy = curl::easy::Easy::new();
 
   easy

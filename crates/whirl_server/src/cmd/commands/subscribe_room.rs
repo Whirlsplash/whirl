@@ -1,10 +1,11 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use byteorder::{BigEndian, ReadBytesExt};
-use bytes::{Buf, BytesMut};
-
-use crate::cmd::extendable::Parsable;
+use {
+  crate::cmd::extendable::Parsable,
+  byteorder::{BigEndian, ReadBytesExt},
+  bytes::{Buf, BytesMut},
+};
 
 #[derive(Debug)]
 pub struct SubscribeRoom {
@@ -24,7 +25,7 @@ impl Parsable for SubscribeRoom {
       x:           f32::from(data.read_i16::<BigEndian>().unwrap() as i8),
       y:           f32::from(data.read_i16::<BigEndian>().unwrap() as i8),
       z:           f32::from(data.read_i16::<BigEndian>().unwrap() as i8),
-      distance:    f32::from(data.read_i16::<BigEndian>().unwrap() as i8), // + 100
+      distance:    f32::from(data.read_i16::<BigEndian>().unwrap() as i8), /* + 100 */
     }
   }
 }

@@ -1,14 +1,15 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use bytes::{BufMut, BytesMut};
-
-use crate::{
-  cmd::constants::Command,
-  net::{
-    constants::{PROPACCESS_POSSESS, PROPFLAG_DBSTORE},
-    network_property::NetworkProperty,
+use {
+  crate::{
+    cmd::constants::Command,
+    net::{
+      constants::{PROPACCESS_POSSESS, PROPFLAG_DBSTORE},
+      network_property::NetworkProperty,
+    },
   },
+  bytes::{BufMut, BytesMut},
 };
 
 #[derive(Clone)]

@@ -1,9 +1,10 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use bytes::{BufMut, BytesMut};
-
-use crate::cmd::{constants::Command, extendable::Creatable};
+use {
+  crate::cmd::{constants::Command, extendable::Creatable},
+  bytes::{BufMut, BytesMut},
+};
 
 #[derive(Debug)]
 pub struct RegisterObjectId {
