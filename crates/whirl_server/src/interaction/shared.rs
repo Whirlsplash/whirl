@@ -9,6 +9,7 @@ pub struct Shared {
 impl Shared {
   pub fn new() -> Self { Self { peers: HashMap::new() } }
 
+  #[allow(clippy::unused_async)]
   pub async fn broadcast(&mut self, message: &[u8]) {
     for peer in &mut self.peers {
       peer.1.send(BytesMut::from(message)).unwrap();

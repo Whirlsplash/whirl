@@ -62,7 +62,7 @@ impl Cli {
 
     debug!("attempting to create .whirl directory...");
     match std::fs::create_dir(".whirl/") {
-      Ok(_) => debug!("successfully created .whirl directory"),
+      Ok(()) => debug!("successfully created .whirl directory"),
       Err(e) => debug!("error creating .whirl directory: {}", e),
     }
 
@@ -74,11 +74,10 @@ impl Cli {
           // pass any sub-server types meaning that the subcommand `run` was
           // called without any arguments, in other words: "run everything".
           let mut types = {
-            // s_matches.values_of("type").unwrap().collect::<Vec<_>>();
-            match s_matches.values_of("type") {
-              Some(values) => values.collect::<Vec<_>>(),
-              None => vec!["distributor", "hub", "api"],
-            }
+            s_matches.values_of("type").map_or_else(
+              || vec!["distributor", "hub", "api"],
+              std::iter::Iterator::collect,
+            )
           };
           // Remove any duplicate sub-commands, we don't want to start two
           // instances of the same sub-server.
@@ -183,6 +182,7 @@ impl Cli {
   }
 
   async fn run(mut server_type: Vec<RunType>) {
+    #[allow(clippy::collection_is_never_read)]
     let mut threads = vec![];
     // Iterate over all of of the requested sub-servers and spawn one of each.
     while let Some(run_type) = server_type.last() {

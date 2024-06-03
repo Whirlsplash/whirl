@@ -75,8 +75,9 @@ impl Whirl {
 
     // Ctrl+C handling
     #[cfg(unix)]
+    #[allow(clippy::never_loop)]
     tokio::spawn(async move {
-      for signal in signal_hook::iterator::Signals::new(&[SIGTERM, SIGINT])
+      for signal in signal_hook::iterator::Signals::new([SIGTERM, SIGINT])
         .unwrap()
         .forever()
       {

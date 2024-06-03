@@ -67,7 +67,7 @@ impl Server for Distributor {
         result = peer.bytes.next() => match result {
           Some(Ok(msg)) => {
             for msg in parse_commands_from_packet(msg) {
-              match num_traits::FromPrimitive::from_i32(msg.get(2).unwrap().to_owned() as i32) {
+              match num_traits::FromPrimitive::from_i32(i32::from(msg.get(2).unwrap().to_owned())) {
                 Some(Command::PropReq) => {
                   debug!("received property request from client");
 
@@ -76,9 +76,9 @@ impl Server for Distributor {
                   trace!("sent property update to client");
                 }
                 Some(Command::SessInit) => {
-                  username = (*crate::net::property_list::PropertyList::from_bytes(msg[3..]
+                  username = crate::net::property_list::PropertyList::from_bytes(msg[3..]
                     .to_vec())
-                    .find(VAR_USERNAME)).value.to_string();
+                    .find(VAR_USERNAME).value.to_string();
 
                   debug!("received session initialization from {}", username);
 
@@ -114,13 +114,13 @@ impl Server for Distributor {
                     trace!("found room: {}", room.room_name);
                     room_id = position;
                   } else {
-                    room_ids.push((&*room.room_name).to_string());
+                    room_ids.push((*room.room_name).to_string());
                     room_id = room_ids.iter().position(|r| r == &room.room_name).unwrap();
                     trace!("inserted room {}: {}", room.room_name, room_id);
                   }
 
                   peer.bytes.get_mut().write_all(&RedirectId {
-                    room_name: (&*room.room_name).to_string(),
+                    room_name: (*room.room_name).to_string(),
                     room_number: room_id as i8,
                   }.create()).await?;
                   trace!("sent redirect id to {}: {}", username, room.room_name);
