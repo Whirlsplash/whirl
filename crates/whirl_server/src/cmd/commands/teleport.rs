@@ -3,7 +3,6 @@
 
 use byteorder::{BigEndian, ReadBytesExt};
 use bytes::{Buf, BytesMut};
-use num_traits::AsPrimitive;
 
 use crate::cmd::extendable::Parsable;
 
@@ -23,7 +22,7 @@ impl Parsable for Teleport {
     let mut data = BytesMut::from(data.as_slice()).reader();
 
     Self {
-      room_id:    data.read_u16::<BigEndian>().unwrap().as_(): i8,
+      room_id:    data.read_u16::<BigEndian>().unwrap() as i8,
       exit_type:  data.read_u8().unwrap(),
       entry_type: data.read_u8().unwrap(),
       x:          f32::from(data.read_i16::<BigEndian>().unwrap()),

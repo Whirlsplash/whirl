@@ -3,13 +3,7 @@
 
 //! Assorted utilities, for global use.
 
-#![feature(
-  type_ascription,
-  hash_set_entry,
-  type_name_of_val,
-  decl_macro,
-  proc_macro_hygiene
-)]
+#![feature(type_ascription, hash_set_entry, decl_macro, proc_macro_hygiene)]
 #![deny(
   warnings,
   nonstandard_style,
