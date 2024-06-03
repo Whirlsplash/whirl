@@ -70,7 +70,7 @@ impl Server for Hub {
           Some(Ok(msg)) => {
             // trace!("got some bytes: {:?}", &msg);
             for msg in parse_commands_from_packet(msg) {
-              match num_traits::FromPrimitive::from_i32(msg.get(2).unwrap().to_owned() as i32) {
+              match num_traits::FromPrimitive::from_i32(i32::from(msg.get(2).unwrap().to_owned())) {
                 Some(Command::PropReq) => {
                   debug!("received property request from client");
 
@@ -79,9 +79,9 @@ impl Server for Hub {
                   trace!("sent property update to client");
                 }
                 Some(Command::SessInit) => {
-                  username = (*crate::net::property_list::PropertyList::from_bytes(msg[3..]
+                  username = crate::net::property_list::PropertyList::from_bytes(msg[3..]
                     .to_vec())
-                    .find(VAR_USERNAME)).value.to_string();
+                    .find(VAR_USERNAME).value.to_string();
 
                   debug!("received session initialization from {}", username);
 
@@ -142,7 +142,7 @@ impl Server for Hub {
 
                   {
                     state.lock().await.broadcast(&Text {
-                      sender: (&*username).to_string(),
+                      sender: (*username).to_string(),
                       content: text.content.clone(),
                     }.create()).await;
                   }

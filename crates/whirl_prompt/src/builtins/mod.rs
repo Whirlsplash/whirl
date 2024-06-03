@@ -28,7 +28,7 @@ pub fn builtin_history(history: &[String]) -> i32 {
 
 pub fn builtin_help() -> i32 {
   for help in &HELPABLES_BUILTINS {
-    println!("{}", help);
+    println!("{help}");
   }
 
   0
@@ -36,7 +36,7 @@ pub fn builtin_help() -> i32 {
 
 pub fn builtin_ls() -> i32 {
   for file in &FILES {
-    print!("{}  ", file);
+    print!("{file}  ");
   }
   println!();
 
@@ -45,7 +45,7 @@ pub fn builtin_ls() -> i32 {
 
 pub fn builtin_cat(args: &[String]) -> i32 {
   let file;
-  if let Some(file_name) = args.get(0) {
+  if let Some(file_name) = args.first() {
     file = file_name.to_string();
   } else {
     return 0;
@@ -72,19 +72,19 @@ pub fn builtin_cat(args: &[String]) -> i32 {
       colour::red_ln!("NOTE: This is just a wrapper for `config show`.");
       println!("{:#?}", Config::get());
     }
-    _ => println!("/cat: {}: no such file or directory", file),
+    _ => println!("/cat: {file}: no such file or directory"),
   }
 
   0
 }
 
 pub fn builtin_config(args: &[String]) -> i32 {
-  match args.get(0) {
+  match args.first() {
     Some(sub) => match sub.as_str() {
       "show" => println!("{:#?}", Config::get()),
       "help" | "--help" | "-h" =>
         for help in &HELPABLES_BUILTIN_CONFIG {
-          println!("{}", help);
+          println!("{help}");
         },
       // "refresh" => Config::refresh(),
       _ => println!("invalid arguments provided"),
@@ -102,12 +102,12 @@ pub fn builtin_fetch(args: &[String]) -> i32 {
   let mut whirl_image = false;
 
   #[allow(clippy::single_match)]
-  match args.get(0) {
+  match args.first() {
     Some(sub) => match sub.as_str() {
       "--whirl" | "-w" => whirl_image = true,
       "help" | "--help" | "-h" => {
         for help in &HELPABLES_BUILTIN_FETCH {
-          println!("{}", help);
+          println!("{help}");
         }
         return 0;
       }

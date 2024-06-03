@@ -1,6 +1,7 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
+#[derive(Default)]
 pub struct Command {
   pub length: i32,
   pub obj_id: i32,
@@ -32,7 +33,7 @@ impl Command {
         body:   vec![],
       };
       if command.length > 3 {
-        command.body = data[3..].to_owned();
+        data[3..].clone_into(&mut command.body);
       }
       command_set.push(command);
 
@@ -43,7 +44,4 @@ impl Command {
     // Return the human-readable command set
     command_set
   }
-}
-impl Default for Command {
-  fn default() -> Self { Self { length: 0, obj_id: 0, id: 0, body: vec![] } }
 }

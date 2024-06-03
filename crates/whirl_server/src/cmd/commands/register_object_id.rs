@@ -23,7 +23,7 @@ impl Creatable for RegisterObjectId {
     // Content
     command.put_u8(self.long_object_id.len() as u8); // Long object ID length
     command.put_slice(self.long_object_id.as_bytes()); // Long object ID
-    command.put_i8(self.short_object_id as i8); // Short object ID
+    command.put_i8(self.short_object_id); // Short object ID
 
     // Length
     let mut command_as_vec = command.to_vec();

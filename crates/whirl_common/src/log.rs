@@ -15,7 +15,7 @@ pub fn calculate_log_level() -> String {
     _ => "info".to_string(),
   };
   if !Config::get().whirlsplash.log.everything {
-    level = format!("whirl={}", level);
+    level = format!("whirl={level}");
   }
 
   level

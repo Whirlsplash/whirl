@@ -45,6 +45,7 @@ pub struct Prompt {
 }
 impl Prompt {
   /// Begin handling user input as the prompt.
+  #[allow(clippy::unused_async)]
   pub async fn handle() -> ! {
     let mut prompt = Self { history: vec![] };
 
@@ -118,7 +119,7 @@ mod tokenize_command {
 
   #[test]
   fn test_keyword() {
-    assert_eq!("test", Prompt::tokenize_command("test").keyword)
+    assert_eq!("test", Prompt::tokenize_command("test").keyword);
   }
 
   #[test]
@@ -126,17 +127,20 @@ mod tokenize_command {
 
   #[test]
   fn one_arg() {
-    assert_eq!(1, Prompt::tokenize_command("test one").args.len())
+    assert_eq!(1, Prompt::tokenize_command("test one").args.len());
   }
 
   #[test]
   fn multi_arg() {
-    assert_eq!(3, Prompt::tokenize_command("test one two three").args.len())
+    assert_eq!(3, Prompt::tokenize_command("test one two three").args.len());
   }
 
   #[test]
   #[ignore]
   fn quotes() {
-    assert_eq!(2, Prompt::tokenize_command("test \"one two\" three").args.len())
+    assert_eq!(
+      2,
+      Prompt::tokenize_command("test \"one two\" three").args.len()
+    );
   }
 }

@@ -14,11 +14,11 @@ pub fn parse_commands_from_packet(mut buffer: BytesMut) -> Vec<BytesMut> {
   let mut commands: Vec<BytesMut> = Vec::new();
   trace!("initial buffer: {:?}, length: {}", buffer, buffer.len());
 
-  let data_length = buffer.get(0).unwrap().to_owned() as usize;
+  let data_length = buffer.first().unwrap().to_owned() as usize;
   if buffer.len() > data_length {
     loop {
       trace!("loop: {:?}, length: {}", buffer, buffer.len());
-      let command_length = buffer.get(0).unwrap().to_owned() as usize;
+      let command_length = buffer.first().unwrap().to_owned() as usize;
       commands.push(BytesMut::from(buffer.get(0..command_length).unwrap()));
 
       // Remove command from buffer
