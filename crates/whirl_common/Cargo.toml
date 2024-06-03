@@ -1,7 +1,7 @@
 [package]
 name = "whirl_common"
 version = "0.1.0"
-authors = ["Fuwn <fuwnzy@gmail.com>"]
+authors = ["Fuwn <contact@fuwn.me>"]
 edition = "2018"
 description = "Provides assorted utilities for global use"
 documentation = "https://whirlsplash.org/docs/"
@@ -16,17 +16,3 @@ publish = false
 # Config
 whirl_config = { path = "../whirl_config" }
 
-[dev-dependencies]
-# Benchmark
-iai = "0.1.1"
-criterion = { version = "0.3.5", features = ["html_reports"] }
-
-[[bench]]
-name = "whirl_common"
-path = "../../benches/whirl_common_iai.rs"
-harness = false
-
-[[bench]]
-name = "whirl_common_criterion"
-path = "../../benches/whirl_common_criterion.rs"
-harness = false

@@ -1,7 +1,7 @@
 [package]
 name = "whirl_config"
 version = "0.1.0"
-authors = ["Fuwn <fuwnzy@gmail.com>"]
+authors = ["Fuwn <contact@fuwn.me>"]
 edition = "2018"
 description = "Provides abstractions to interact with the configuration system"
 documentation = "https://whirlsplash.org/docs/"

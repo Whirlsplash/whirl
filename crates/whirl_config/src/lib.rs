@@ -19,22 +19,17 @@
   html_favicon_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png"
 )]
 
-#[macro_use]
-extern crate serde_derive;
-#[macro_use]
-extern crate log;
+#[macro_use] extern crate serde_derive;
+#[macro_use] extern crate log;
 
 mod structures;
 
-use config::{ConfigError, File};
-
-use crate::structures::{
-  DistributorConfig,
-  HubConfig,
-  WhirlsplashApiConfig,
-  WhirlsplashConfig,
-  WhirlsplashLogConfig,
-  WhirlsplashPromptConfig,
+use {
+  crate::structures::{
+    DistributorConfig, HubConfig, WhirlsplashApiConfig, WhirlsplashConfig,
+    WhirlsplashLogConfig, WhirlsplashPromptConfig,
+  },
+  config::{ConfigError, File},
 };
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -49,10 +44,9 @@ impl Config {
   ///
   /// # Panics
   /// - May panic if the configuration is unable to be refreshed.
-  #[deprecated(
-    note = "the current implementation of the configurations system automatically performs \
-            refreshes, this method has no effects"
-  )]
+  #[deprecated(note = "the current implementation of the configurations \
+                       system automatically performs refreshes, this method \
+                       has no effects")]
   pub fn refresh() { let _ = config::Config::new().refresh().unwrap(); }
 
   fn load() -> Result<Self, ConfigError> {
@@ -74,7 +68,8 @@ impl Config {
         why
       );
       warn!(
-        "you should probably generate yourself a configuration file with `whirl config generate`!"
+        "you should probably generate yourself a configuration file with \
+         `whirl config generate`!"
       );
 
       Self::default()
@@ -90,9 +85,7 @@ impl Default for Config {
       whirlsplash: WhirlsplashConfig {
         worldsmaster_username: "WORLDSMASTER".to_string(),
         ip:                    "127.0.0.1".to_string(),
-        api:                   WhirlsplashApiConfig {
-          port: 80
-        },
+        api:                   WhirlsplashApiConfig { port: 80 },
         prompt:                WhirlsplashPromptConfig {
           enable: false,
           ps1:    "[WORLDSMASTER@Whirlsplash ~]$".to_string(),
@@ -109,9 +102,7 @@ impl Default for Config {
         worldsmaster_greeting: "Welcome to Whirlsplash!".to_string(),
         port:                  6650,
       },
-      hub:         HubConfig {
-        port: 5673
-      },
+      hub:         HubConfig { port: 5673 },
     }
   }
 }

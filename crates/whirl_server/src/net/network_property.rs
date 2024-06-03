@@ -10,10 +10,5 @@ impl NetworkProperty {
   pub fn _new() -> Self { Self::default() }
 }
 impl Default for NetworkProperty {
-  fn default() -> Self {
-    Self {
-      prop_id: 0,
-      value:   "".to_string(),
-    }
-  }
+  fn default() -> Self { Self { prop_id: 0, value: "".to_string() } }
 }

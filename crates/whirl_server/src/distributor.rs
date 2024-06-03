@@ -11,35 +11,37 @@
 //! This is not meant to be a high focus module as the Distributor is only
 //! meant to handle the initial and brief session initialization of the client.
 
-use std::{error::Error, net::SocketAddr, sync::Arc};
-
-use tokio::{io::AsyncWriteExt, net::TcpStream, sync::Mutex};
-use tokio_stream::StreamExt;
-use tokio_util::codec::{BytesCodec, Decoder};
-use whirl_config::Config;
-
-use crate::{
-  cmd::{
-    commands::{
-      action::create,
-      buddy_list::BuddyList,
-      property::create::{property_request_as_distributor, property_update_as_distributor},
-      redirect_id::RedirectId,
-      room_id_request::RoomIdRequest,
-      session_exit::SessionExit,
-      text::Text,
+use {
+  crate::{
+    cmd::{
+      commands::{
+        action::create,
+        buddy_list::BuddyList,
+        property::create::{
+          property_request_as_distributor, property_update_as_distributor,
+        },
+        redirect_id::RedirectId,
+        room_id_request::RoomIdRequest,
+        session_exit::SessionExit,
+        text::Text,
+      },
+      constants::Command,
+      extendable::{Creatable, Parsable},
     },
-    constants::Command,
-    extendable::{Creatable, Parsable},
+    interaction::{peer::Peer, shared::Shared},
+    net::{
+      constants::{VAR_ERROR, VAR_USERNAME},
+      network_property::NetworkProperty,
+      property_list::PropertyList,
+    },
+    packet_parser::parse_commands_from_packet,
+    Server,
   },
-  interaction::{peer::Peer, shared::Shared},
-  net::{
-    constants::{VAR_ERROR, VAR_USERNAME},
-    network_property::NetworkProperty,
-    property_list::PropertyList,
-  },
-  packet_parser::parse_commands_from_packet,
-  Server,
+  std::{error::Error, net::SocketAddr, sync::Arc},
+  tokio::{io::AsyncWriteExt, net::TcpStream, sync::Mutex},
+  tokio_stream::StreamExt,
+  tokio_util::codec::{BytesCodec, Decoder},
+  whirl_config::Config,
 };
 
 /// Spawn a Distributor.

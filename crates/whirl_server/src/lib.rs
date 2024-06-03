@@ -20,10 +20,8 @@
 )]
 #![allow(non_local_definitions, dead_code)]
 
-#[macro_use]
-extern crate log;
-#[macro_use]
-extern crate async_trait;
+#[macro_use] extern crate log;
+#[macro_use] extern crate async_trait;
 
 mod cmd;
 mod interaction;
@@ -33,14 +31,14 @@ mod distributor;
 mod hub;
 mod packet_parser;
 
-use std::{error::Error, fmt, net::SocketAddr, sync::Arc};
-
-use tokio::{
-  net::{TcpListener, TcpStream},
-  sync::Mutex,
+use {
+  crate::interaction::shared::Shared,
+  std::{error::Error, fmt, net::SocketAddr, sync::Arc},
+  tokio::{
+    net::{TcpListener, TcpStream},
+    sync::Mutex,
+  },
 };
-
-use crate::interaction::shared::Shared;
 
 /// The type of server the `listen` method of the `Server` trait will
 /// implemented for.
@@ -54,12 +52,17 @@ pub enum ServerType {
 }
 // https://stackoverflow.com/a/32712140/14452787
 impl fmt::Display for ServerType {
-  fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result { write!(f, "{:?}", self) }
+  fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    write!(f, "{:?}", self)
+  }
 }
 
 #[async_trait]
 pub trait Server {
-  async fn listen(address: &str, server_type: ServerType) -> Result<(), Box<dyn Error>> {
+  async fn listen(
+    address: &str,
+    server_type: ServerType,
+  ) -> Result<(), Box<dyn Error>> {
     let listener = TcpListener::bind(address).await?;
     let state = Arc::new(Mutex::new(Shared::new()));
     let mut counter = 0;
@@ -86,7 +89,8 @@ pub trait Server {
           error!("an error occurred: {}", e);
         }
 
-        if std::env::var("EXIT_ON_CLIENT_DISCONNECT").unwrap_or_else(|_| "false".to_string())
+        if std::env::var("EXIT_ON_CLIENT_DISCONNECT")
+          .unwrap_or_else(|_| "false".to_string())
           == "true"
         {
           std::process::exit(0);
@@ -104,10 +108,11 @@ pub trait Server {
 }
 
 pub mod make {
-  use tokio::task::JoinHandle;
-  use whirl_config::Config;
-
-  use crate::{Server, ServerType};
+  use {
+    crate::{Server, ServerType},
+    tokio::task::JoinHandle,
+    whirl_config::Config,
+  };
 
   /// Spawn and return a thread handle for a Distributor sub-server.
   ///
@@ -158,8 +163,7 @@ pub mod make {
   /// - A panic may occur if the TCP server is unable to bind the specified
   ///   port.
   #[must_use]
-  #[deprecated(
-    note = "The `distributor` and `hub` functions are more extensible, use them instead."
-  )]
+  #[deprecated(note = "The `distributor` and `hub` functions are more \
+                       extensible, use them instead.")]
   pub fn all() -> Vec<JoinHandle<()>> { vec![distributor(), hub()] }
 }

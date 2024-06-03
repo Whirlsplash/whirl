@@ -17,8 +17,7 @@
   html_favicon_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png"
 )]
 
-#[macro_use]
-extern crate log;
+#[macro_use] extern crate log;
 // #[macro_use]
 // extern crate simple_error;
 
@@ -32,8 +31,7 @@ static GLOBAL: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
 pub mod cli;
 
-#[cfg(unix)]
-use signal_hook::consts::signal::{SIGINT, SIGTERM};
+#[cfg(unix)] use signal_hook::consts::signal::{SIGINT, SIGTERM};
 use whirl_config::Config;
 
 pub struct Whirl;
@@ -51,25 +49,26 @@ impl Whirl {
     dotenv::dotenv().ok();
     human_panic::setup_panic!();
     if Config::get().whirlsplash.log.enable {
-      let logger =
-        flexi_logger::Logger::try_with_str(whirl_common::log::calculate_log_level()).unwrap();
-      if std::env::var("LOG_FILE").unwrap_or_else(|_| "true".to_string()) == "false"
+      let logger = flexi_logger::Logger::try_with_str(
+        whirl_common::log::calculate_log_level(),
+      )
+      .unwrap();
+      if std::env::var("LOG_FILE").unwrap_or_else(|_| "true".to_string())
+        == "false"
         || !whirl_config::Config::get().whirlsplash.log.file
         || ({
           // Cheeky as all hell.
           let args = std::env::args().collect::<Vec<_>>();
-          if args.len() == 2 {
-            args[1] == "clean"
-          } else {
-            false
-          }
+          if args.len() == 2 { args[1] == "clean" } else { false }
         })
       {
         logger.start()?;
       } else {
         logger
           .print_message()
-          .log_to_file(flexi_logger::FileSpec::default().directory(".whirl/log"))
+          .log_to_file(
+            flexi_logger::FileSpec::default().directory(".whirl/log"),
+          )
           .start()?;
       }
     }
