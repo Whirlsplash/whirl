@@ -15,7 +15,7 @@ pub async fn info(
   easy
     .url(&format!(
       "http://www-dynamic.us.worlds.net/cgi-bin/profile.pl?{}",
-      req.username.as_ref().unwrap_or(&"".to_string()),
+      req.username.as_ref().unwrap_or(&String::new()),
     ))
     .unwrap();
 

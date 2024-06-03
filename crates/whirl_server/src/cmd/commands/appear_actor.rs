@@ -25,8 +25,8 @@ impl Creatable for AppearActor {
     command.put_i8(Command::ApprActr as i32 as i8); // Type
 
     // Content
-    command.put_i8(self.short_object_id as i8); // ObjId, why is it here? Worlds...
-    command.put_u16(self.room_id as u16); // Room ID
+    command.put_i8(self.short_object_id); // ObjId, why is it here? Worlds...
+    command.put_u16(self.room_id); // Room ID
     command.put_u16(self.x as u16); // X
     command.put_u16(self.y as u16); // Y
     command.put_u16(self.z as u16); // Z

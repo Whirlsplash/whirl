@@ -18,7 +18,13 @@
   html_logo_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png",
   html_favicon_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png"
 )]
-#![allow(non_local_definitions, dead_code)]
+#![allow(
+  non_local_definitions,
+  dead_code,
+  clippy::cast_possible_truncation,
+  clippy::cast_sign_loss,
+  clippy::cast_possible_wrap
+)]
 
 #[macro_use] extern crate log;
 #[macro_use] extern crate async_trait;
@@ -53,7 +59,7 @@ pub enum ServerType {
 // https://stackoverflow.com/a/32712140/14452787
 impl fmt::Display for ServerType {
   fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-    write!(f, "{:?}", self)
+    write!(f, "{self:?}")
   }
 }
 
@@ -123,7 +129,7 @@ pub mod make {
   pub fn distributor() -> JoinHandle<()> {
     tokio::spawn(async move {
       crate::distributor::Distributor::listen(
-        &*format!(
+        &format!(
           "{}:{}",
           Config::get().whirlsplash.ip,
           Config::get().distributor.port
@@ -144,11 +150,7 @@ pub mod make {
   pub fn hub() -> JoinHandle<()> {
     tokio::spawn(async move {
       crate::hub::Hub::listen(
-        &*format!(
-          "{}:{}",
-          Config::get().whirlsplash.ip,
-          Config::get().hub.port
-        ),
+        &format!("{}:{}", Config::get().whirlsplash.ip, Config::get().hub.port),
         ServerType::Room,
       )
       .await

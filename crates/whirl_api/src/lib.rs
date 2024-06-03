@@ -18,6 +18,7 @@
   html_logo_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png",
   html_favicon_url = "https://raw.githubusercontent.com/Whirlsplash/assets/master/Whirl.png"
 )]
+#![allow(clippy::cast_precision_loss)]
 
 #[macro_use] extern crate log;
 #[macro_use] extern crate serde_derive;
@@ -63,7 +64,7 @@ impl Api {
 #[must_use]
 pub fn make() -> tokio::task::JoinHandle<()> {
   tokio::spawn(async move {
-    crate::Api::listen(&*format!(
+    crate::Api::listen(&format!(
       "{}:{}",
       whirl_config::Config::get().whirlsplash.ip,
       whirl_config::Config::get().whirlsplash.api.port
