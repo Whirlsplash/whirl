@@ -6,7 +6,10 @@ pub trait Parsable {
 }
 
 pub trait Creatable {
-  fn create(&self) -> Vec<u8>;
+  fn create(&self) -> Vec<u8> { vec![] }
+  fn create_with_short_object_id(&self, _short_object_id: u8) -> Vec<u8> {
+    vec![]
+  }
 }
 
 /// Having to do this makes me with there was operator overloading in Rust.

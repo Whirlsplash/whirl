@@ -1,13 +1,17 @@
 // Copyright (C) 2021-2021 The Whirlsplash Collective
 // SPDX-License-Identifier: GPL-3.0-only
 
-use {bytes::BytesMut, std::collections::HashMap};
+use {
+  crate::cmd::commands::register_object_id::RegisterObjectId, bytes::BytesMut,
+  std::collections::HashMap,
+};
 
 pub struct Shared {
-  pub peers: HashMap<String, tokio::sync::mpsc::UnboundedSender<BytesMut>>,
+  pub peers:      HashMap<String, tokio::sync::mpsc::UnboundedSender<BytesMut>>,
+  pub object_ids: Vec<RegisterObjectId>,
 }
 impl Shared {
-  pub fn new() -> Self { Self { peers: HashMap::new() } }
+  pub fn new() -> Self { Self { peers: HashMap::new(), object_ids: vec![] } }
 
   #[allow(clippy::unused_async)]
   pub async fn broadcast(&mut self, message: &[u8]) {
