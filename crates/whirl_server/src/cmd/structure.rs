@@ -3,10 +3,11 @@
 
 #[derive(Default)]
 pub struct Command {
-  pub length: i32,
-  pub obj_id: i32,
-  pub id:     i32,
-  pub body:   Vec<u8>,
+  pub length:          i32,
+  pub short_object_id: i32,
+  #[allow(clippy::struct_field_names)]
+  pub command_type:    i32,
+  pub body:            Vec<u8>,
 }
 impl Command {
   /// Create and return a new `Command` with default values (`0`s and empty).
@@ -27,10 +28,10 @@ impl Command {
 
       let command_length = data[0];
       let mut command = Self {
-        length: i32::from(command_length),
-        obj_id: i32::from(data[1]),
-        id:     i32::from(data[2]),
-        body:   vec![],
+        length:          i32::from(command_length),
+        short_object_id: i32::from(data[1]),
+        command_type:    i32::from(data[2]),
+        body:            vec![],
       };
       if command.length > 3 {
         data[3..].clone_into(&mut command.body);
