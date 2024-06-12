@@ -26,16 +26,8 @@
   clippy::cast_possible_wrap
 )]
 
-#[macro_use] extern crate log;
 #[macro_use] extern crate async_trait;
-
-mod cmd;
-mod interaction;
-mod net;
-
-mod distributor;
-mod hub;
-mod packet_parser;
+#[macro_use] extern crate log;
 
 use {
   crate::interaction::shared::Shared,
@@ -45,6 +37,14 @@ use {
     sync::Mutex,
   },
 };
+
+mod cmd;
+mod interaction;
+mod net;
+
+mod distributor;
+mod hub;
+mod packet_parser;
 
 /// The type of server the `listen` method of the `Server` trait will
 /// implemented for.

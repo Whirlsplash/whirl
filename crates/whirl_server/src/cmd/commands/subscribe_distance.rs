@@ -16,10 +16,9 @@ impl Parsable for SubscribeDistance {
   fn parse(data: Vec<u8>) -> Self {
     // https://stackoverflow.com/questions/41034635/how-do-i-convert-between-string-str-vecu8-and-u8
     let mut data = BytesMut::from(data.as_slice()).reader();
+    let room_number = data.read_i16::<BigEndian>().unwrap();
+    let distance = data.read_i16::<BigEndian>().unwrap();
 
-    Self {
-      distance:    data.read_i16::<BigEndian>().unwrap(),
-      room_number: data.read_i16::<BigEndian>().unwrap(),
-    }
+    Self { distance, room_number }
   }
 }

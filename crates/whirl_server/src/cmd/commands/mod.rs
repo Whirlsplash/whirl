@@ -4,6 +4,7 @@
 pub mod action;
 pub mod appear_actor;
 pub mod buddy_list;
+pub mod long_location;
 pub mod property;
 pub mod redirect_id;
 pub mod register_object_id;

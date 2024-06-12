@@ -8,6 +8,8 @@
 //! client after they have been redirected to a room (Hub) and finished their
 //! business with the Distributor (`AutoServer`).
 
+#![allow(clippy::significant_drop_in_scrutinee)]
+
 use {
   crate::{
     cmd::{
@@ -15,6 +17,7 @@ use {
         action::create,
         appear_actor::AppearActor,
         buddy_list::BuddyList,
+        long_location::LongLocation,
         property::create::{property_request_as_hub, property_update_as_hub},
         register_object_id::RegisterObjectId,
         session_exit::SessionExit,
@@ -57,7 +60,6 @@ impl Server for Hub {
     let mut peer = Peer::new(state.clone(), bytes, count.to_string()).await?;
     // let mut room_ids = vec![];
     let mut username = String::from("unknown");
-
     let mut show_avatar = false;
 
     loop {
@@ -68,6 +70,8 @@ impl Server for Hub {
         }
         result = peer.bytes.next() => match result {
           Some(Ok(msg)) => {
+            let short_object_id = msg.get(1).unwrap().to_owned();
+
             // trace!("got some bytes: {:?}", &msg);
             for msg in parse_commands_from_packet(msg) {
               match num_traits::FromPrimitive::from_i32(i32::from(msg.get(2).unwrap().to_owned())) {
@@ -100,6 +104,19 @@ impl Server for Hub {
                   peer.bytes.get_mut()
                     .write_all(&create()).await?;
                   trace!("sent text to {}", username);
+                }
+                Some(Command::RegObjId) => {}
+                Some(Command::LongLoc) => {
+                  let long_location = LongLocation::parse(msg[3..].to_vec());
+
+                  debug!("received long location from {}: {:?}", username, long_location);
+
+                  state.lock().await.broadcast(&LongLocation {
+                    x: long_location.x,
+                    y: long_location.y,
+                    z: long_location.z,
+                    direction: long_location.direction,
+                  }.create_with_short_object_id(short_object_id)).await;
                 }
                 Some(Command::BuddyListUpdate) => {
                   let buddy = BuddyList::parse(msg.to_vec());
@@ -138,17 +155,26 @@ impl Server for Hub {
                 }
                 Some(Command::Text) => {
                   let text = Text::parse(msg.to_vec(), &[&username]);
+
                   debug!("received text from {}: {}", username, text.content);
 
-                  {
-                    state.lock().await.broadcast(&Text {
-                      sender: (*username).to_string(),
-                      content: text.content.clone(),
-                    }.create()).await;
-                  }
-                  debug!("broadcasted text to hub");
+                    if !text.content.starts_with('/') {
+                      state.lock().await.broadcast(&Text {
+                        sender: (*username).to_string(),
+                        content: text.content.clone(),
+                      }.create()).await;
+                    debug!("broadcasted text to hub");
+                    }
 
                   match text.content.as_str() {
+                    "/objects" => {
+                      for object_id in &state.lock().await.object_ids {
+                        peer.bytes.get_mut().write_all(&Text {
+                          sender: Config::get().whirlsplash.worldsmaster_username,
+                          content: format!("{object_id:?}"),
+                        }.create()).await?;
+                      }
+                    }
                     // Makes the friend "fuwn" come online
                     "/friend online fuwn" => {
                       peer.bytes.get_mut().write_all(&[
@@ -163,11 +189,17 @@ impl Server for Hub {
                         0x00,
                       ]).await?;
                     }
+                    "/me" => {
+                      peer.bytes.get_mut().write_all(&Text {
+                        sender: Config::get().whirlsplash.worldsmaster_username,
+                        content: format!("{short_object_id}"),
+                      }.create()).await?;
+                    }
                     // Spawns a test avatar with the name "fuwn"
                     "/spawn fuwn" => {
-                      show_avatar = true;
+                      // show_avatar = true;
 
-                      peer.bytes.get_mut().write_all(&[
+                      state.lock().await.broadcast(&[
                         // REGOBJID
                         0x09, 0xff, 0x0d, 0x04, 0x66, 0x75, 0x77, 0x6e,
                         0x02,
@@ -193,7 +225,7 @@ impl Server for Hub {
                         0x16, 0x02, 0x10, 0x05, 0x40, 0x01, 0x0f, 0x61,
                         0x76, 0x61, 0x74, 0x61, 0x72, 0x3a, 0x56, 0x61,
                         0x6d, 0x70, 0x2e, 0x6d, 0x6f, 0x76,
-                      ]).await?;
+                      ]).await;
                     }
                     // Puts the test avatar "fuwn" into the asleep action
                     "/sleep fuwn" => {
@@ -211,28 +243,52 @@ impl Server for Hub {
                   debug!("received subscribe room from {}: {:?}",
                     username, subscribe_room);
 
-                  peer.bytes.get_mut().write_all(&RegisterObjectId {
-                    long_object_id: "fuwn".to_string(),
-                    short_object_id: 2,
-                  }.create()).await?;
-                  peer.bytes.get_mut().write_all(&AppearActor {
-                    short_object_id: 2,
-                    room_id: 1,
-                    x: 191,
-                    y: 173,
-                    z: 0,
-                    direction: 45,
-                  }.create()).await?;
+                  // peer.bytes.get_mut().write_all(&AppearActor {
+                  //   short_object_id: 2,
+                  //   room_id: 1,
+                  //   x: 191,
+                  //   y: 173,
+                  //   z: 0,
+                  //   direction: 45,
+                  // }.create()).await?;
+
+                  for object_id in &state.lock().await.object_ids {
+                    peer.bytes.get_mut().write_all(&object_id.create()).await?;
+                  }
                 }
                 Some(Command::SubDist) => {
                   let subscribe_distance = SubscribeDistance::parse(msg[3..].to_vec());
                   debug!("received subscribe distance from {}: {:?}",
                     username, subscribe_distance);
+
+                  for object_id in &state.lock().await.object_ids {
+                    let _actor = AppearActor {
+                      room_id: 1,
+                    x: 1200,
+                    y: 600,
+                    z: 0,
+                    direction: 208,
+                    }.create_with_short_object_id(object_id.short_object_id as u8);
+                    // peer.bytes.get_mut().write_all(&actor).await?;
+                  }
                 }
                 Some(Command::Teleport) => {
                   let teleport = Teleport::parse(msg[3..].to_vec());
+                  let objects_length = state.lock().await.object_ids.len();
+                  let object_id = RegisterObjectId {
+                    long_object_id: format!("{username} ({objects_length})"),
+                    short_object_id: objects_length as i8,
+                  };
+
                   debug!("received teleport from {}: {:?}",
                     username, teleport);
+                  debug!("registered object ID: {:?}", object_id);
+
+                  state.lock().await.object_ids.push(object_id.clone());
+                  state.lock().await.broadcast(&object_id.create()).await;
+                }
+                Some(Command::AppInit) => {
+                  debug!("received app initialization from {}", username);
                 }
                 Some(Command::ShortLoc) => {
                   // This is all just test stuff. Once the drone system has been

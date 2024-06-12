@@ -15,7 +15,7 @@ use {
   crate::{
     cmd::{
       commands::{
-        action::create,
+        // action::create,
         buddy_list::BuddyList,
         property::create::{
           property_request_as_distributor, property_update_as_distributor,
@@ -94,8 +94,8 @@ impl Server for Distributor {
                     sender: Config::get().whirlsplash.worldsmaster_username,
                     content: Config::get().distributor.worldsmaster_greeting,
                   }.create()).await?;
-                  peer.bytes.get_mut()
-                    .write_all(&create()).await?;
+                  // peer.bytes.get_mut()
+                  //   .write_all(&create()).await?;
                   trace!("sent text to {}", username);
                 }
                 Some(Command::BuddyListUpdate) => {
