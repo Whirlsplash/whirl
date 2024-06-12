@@ -4,6 +4,7 @@
 pub mod action;
 pub mod appear_actor;
 pub mod buddy_list;
+mod channel;
 pub mod long_location;
 pub mod property;
 pub mod redirect_id;
