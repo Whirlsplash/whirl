@@ -21,13 +21,13 @@
 // #[macro_use]
 // extern crate simple_error;
 
-#[cfg(windows)]
-#[global_allocator]
-static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+// #[cfg(windows)]
+// #[global_allocator]
+// static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-#[cfg(unix)]
-#[global_allocator]
-static GLOBAL: jemallocator::Jemalloc = jemallocator::Jemalloc;
+// #[cfg(unix)]
+// #[global_allocator]
+// static GLOBAL: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
 pub mod cli;
 
