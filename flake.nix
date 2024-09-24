@@ -2,6 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    crane.url = "github:ipetkov/crane";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -14,15 +15,63 @@
       nixpkgs,
       flake-utils,
       rust-overlay,
+      crane,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        overlays = [ (import rust-overlay) ];
-        pkgs = import nixpkgs { inherit system overlays; };
+        pkgs = import nixpkgs {
+          inherit system;
+
+          overlays = [ (import rust-overlay) ];
+        };
+
+        rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+        craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
+
+        commonArgs = {
+          src = craneLib.cleanCargoSource ./.;
+
+          nativeBuildInputs = with pkgs; [
+            rustToolchain
+            pkg-config
+          ];
+
+          buildInputs = with pkgs; [
+            openssl
+            sqlite
+          ];
+        };
+
+        whirl = craneLib.buildPackage (
+          commonArgs
+          // {
+            cargoArtifacts = craneLib.buildDepsOnly commonArgs;
+          }
+        );
       in
       {
+        packages = {
+          inherit whirl;
+
+          default = whirl;
+
+          docker = pkgs.dockerTools.buildLayeredImage {
+            name = "fuwn/whirl";
+            tag = "latest";
+
+            config = {
+              Entrypoint = [ "${whirl}/bin/whirl" ];
+
+              Cmd = [
+                "run"
+                "distributor,hub"
+              ];
+            };
+          };
+        };
+
         devShell =
           with pkgs;
           mkShell.override
