@@ -55,11 +55,11 @@ whirl_prompt = { path = "../whirl_prompt" }
 whirl_server = { path = "../whirl_server" }
 
 # Allocator
-[target.'cfg(windows)'.dependencies]
-mimalloc = { version = "0.1.28", default-features = false }
+# [target.'cfg(windows)'.dependencies]
+# mimalloc = { version = "0.1.28", default-features = false }
 
-[target.'cfg(unix)'.dependencies]
-jemallocator = "0.3.2"
+# [target.'cfg(unix)'.dependencies]
+# jemallocator = "0.3.2"
 
 # Signal
 signal-hook = "0.3.13"
