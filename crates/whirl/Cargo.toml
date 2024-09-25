@@ -18,7 +18,7 @@ dotenv = "0.15.0"
 
 # Logging
 log = "0.4.14"
-flexi_logger = "0.22.3"
+flexi_logger = "0.29.0"
 human-panic = "1.0.3"
 # simple-error = "0.2.3"
 
