@@ -19,7 +19,7 @@ log = "0.4.14"
 # Utility
 async-trait = "0.1.52"
 num-traits = "0.2.14"
-num-derive = "0.3.3"
+num-derive = "0.4.0"
 
 # Byte Manipulation
 bytes = "1.1.0"
