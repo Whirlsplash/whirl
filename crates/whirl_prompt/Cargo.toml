@@ -14,7 +14,7 @@ publish = false
 
 [dependencies]
 # Utility
-sysinfo = "0.23.5"
+sysinfo = "0.32.0"
 colour = "0.6.0"
 
 # Config
